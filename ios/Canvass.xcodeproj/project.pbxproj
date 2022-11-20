@@ -14,6 +14,10 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		7699B88040F8A987B510C191 /* libPods-Canvass-CanvassTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-Canvass-CanvassTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		873744503B144F688E2CBAAE /* Inter.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A1279508D8324D3EA313856B /* Inter.ttf */; };
+		ADBBC740225948CF96CF60A8 /* Inter_bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 090ED2D006C14E39859CD473 /* Inter_bold.ttf */; };
+		491EB0143E174E62B8D5DE01 /* Montserrat.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2E1DFCDC1CA04C6CA86139C9 /* Montserrat.ttf */; };
+		FC609D76EEF3414B88945D4F /* Montserrat_bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A0EF1B51B5414D0687BDDAC9 /* Montserrat_bold.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +48,10 @@
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = Canvass/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-Canvass-CanvassTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Canvass-CanvassTests.release.xcconfig"; path = "Target Support Files/Pods-Canvass-CanvassTests/Pods-Canvass-CanvassTests.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		A1279508D8324D3EA313856B /* Inter.ttf */ = {isa = PBXFileReference; name = "Inter.ttf"; path = "../assets/fonts/Inter.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		090ED2D006C14E39859CD473 /* Inter_bold.ttf */ = {isa = PBXFileReference; name = "Inter_bold.ttf"; path = "../assets/fonts/Inter_bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		2E1DFCDC1CA04C6CA86139C9 /* Montserrat.ttf */ = {isa = PBXFileReference; name = "Montserrat.ttf"; path = "../assets/fonts/Montserrat.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		A0EF1B51B5414D0687BDDAC9 /* Montserrat_bold.ttf */ = {isa = PBXFileReference; name = "Montserrat_bold.ttf"; path = "../assets/fonts/Montserrat_bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,6 +130,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				BBD78D7AC51CEA395F1C20DB /* Pods */,
+				B1CA8663052B497795BB6A7E /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -147,6 +156,18 @@
 			);
 			path = Pods;
 			sourceTree = "<group>";
+		};
+		B1CA8663052B497795BB6A7E /* Resources */ = {
+			isa = "PBXGroup";
+			children = (
+				A1279508D8324D3EA313856B /* Inter.ttf */,
+				090ED2D006C14E39859CD473 /* Inter_bold.ttf */,
+				2E1DFCDC1CA04C6CA86139C9 /* Montserrat.ttf */,
+				A0EF1B51B5414D0687BDDAC9 /* Montserrat_bold.ttf */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+			path = "";
 		};
 /* End PBXGroup section */
 
@@ -244,6 +265,10 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				873744503B144F688E2CBAAE /* Inter.ttf in Resources */,
+				ADBBC740225948CF96CF60A8 /* Inter_bold.ttf in Resources */,
+				491EB0143E174E62B8D5DE01 /* Montserrat.ttf in Resources */,
+				FC609D76EEF3414B88945D4F /* Montserrat_bold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
