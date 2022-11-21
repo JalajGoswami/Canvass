@@ -1,11 +1,11 @@
-import { View } from 'react-native'
 import React from 'react'
-import Text from '../../theme/Components/Text'
+import StyledText from '../../Components/Common/StyledText'
+import StyledBody from '../../Components/Common/StyledBody'
 
 export default function Loading() {
   return (
-    <View>
-      <Text>Loading</Text>
-    </View>
+    <StyledBody>
+      <StyledText>Loading</StyledText>
+    </StyledBody>
   )
 }

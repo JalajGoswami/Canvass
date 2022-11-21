@@ -2,7 +2,7 @@ import { Text } from 'react-native'
 import React from 'react'
 import { useTheme } from 'react-native-paper'
 
-export default function Text({ children, variant = 'content', style, ...props }) {
+export default function StyledText({ children, variant = 'content', style, ...props }) {
     const theme = useTheme()
 
     const getStyles = () => {

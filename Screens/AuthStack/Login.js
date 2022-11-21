@@ -1,11 +1,13 @@
-import { View } from 'react-native'
 import React from 'react'
-import Text from '../../theme/Components/Text'
+import StyledText from '../../Components/Common/StyledText'
+import StyledBody from '../../Components/Common/StyledBody'
+import { View } from 'react-native'
 
 export default function Login() {
+  console.log('login')
   return (
-    <View>
-      <Text>Login</Text>
+    <View style={{ backgroundColor: '#000',flex: 1 }}>
+      <StyledText>Login</StyledText>
     </View>
   )
 }
