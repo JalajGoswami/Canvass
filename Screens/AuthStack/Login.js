@@ -2,12 +2,14 @@ import React from 'react'
 import StyledText from '../../Components/Common/StyledText'
 import StyledBody from '../../Components/Common/StyledBody'
 import { View } from 'react-native'
+import { useTheme } from 'react-native-paper'
 
 export default function Login() {
-  console.log('login')
+  const theme = useTheme()
+
   return (
-    <View style={{ backgroundColor: '#000',flex: 1 }}>
+    <StyledBody style={{backgroudColor: theme.colors.primary}}>
       <StyledText>Login</StyledText>
-    </View>
+    </StyledBody>
   )
 }
