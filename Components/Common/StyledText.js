@@ -2,13 +2,15 @@ import { Text } from 'react-native'
 import React from 'react'
 import { useTheme } from 'react-native-paper'
 
-export default function StyledText({ children, variant = 'content', style, ...props }) {
+export default function StyledText({
+    children, variant = 'content', size = 10, style, ...props
+}) {
     const theme = useTheme()
 
     const getStyles = () => {
         let defaultStyle = [{
             color: theme.colors.onBackground,
-            fontSize: 14
+            fontSize: 14 * size / 10
         }]
         if (variant === 'content')
             defaultStyle.push({ fontFamily: 'Inter' })
@@ -17,18 +19,18 @@ export default function StyledText({ children, variant = 'content', style, ...pr
             defaultStyle.push({ fontFamily: 'Inter', fontWeight: 'bold' })
 
         if (variant === 'title')
-            defaultStyle.push({ fontFamily: 'Montserrat', fontSize: 20 })
+            defaultStyle.push({ fontFamily: 'Montserrat', fontSize: 20 * size / 10 })
 
         if (variant === 'title-bold')
             defaultStyle.push({
                 fontFamily: 'Montserrat',
-                fontSize: 20,
+                fontSize: 20 * size / 10,
                 fontWeight: 'bold'
             })
 
         Array.isArray(style) ? defaultStyle.push(...style)
             : defaultStyle.push(style)
-        
+
         return defaultStyle
     }
 

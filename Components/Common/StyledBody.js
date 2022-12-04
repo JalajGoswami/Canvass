@@ -1,12 +1,17 @@
 import React from 'react'
-import { StyleSheet } from 'react-native'
+import { StatusBar, StyleSheet, useColorScheme } from 'react-native'
 import { useTheme } from 'react-native-paper'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-export default function StyledBody({ children, variant = 'neutral', style, ...props }) {
+export default function StyledBody({
+    children, variant = 'neutral',
+    statusBarColor, style, ...props
+}) {
     const theme = useTheme()
+    const isDarkTheme = useColorScheme() === 'dark'
+
     const BgColors = {
-        neutral: theme.colors.background ,
+        neutral: theme.colors.background,
         surface: theme.colors.surface,
         surfaceVariant: theme.colors.surfaceVariant,
         primary: theme.colors.onPrimary,
@@ -14,11 +19,11 @@ export default function StyledBody({ children, variant = 'neutral', style, ...pr
         tertiary: theme.colors.onTertiary,
         error: theme.colors.onError,
     }
-    const styles = StyleSheet.create({ 
+    const styles = StyleSheet.create({
         defaultStyle: {
             flex: 1,
             backgroundColor: BgColors[variant]
-        } 
+        }
     })
 
     const getUserStyles = () => (
@@ -30,6 +35,10 @@ export default function StyledBody({ children, variant = 'neutral', style, ...pr
             style={[styles.defaultStyle, ...getUserStyles()]}
             {...props}
         >
+            <StatusBar animated
+                barStyle={isDarkTheme ? 'light-content' : 'dark-content'}
+                backgroundColor={statusBarColor || theme.colors.background}
+            />
             {children}
         </SafeAreaView>
     )

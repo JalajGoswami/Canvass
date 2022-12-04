@@ -8,6 +8,8 @@ import Login from './Screens/AuthStack/Login'
 import { useSelector } from 'react-redux';
 import { noHeader } from './theme/header';
 
+const SignUp = lazy(() => import('./Screens/AuthStack/SignUp'))
+
 const { LightTheme, DarkTheme } = adaptNavigationTheme({ light: DefaultTheme, dark: NavigationDarkTheme })
 
 const { Navigator, Screen } = createStackNavigator();
@@ -28,6 +30,7 @@ const App = () => {
               :
               <>
                 <Screen name='Login' component={Login} options={noHeader} />
+                <Screen name='SignUp' component={SignUp} options={noHeader} />
               </>
           }
         </Navigator>

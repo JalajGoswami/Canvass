@@ -1,4 +1,9 @@
-import { MD3LightTheme, MD3DarkTheme } from 'react-native-paper';
+import { MD3LightTheme, MD3DarkTheme, configureFonts } from 'react-native-paper';
+
+const fontConfig = {
+    fontFamily: 'Inter',
+    letterSpacing: 0,
+}
 
 const lightColors = {
     primary: "#4955B3",
@@ -56,7 +61,8 @@ export const lightTheme = {
     colors: {
         // ...MD3LightTheme.colors,
         ...lightColors,
-    }
+    },
+    fonts: configureFonts({config: fontConfig})
 }
 
 export const darkTheme = {
@@ -64,5 +70,6 @@ export const darkTheme = {
     colors: {
         // ...MD3DarkTheme.colors,
         ...darkColors,
-    }
+    },
+    fonts: configureFonts({config: fontConfig})
 }
