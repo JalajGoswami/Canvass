@@ -19,7 +19,7 @@ export default function StyledText({ children, variant = 'content', style, ...pr
         if (variant === 'title')
             defaultStyle.push({ fontFamily: 'Montserrat', fontSize: 20 })
 
-        if (variant === 'title')
+        if (variant === 'title-bold')
             defaultStyle.push({
                 fontFamily: 'Montserrat',
                 fontSize: 20,
