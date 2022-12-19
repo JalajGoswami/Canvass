@@ -1,15 +1,23 @@
+import { TransitionPresets } from '@react-navigation/stack'
 import React from 'react'
-import StyledText from '../../Components/Common/StyledText'
-import StyledBody from '../../Components/Common/StyledBody'
-import { View } from 'react-native'
-import { useTheme } from 'react-native-paper'
+import { createSharedElementStackNavigator } from 'react-navigation-shared-element'
+import { noHeader } from '../../theme/header'
+import Email from './SignUp/Email'
+import Verify from './SignUp/Verify'
+
+const { Navigator, Screen } = createSharedElementStackNavigator()
 
 export default function SignUp() {
-    const theme = useTheme()
-
   return (
-    <StyledBody variant='neutral' statusBarColor={theme.colors.primaryContainer}>
-      <StyledText>Sign Up</StyledText>
-    </StyledBody>
+    <Navigator screenOptions={{
+      ...noHeader,
+      ...TransitionPresets.SlideFromRightIOS,
+    }}>
+      <Screen name='SignUp/Email' component={Email}
+        sharedElements={() => ['title','proceed_btn']}
+      />
+      <Screen name='SignUp/Verify' component={Verify}
+      />
+    </Navigator>
   )
 }

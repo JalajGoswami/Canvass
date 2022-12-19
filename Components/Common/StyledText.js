@@ -1,6 +1,7 @@
 import { Text } from 'react-native'
 import React from 'react'
 import { useTheme } from 'react-native-paper'
+import { BodyFont, DisplayFont } from '../../theme/theme'
 
 export default function StyledText({
     children, variant = 'content', size = 10, style, ...props
@@ -13,17 +14,17 @@ export default function StyledText({
             fontSize: 14 * size / 10
         }]
         if (variant === 'content')
-            defaultStyle.push({ fontFamily: 'Inter' })
+            defaultStyle.push({ fontFamily: BodyFont })
 
         if (variant === 'content-bold')
-            defaultStyle.push({ fontFamily: 'Inter', fontWeight: 'bold' })
+            defaultStyle.push({ fontFamily: BodyFont, fontWeight: 'bold' })
 
         if (variant === 'title')
-            defaultStyle.push({ fontFamily: 'Montserrat', fontSize: 20 * size / 10 })
+            defaultStyle.push({ fontFamily: DisplayFont, fontSize: 20 * size / 10 })
 
         if (variant === 'title-bold')
             defaultStyle.push({
-                fontFamily: 'Montserrat',
+                fontFamily: DisplayFont,
                 fontSize: 20 * size / 10,
                 fontWeight: 'bold'
             })

@@ -1,6 +1,7 @@
 import { StyleSheet, View } from 'react-native'
 import React, { useMemo, useState } from 'react'
 import { Button, TextInput } from 'react-native-paper'
+import { DisplayFont } from '../../theme/theme'
 
 export default function LoginForm() {
     const [passHidden, setPassHidden] = useState(true)
@@ -29,7 +30,7 @@ export default function LoginForm() {
             marginTop: 12,
         },
         submitBtnTxt: {
-            fontFamily: 'Montserrat',
+            fontFamily: DisplayFont,
             fontWeight: 'bold',
             fontSize: 17,
         }

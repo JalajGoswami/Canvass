@@ -1,5 +1,8 @@
 import { MD3LightTheme, MD3DarkTheme, configureFonts } from 'react-native-paper';
 
+export const BodyFont = 'Inter'
+export const DisplayFont = 'Montserrat'
+
 const fontConfig = {
     fontFamily: 'Inter',
     letterSpacing: 0,
