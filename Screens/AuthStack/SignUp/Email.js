@@ -43,7 +43,6 @@ export default function Email({ navigation }) {
 
     return (
         <StyledBody variant='neutral'>
-
             <Image source={require('../../../assets/images/social.png')}
                 resizeMode='contain' style={styles.image} />
             <SharedElement id='title'>

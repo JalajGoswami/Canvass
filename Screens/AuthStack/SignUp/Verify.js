@@ -6,7 +6,7 @@ import StyledBody from '../../../Components/Common/StyledBody'
 import StyledText from '../../../Components/Common/StyledText'
 import { DisplayFont } from '../../../theme/theme'
 
-export default function Verify() {
+export default function Verify({ navigation }) {
     const theme = useTheme()
     const styles = useMemo(() => StyleSheet.create({
         title: {
@@ -42,7 +42,6 @@ export default function Verify() {
     }))
     return (
         <StyledBody variant='neutral'>
-
             <Image source={require('../../../assets/images/connect.png')}
                 resizeMode='contain' style={styles.image} />
             <SharedElement id='title'>
@@ -63,6 +62,7 @@ export default function Verify() {
                         mode='contained' contentStyle={{ paddingVertical: 5 }}
                         style={styles.btn}
                         labelStyle={styles.btnTxt}
+                        onPress={() => navigation.navigate('SignUp/Profile')}
                     >
                         Proceed
                     </Button>
