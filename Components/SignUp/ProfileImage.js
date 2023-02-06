@@ -27,7 +27,7 @@ export default function ProfileImage() {
     const handleFileSelect = () => {
         DocumentPicker.pickSingle({ type: 'image/*' })
             .then(setImgFile)
-            .catch()
+            .catch(err => null)
     }
 
     return (
