@@ -2,11 +2,11 @@ import { StyleSheet, View } from 'react-native'
 import React, { useMemo } from 'react'
 import { Formik } from 'formik'
 import FormInput from '../Common/FormInput'
-import { Button, TextInput } from 'react-native-paper'
+import { Button } from 'react-native-paper'
 import { DisplayFont } from '../../theme/theme'
 import { SignupSchema } from '../../utils/FormSchemas'
 
-export default function DetailForm() {
+export default function DetailForm({ navigation }) {
     const styles = useMemo(() => StyleSheet.create({
         container: {
             alignItems: 'center',
@@ -71,12 +71,12 @@ export default function DetailForm() {
                         style={styles.input}
                         multiline numberOfLines={2}
                     />
-                    {/* <TextInput style={styles.input} /> */}
                     <Button mode='contained'
                         style={styles.submitBtn}
                         labelStyle={styles.submitBtnTxt}
                         theme={{ roundness: 1 }}
-                        onPress={formProps.handleSubmit}
+                        // onPress={formProps.handleSubmit}
+                        onPress={()=>navigation.navigate('SignUp/Prefrence')}
                     >
                         Get Started
                     </Button>

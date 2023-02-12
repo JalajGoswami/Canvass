@@ -3,6 +3,7 @@ import React from 'react'
 import { createSharedElementStackNavigator } from 'react-navigation-shared-element'
 import { noHeader } from '../../theme/header'
 import Email from './SignUp/Email'
+import Prefrence from './SignUp/Prefrence'
 import Profile from './SignUp/Profile'
 import Verify from './SignUp/Verify'
 
@@ -20,6 +21,8 @@ export default function SignUp() {
       <Screen name='SignUp/Verify' component={Verify}
       />
       <Screen name='SignUp/Profile' component={Profile}
+      />
+      <Screen name='SignUp/Prefrence' component={Prefrence}
       />
     </Navigator>
   )
