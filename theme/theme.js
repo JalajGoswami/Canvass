@@ -53,7 +53,7 @@ const darkColors = {
     background: "#1B1B1F",
     onBackground: "#E4E1E6",
     surface: "#28282F",
-    onSurface: "#D9D5DC",
+    onSurface: "#DAD8DC",
     surfaceVariant: "#46464F",
     onSurfaceVariant: "#C7C5D0",
     outline: "#90909A",

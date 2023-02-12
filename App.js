@@ -7,6 +7,7 @@ import Loading from './Screens/Common/Loading';
 import Login from './Screens/AuthStack/Login'
 import { useSelector } from 'react-redux';
 import { noHeader } from './theme/header';
+import StyledToast from './Components/Common/StyledToast';
 
 const SignUp = lazy(() => import('./Screens/AuthStack/SignUp'))
 
@@ -35,6 +36,7 @@ const App = () => {
           }
         </Navigator>
       </NavigationContainer>
+      <StyledToast />
     </Suspense>
   );
 };
