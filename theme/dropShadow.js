@@ -1,4 +1,5 @@
-export function dropShadow(variant = 'low', color) {
+export function dropShadow(variant = 'low', color, direction = 'down') {
+    let sign = direction == 'up' ? -1 : (direction == 'center' ? 0 : 1)
 
     if (variant === 'none' || !color)
         return {}
@@ -8,7 +9,7 @@ export function dropShadow(variant = 'low', color) {
             shadowColor: color,
             shadowOffset: {
                 width: 0,
-                height: 1,
+                height: 1 * sign,
             },
             shadowOpacity: 0.16,
             shadowRadius: 1.51,
@@ -20,7 +21,7 @@ export function dropShadow(variant = 'low', color) {
             shadowColor: color,
             shadowOffset: {
                 width: 0,
-                height: 3,
+                height: 3 * sign,
             },
             shadowOpacity: 0.17,
             shadowRadius: 3.05,
@@ -32,7 +33,7 @@ export function dropShadow(variant = 'low', color) {
             shadowColor: color,
             shadowOffset: {
                 width: 0,
-                height: 4,
+                height: 4 * sign,
             },
             shadowOpacity: 0.19,
             shadowRadius: 5.62,

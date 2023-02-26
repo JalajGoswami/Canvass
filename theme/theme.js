@@ -35,7 +35,7 @@ const lightColors = {
 }
 const darkColors = {
     primary: "#BCC2FF",
-    onPrimary: "#152383",
+    onPrimary: "#16192F",
     primaryContainer: "#303C9A",
     onPrimaryContainer: "#DFE0FF",
     secondary: "#A3C9FF",

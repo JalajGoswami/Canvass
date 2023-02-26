@@ -1,43 +1,64 @@
-import { DarkTheme as NavigationDarkTheme, DefaultTheme, NavigationContainer } from '@react-navigation/native';
+import {
+  Provider as PaperProvider,
+  adaptNavigationTheme
+} from 'react-native-paper'
+import {
+  DarkTheme as NavigationDarkTheme,
+  DefaultTheme, NavigationContainer
+} from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import React, { lazy, Suspense } from 'react';
+import React, { Suspense, useEffect } from 'react';
 import { useColorScheme } from 'react-native';
-import { adaptNavigationTheme } from 'react-native-paper';
 import Loading from './Screens/Common/Loading';
-import Login from './Screens/AuthStack/Login'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { noHeader } from './theme/header';
 import StyledToast from './Components/Common/StyledToast';
+import AuthStack from './Screens/AuthStack/AuthStack';
+import HomeTabs from './Screens/Home/HomeTabs';
+import { setSystemTheme } from './store/slices/settings';
+import { darkTheme, lightTheme } from './theme/theme';
 
-const SignUp = lazy(() => import('./Screens/AuthStack/SignUp'))
-
+const mainThemes = {
+  'dark': darkTheme,
+  'light': lightTheme,
+}
 const { LightTheme, DarkTheme } = adaptNavigationTheme({ light: DefaultTheme, dark: NavigationDarkTheme })
+const navigationThemes = {
+  'dark': DarkTheme,
+  'light': LightTheme,
+}
 
-const { Navigator, Screen } = createStackNavigator();
+const { Navigator, Screen } = createStackNavigator()
 
 const App = () => {
-  const isDarkTheme = useColorScheme() === 'dark'
+  const dispatch = useDispatch()
+  const OsTheme = useColorScheme()
   const { isAuthorized, loading } = useSelector(state => state.user)
+  const { appTheme, systemTheme } = useSelector(state => state.settings)
+
+  useEffect(() => {
+    if (systemTheme != OsTheme)
+      dispatch(setSystemTheme(OsTheme))
+  }, [OsTheme])
 
   return (
-    <Suspense fallback={Loading}>
-      <NavigationContainer theme={isDarkTheme ? DarkTheme : LightTheme}>
-        <Navigator>
-          {loading ?
-            <Screen name='Loading' component={Loading} options={noHeader} />
-            :
-            isAuthorized ?
-              <></>
+    <PaperProvider theme={mainThemes[appTheme || systemTheme]}>
+      <Suspense fallback={Loading}>
+        <NavigationContainer theme={navigationThemes[appTheme || systemTheme]}>
+          <Navigator screenOptions={noHeader}>
+            {loading ?
+              <Screen name='Loading' component={Loading} />
               :
-              <>
-                <Screen name='Login' component={Login} options={noHeader} />
-                <Screen name='SignUp' component={SignUp} options={noHeader} />
-              </>
-          }
-        </Navigator>
-      </NavigationContainer>
-      <StyledToast />
-    </Suspense>
+              true ?
+                <Screen name='Home' component={HomeTabs} />
+                :
+                <Screen name='Auth' component={AuthStack} />
+            }
+          </Navigator>
+        </NavigationContainer>
+        <StyledToast />
+      </Suspense>
+    </PaperProvider>
   );
 };
 

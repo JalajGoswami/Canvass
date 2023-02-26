@@ -3,9 +3,9 @@ import { StyleSheet, View } from 'react-native'
 import { useTheme } from 'react-native-paper'
 import { dropShadow } from '../../theme/dropShadow'
 
-export default function StyledBody({
+export default function Box({
     children, variant = 'neutral',
-    shadow = 'none', shadowColor,
+    shadow = 'none', shadowColor, shadowDirection,
     style, ...props
 }) {
     const theme = useTheme()
@@ -25,7 +25,10 @@ export default function StyledBody({
     const styles = StyleSheet.create({
         defaultStyle: {
             backgroundColor: BgColors[variant],
-            ...dropShadow(shadow, shadowColor || theme.colors.onBackground)
+            ...dropShadow(shadow,
+                shadowColor || theme.colors.onBackground,
+                shadowDirection
+            )
         }
     })
 
