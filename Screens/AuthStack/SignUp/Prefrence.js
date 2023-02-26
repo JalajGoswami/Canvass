@@ -52,7 +52,7 @@ export default function Prefrence() {
             marginVertical: 12,
         }
     })
-    const baseUrl = '../../../assets/images/'
+    const baseUrl = '../../../assets/images/categories/'
     const categories = [
         { name: 'Tech & Gadgets', image: require(baseUrl + 'tech-gadgets.webp') },
         { name: 'Science & Cosmos', image: require(baseUrl + 'science-cosmos.webp') },
