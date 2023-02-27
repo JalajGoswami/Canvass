@@ -1,6 +1,6 @@
-import { View, Text, StyleSheet, Image } from 'react-native'
+import { StyleSheet, Image } from 'react-native'
 import React from 'react'
-import Box from './Box'
+import Box from '../Common/Box'
 import { Button, useTheme } from 'react-native-paper'
 import { useSelector } from 'react-redux'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'

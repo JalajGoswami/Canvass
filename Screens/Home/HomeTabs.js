@@ -22,6 +22,7 @@ export default function HomeTabs() {
             borderTopWidth: 0,
             borderTopLeftRadius: 30,
             borderTopRightRadius: 30,
+            paddingHorizontal: 6,
             overflow: 'visible',
             ...dropShadow(
                 'high', theme.colors.onPrimaryContainer, 'up'
