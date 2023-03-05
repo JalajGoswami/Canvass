@@ -11,22 +11,44 @@ export default function TrendingTopics() {
         container: {
             flexDirection: 'row',
             flexGrow: 0,
+        },
+        topicBtn: {
+            marginVertical: 4,
+            marginHorizontal: 2,
+            minWidth: 40,
+        },
+        topicBtnTxt: {
+            marginVertical: 2,
+            marginHorizontal: 8,
+            fontSize: 12,
+            fontWeight: 'bold',
         }
     })
+    function TopicBtn({ name }) {
+        const active = topic == name
+        return (
+            <Button mode={active ? 'contained' : 'outlined'}
+                textColor={theme.colors[active ?
+                    'background' : 'onBackground']}
+                buttonColor={theme.colors[active ?
+                    'onBackground' : 'background']}
+                labelStyle={styles.topicBtnTxt}
+                style={styles.topicBtn}
+                onPress={() => setTopic(name)}
+            >
+                {name}
+            </Button>
+        )
+    }
+    const topicList = ['Movies', 'Science', 'Gaming', 'Adventure', 'Cars']
     return (
-        <ScrollView style={styles.container} horizontal>
-            <Button mode={topic == 'All' ? 'contained' : 'outlined'}
-                textColor={theme.colors[topic == 'All' ? 'background' : 'onBackground']}
-                buttonColor={theme.colors[topic == 'All' ? 'onBackground' : 'background']}
-            >
-                All
-            </Button>
-            <Button mode={topic == 'movie' ? 'contained' : 'outlined'}
-                textColor={theme.colors[topic == 'movie' ? 'background' : 'onBackground']}
-                buttonColor={theme.colors[topic == 'movie' ? 'onBackground' : 'background']}
-            >
-                Movies & Series
-            </Button>
+        <ScrollView style={styles.container} horizontal
+            contentContainerStyle={{ paddingHorizontal: 2 }}
+        >
+            <TopicBtn name='All' />
+            {topicList.map(t => (
+                <TopicBtn key={t} name={t} />
+            ))}
         </ScrollView>
     )
 }

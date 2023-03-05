@@ -13,6 +13,7 @@ export default function TopBar() {
         container: {
             flexDirection: 'row',
             justifyContent: 'space-between',
+            height: 55,
         },
         logo: {
             height: 52,
@@ -31,10 +32,7 @@ export default function TopBar() {
         : require('../../assets/images/long-logo-light.png')
 
     return (
-        <Box
-            style={styles.container} shadow='low'
-            shadowColor={theme.colors.onBackground}
-        >
+        <Box style={styles.container}>
             <Image style={styles.logo}
                 source={logo} resizeMode='contain'
             />
