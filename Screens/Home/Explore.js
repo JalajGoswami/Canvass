@@ -1,6 +1,9 @@
-import React from 'react'
-import { FlatList } from 'react-native-gesture-handler'
+import { useState, useRef } from 'react'
+import { FlatList, RefreshControl } from 'react-native-gesture-handler'
+import { useTheme } from 'react-native-paper'
 import StyledBody from '../../Components/Common/StyledBody'
+import EndReached from '../../Components/Explore/EndReached'
+import PostsSkeleton from '../../Components/Explore/PostsSkeleton'
 import TopBar from '../../Components/Explore/TopBar'
 import TrendingTopics from '../../Components/Explore/TrendingTopics'
 import UserPost from '../../Components/User/UserPost'
@@ -35,15 +38,55 @@ const POSTS = [
 ];
 
 export default function Explore() {
+    const [posts, setPosts] = useState(POSTS)
+    const [refreshing, setRefreshing] = useState(false)
+    const [pages, setPages] = useState({ current: 1, last: 3 })
+    const listRef = useRef()
+    const theme = useTheme()
+
+    function fetchMorePosts() {
+        if (pages.current >= pages.last)
+            return;
+        setTimeout(() => {
+            setPosts(prev => prev.concat(POSTS))
+            setPages(prev => ({ ...prev, current: prev.current + 1 }))
+        }, 3000)
+    }
+
+    function refreshPosts() {
+        setRefreshing(true)
+        setTimeout(() => setRefreshing(false), 3000)
+    }
+
+    function gotoTop() {
+        listRef.current.scrollToIndex({ index: 0 })
+    }
+
     return (
         <StyledBody>
             <TopBar />
             <TrendingTopics />
             <FlatList
-                data={POSTS}
+                ref={listRef}
+                data={posts}
+                refreshControl={
+                    <RefreshControl
+                        onRefresh={refreshPosts}
+                        refreshing={refreshing}
+                        colors={[theme.colors.secondary, theme.colors.primary, theme.colors.error]}
+                        progressBackgroundColor={theme.colors.surface}
+                    />
+                }
                 contentContainerStyle={{ paddingBottom: 50 }}
                 keyExtractor={(_, i) => i.toString()}
                 renderItem={args => <UserPost {...args} />}
+                ListFooterComponent={
+                    pages.current >= pages.last ?
+                        <EndReached gotoTop={gotoTop} />
+                        : <PostsSkeleton />
+                }
+                onEndReached={fetchMorePosts}
+                onEndReachedThreshold={1}
             />
         </StyledBody>
     )
