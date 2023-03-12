@@ -1,0 +1,55 @@
+import React, { useState } from "react"
+import { TouchableOpacity } from "react-native-gesture-handler";
+import { useTheme } from "react-native-paper";
+import StyledText from "./StyledText";
+
+export default function TruncatedText({ text, linesToTruncate, style = {}, ...props }) {
+    const theme = useTheme()
+    const [clippedText, setClippedText] = useState(false)
+    const [more, setMore] = useState(false)
+
+    return clippedText ? (
+        <StyledText style={style} {...props}>
+            {!more ? `${clippedText}...` : text}
+            <TouchableOpacity onPress={() => setMore(!more)}>
+                <StyledText
+                    style={[
+                        {
+                            color: theme.colors.secondary,
+                            transform: [{ translateY: 3 }]
+                        },
+                        !more ?
+                            { lineHeight: 12 } :
+                            { lineHeight: 14 }
+                        , style
+                    ]}
+                >
+                    {more ? ' less' : ' more'}
+                </StyledText>
+            </TouchableOpacity>
+        </StyledText>
+    ) : (
+        <StyledText
+            style={style} {...props}
+            numberOfLines={linesToTruncate}
+            ellipsizeMode={'tail'}
+            onTextLayout={(event) => {
+                //get all lines
+                const { lines } = event.nativeEvent;
+
+                //no truncation if text is shorter
+                if (lines.length <= linesToTruncate)
+                    return
+
+                //get lines after it truncate
+                let truncated = lines
+                    .splice(0, linesToTruncate)
+                    .map((line) => line.text)
+                    .join('')
+
+                setClippedText(truncated.substr(0, truncated.length - 10))
+            }}>
+            {text}
+        </StyledText>
+    )
+}
