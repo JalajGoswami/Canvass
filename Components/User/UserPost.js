@@ -1,13 +1,13 @@
 import { Image, StyleSheet, View } from 'react-native'
 import React, { useState } from 'react'
-import StyledText from '../Common/StyledText'
-import { Button, IconButton, Menu, TouchableRipple, useTheme } from 'react-native-paper'
+import StyledText from 'Components/Common/StyledText'
+import { IconButton, Menu, TouchableRipple, useTheme } from 'react-native-paper'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import Feather from 'react-native-vector-icons/Feather'
-import TruncatedText from '../Common/TrucatedText'
-import { DisplayFont } from '../../theme/theme'
+import TruncatedText from 'Components/Common/TrucatedText'
+import { DisplayFont } from 'theme/theme'
 import { memo } from 'react'
 
 function UserPost({ item: {
@@ -133,7 +133,7 @@ function UserPost({ item: {
         <View style={styles.postContainer}>
             <View style={styles.titleBar}>
                 <Image
-                    source={require('../../assets/images/profile.png')}
+                    source={require('assets/images/profile.png')}
                     style={styles.userImg} resizeMode='cover'
                 />
                 <StyledText>{user}</StyledText>

@@ -1,7 +1,7 @@
 import { TransitionPresets } from '@react-navigation/stack'
 import React from 'react'
 import { createSharedElementStackNavigator } from 'react-navigation-shared-element'
-import { noHeader } from '../../theme/header'
+import { noHeader } from 'theme/header'
 import Email from './SignUp/Email'
 import Prefrence from './SignUp/Prefrence'
 import Profile from './SignUp/Profile'

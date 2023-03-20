@@ -1,8 +1,8 @@
 import React from 'react'
 import { Snackbar, useTheme } from 'react-native-paper'
 import { useDispatch, useSelector } from 'react-redux'
-import { createToast, hideToast } from '../../store/slices/toast'
-import store from '../../store/store'
+import { createToast, hideToast } from 'store/slices/toast'
+import store from 'store/store'
 
 export default function StyledToast() {
     const { visible, content } = useSelector(state => state.toast)

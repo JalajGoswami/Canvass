@@ -2,11 +2,11 @@ import React from 'react'
 import { useState } from 'react'
 import { StyleSheet, View } from 'react-native'
 import { Button } from 'react-native-paper'
-import StyledBody from '../../../Components/Common/StyledBody'
-import StyledText from '../../../Components/Common/StyledText'
-import { showToast } from '../../../Components/Common/StyledToast'
-import CategoryCard from '../../../Components/SignUp/CategoryCard'
-import { DisplayFont } from '../../../theme/theme'
+import StyledBody from 'Components/Common/StyledBody'
+import StyledText from 'Components/Common/StyledText'
+import { showToast } from 'Components/Common/StyledToast'
+import CategoryCard from 'Components/SignUp/CategoryCard'
+import { DisplayFont } from 'theme/theme'
 
 export default function Prefrence() {
     const [selected, setSelected] = useState([])
@@ -52,7 +52,7 @@ export default function Prefrence() {
             marginVertical: 12,
         }
     })
-    const baseUrl = '../../../assets/images/categories/'
+    const baseUrl = 'assets/images/categories/'
     const categories = [
         { name: 'Tech & Gadgets', image: require(baseUrl + 'tech-gadgets.webp') },
         { name: 'Science & Cosmos', image: require(baseUrl + 'science-cosmos.webp') },

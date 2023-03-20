@@ -2,14 +2,14 @@ import { createMaterialBottomTabNavigator } from '@react-navigation/material-bot
 import React from 'react'
 import { StyleSheet } from 'react-native'
 import { useTheme } from 'react-native-paper'
-import { noHeader } from '../../theme/header'
+import { noHeader } from 'theme/header'
 import Explore from './Explore'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import Box from '../../Components/Common/Box'
-import { dropShadow } from '../../theme/dropShadow'
+import Box from 'Components/Common/Box'
+import { dropShadow } from 'theme/dropShadow'
 
 const { Navigator, Screen } = createBottomTabNavigator()
 

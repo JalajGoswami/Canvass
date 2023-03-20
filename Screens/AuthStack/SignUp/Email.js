@@ -2,9 +2,9 @@ import React, { useMemo } from 'react'
 import { Image, StyleSheet, View } from 'react-native'
 import { Button, TextInput, useTheme } from 'react-native-paper'
 import { SharedElement } from 'react-navigation-shared-element'
-import StyledBody from '../../../Components/Common/StyledBody'
-import StyledText from '../../../Components/Common/StyledText'
-import { DisplayFont } from '../../../theme/theme'
+import StyledBody from 'Components/Common/StyledBody'
+import StyledText from 'Components/Common/StyledText'
+import { DisplayFont } from 'theme/theme'
 
 export default function Email({ navigation }) {
     const theme = useTheme()
@@ -43,7 +43,7 @@ export default function Email({ navigation }) {
 
     return (
         <StyledBody variant='neutral'>
-            <Image source={require('../../../assets/images/social.png')}
+            <Image source={require('assets/images/social.png')}
                 resizeMode='contain' style={styles.image} />
             <SharedElement id='title'>
                 <StyledText variant='title-bold' size={16}

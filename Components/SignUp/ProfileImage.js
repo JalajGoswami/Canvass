@@ -2,7 +2,7 @@ import { Image, StyleSheet, View } from 'react-native'
 import DocumentPicker from 'react-native-document-picker'
 import React, { useMemo, useState } from 'react'
 import { TouchableRipple, useTheme } from 'react-native-paper'
-import StyledText from '../Common/StyledText'
+import StyledText from 'Components/Common/StyledText'
 
 
 export default function ProfileImage() {
@@ -40,7 +40,7 @@ export default function ProfileImage() {
                 <Image style={styles.image}
                     source={
                         imgFile ? { uri: imgFile.uri } :
-                            require('../../assets/images/profile.png')
+                            require('assets/images/profile.png')
                     }
                 />
             </TouchableRipple>

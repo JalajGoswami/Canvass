@@ -2,9 +2,9 @@ import React, { useMemo } from 'react'
 import { Image, StyleSheet, View } from 'react-native'
 import { Button, TextInput, useTheme } from 'react-native-paper'
 import { SharedElement } from 'react-navigation-shared-element'
-import StyledBody from '../../../Components/Common/StyledBody'
-import StyledText from '../../../Components/Common/StyledText'
-import { DisplayFont } from '../../../theme/theme'
+import StyledBody from 'Components/Common/StyledBody'
+import StyledText from 'Components/Common/StyledText'
+import { DisplayFont } from 'theme/theme'
 
 export default function Verify({ navigation }) {
     const theme = useTheme()
@@ -42,7 +42,7 @@ export default function Verify({ navigation }) {
     }))
     return (
         <StyledBody variant='neutral'>
-            <Image source={require('../../../assets/images/connect.png')}
+            <Image source={require('assets/images/connect.png')}
                 resizeMode='contain' style={styles.image} />
             <SharedElement id='title'>
                 <StyledText variant='title-bold' size={15}

@@ -2,7 +2,7 @@ import React from 'react'
 import { useMemo } from 'react'
 import { Image, StyleSheet, View } from 'react-native'
 import { TouchableRipple, useTheme } from 'react-native-paper'
-import StyledText from '../Common/StyledText'
+import StyledText from 'Components/Common/StyledText'
 
 function getActiveColors() {
     const bgColor = ['primaryContainer', 'secondaryContainer',

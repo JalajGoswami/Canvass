@@ -1,7 +1,7 @@
 import { StyleSheet, View } from 'react-native'
 import React, { useMemo, useState } from 'react'
 import { Button, TextInput } from 'react-native-paper'
-import { DisplayFont } from '../../theme/theme'
+import { DisplayFont } from 'theme/theme'
 
 export default function LoginForm() {
     const [passHidden, setPassHidden] = useState(true)

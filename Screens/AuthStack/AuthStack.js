@@ -1,6 +1,6 @@
 import { createStackNavigator } from '@react-navigation/stack'
 import React, { lazy } from 'react'
-import { noHeader } from '../../theme/header'
+import { noHeader } from 'theme/header'
 import Login from './Login'
 
 const SignUp = lazy(() => import('./SignUp'))

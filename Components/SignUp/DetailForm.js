@@ -1,10 +1,10 @@
 import { StyleSheet, View } from 'react-native'
 import React, { useMemo } from 'react'
 import { Formik } from 'formik'
-import FormInput from '../Common/FormInput'
+import FormInput from 'Components/Common/FormInput'
 import { Button } from 'react-native-paper'
-import { DisplayFont } from '../../theme/theme'
-import { SignupSchema } from '../../utils/FormSchemas'
+import { DisplayFont } from 'theme/theme'
+import { SignupSchema } from 'utils/FormSchemas'
 
 export default function DetailForm({ navigation }) {
     const styles = useMemo(() => StyleSheet.create({

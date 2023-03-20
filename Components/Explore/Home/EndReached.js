@@ -1,6 +1,6 @@
 import { StyleSheet, View } from 'react-native'
 import React from 'react'
-import StyledText from '../Common/StyledText'
+import StyledText from 'Components/Common/StyledText'
 import Entypo from 'react-native-vector-icons/Entypo'
 import { TouchableRipple, useTheme } from 'react-native-paper'
 

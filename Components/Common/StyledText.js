@@ -1,7 +1,7 @@
 import { Text } from 'react-native'
 import React from 'react'
 import { useTheme } from 'react-native-paper'
-import { BodyFont, DisplayFont } from '../../theme/theme'
+import { BodyFont, DisplayFont } from 'theme/theme'
 
 export default function StyledText({
     children, variant = 'content', size = 10, style, ...props

@@ -1,6 +1,6 @@
 import { Image, StyleSheet, View } from 'react-native'
 import React, { useMemo } from 'react'
-import StyledText from '../Common/StyledText'
+import StyledText from 'Components/Common/StyledText'
 import { useTheme } from 'react-native-paper'
 
 export default function LoginHeader() {
@@ -31,7 +31,7 @@ export default function LoginHeader() {
   return (
     <View style={styles.container}>
       <Image style={styles.image} resizeMode='contain'
-        source={require('../../assets/images/Canvass-Icon.png')}
+        source={require('assets/images/Canvass-Icon.png')}
       />
       <StyledText variant='title-bold' size={16} style={styles.title}>
         Canvass

@@ -1,9 +1,9 @@
 import { StyleSheet, View } from 'react-native'
 import React, { useMemo } from 'react'
-import StyledText from '../Common/StyledText'
+import StyledText from 'Components/Common/StyledText'
 import { Button, useTheme } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/native'
-import { DisplayFont } from '../../theme/theme'
+import { DisplayFont } from 'theme/theme'
 
 export default function LoginFooter() {
     const navigation = useNavigation()

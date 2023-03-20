@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, View } from 'react-native'
 import { useTheme } from 'react-native-paper'
-import { dropShadow } from '../../theme/dropShadow'
+import { dropShadow } from 'theme/dropShadow'
 
 export default function Box({
     children, variant = 'neutral',
