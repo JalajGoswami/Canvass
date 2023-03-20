@@ -1,7 +1,7 @@
 import { Image, StyleSheet, View } from 'react-native'
 import React, { useState } from 'react'
 import StyledText from '../Common/StyledText'
-import { IconButton, TouchableRipple, useTheme } from 'react-native-paper'
+import { Button, IconButton, Menu, TouchableRipple, useTheme } from 'react-native-paper'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
@@ -16,6 +16,7 @@ function UserPost({ item: {
 } }) {
     const theme = useTheme()
     const [compact, setCompact] = useState(false)
+    const [options, setOptions] = useState(false)
     const [contentWidth, setContentWidth] = useState(320)
 
     const styles = StyleSheet.create({
@@ -34,9 +35,25 @@ function UserPost({ item: {
             borderRadius: 12,
             marginHorizontal: 6,
         },
-        optionsBtn: {
+        optionsContainer: {
             marginLeft: 'auto',
+        },
+        optionsBtn: {
             marginVertical: 0,
+        },
+        menuItem: {
+            flexDirection: 'row',
+            alignItems: 'center',
+        },
+        menuItemIcon: {
+            width: 40,
+            height: 36,
+            textAlign: 'center',
+            textAlignVertical: 'center',
+        },
+        menuItemTxt: {
+            color: theme.colors.onSurfaceVariant,
+            paddingRight: 12,
         },
         mainContainer: {
             flexDirection: compact ? 'column' : 'row',
@@ -77,6 +94,28 @@ function UserPost({ item: {
             marginRight: 6,
         },
     })
+    function MenuItem({
+        IconComponent, icon, title, onPress = () => null
+    }) {
+        return (
+            <TouchableRipple borderless
+                rippleColor={theme.colors.primary + '22'}
+                style={styles.menuItem}
+                onPress={onPress}
+            >
+                <>
+                    <IconComponent
+                        color={theme.colors.onSurfaceVariant}
+                        name={icon} size={20}
+                        style={styles.menuItemIcon}
+                    />
+                    <StyledText style={styles.menuItemTxt}>
+                        {title}
+                    </StyledText>
+                </>
+            </TouchableRipple>
+        )
+    }
     function ActionBtn({ children, onPress = () => null }) {
         return (
             <TouchableRipple borderless
@@ -98,10 +137,35 @@ function UserPost({ item: {
                     style={styles.userImg} resizeMode='cover'
                 />
                 <StyledText>{user}</StyledText>
-                <IconButton icon='dots-vertical'
-                    style={styles.optionsBtn}
-                    size={18} onPress={() => null}
-                />
+                <View style={styles.optionsContainer}>
+                    <Menu
+                        visible={options}
+                        onDismiss={() => setOptions(false)}
+                        anchorPosition='bottom'
+                        anchor={
+                            <IconButton icon='dots-vertical'
+                                style={styles.optionsBtn}
+                                size={18} onPress={() => setOptions(true)}
+                            />
+                        }
+                    >
+                        <MenuItem
+                            IconComponent={MaterialCommunityIcons}
+                            icon='eye-off-outline'
+                            title='Hide for me'
+                        />
+                        <MenuItem
+                            IconComponent={MaterialCommunityIcons}
+                            icon='account-remove'
+                            title='Unfollow'
+                        />
+                        <MenuItem
+                            IconComponent={MaterialIcons}
+                            icon='report'
+                            title='Report'
+                        />
+                    </Menu>
+                </View>
             </View>
             <View style={styles.mainContainer}>
                 <View style={styles.content}
