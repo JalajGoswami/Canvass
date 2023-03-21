@@ -4,13 +4,14 @@ import { useTheme } from 'react-native-paper'
 import { BodyFont, DisplayFont } from 'theme/theme'
 
 export default function StyledText({
-    children, variant = 'content', size = 10, style, ...props
+    children, variant = 'content', size = 10,
+    color = 'onBackground', style, ...props
 }) {
     const theme = useTheme()
 
     const getStyles = () => {
         let defaultStyle = [{
-            color: theme.colors.onBackground,
+            color: theme.colors[color],
             fontSize: 14 * size / 10
         }]
         if (variant === 'content')

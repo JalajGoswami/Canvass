@@ -14,9 +14,6 @@ export default function LoginFooter() {
             justifyContent: 'center',
             flexGrow: 1,
         },
-        txt: {
-            color: theme.colors.onSurfaceVariant,
-        },
         btn: {
             fontSize: 17,
             marginVertical: 6,
@@ -27,7 +24,9 @@ export default function LoginFooter() {
     }), [])
     return (
         <View style={styles.container}>
-            <StyledText style={styles.txt}>Don't have an Account ?</StyledText>
+            <StyledText color='onSurfaceVariant'>
+                Don't have an Account ?
+            </StyledText>
             <Button textColor={theme.colors.tertiary}
                 labelStyle={styles.btn}
                 onPress={() => navigation.navigate('SignUp')}

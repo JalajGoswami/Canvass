@@ -10,9 +10,11 @@ import AntDesign from 'react-native-vector-icons/AntDesign'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import Box from 'Components/Common/Box'
 import { dropShadow } from 'theme/dropShadow'
+import { getFocusedRouteNameFromRoute } from '@react-navigation/native'
 
 const { Navigator, Screen } = createBottomTabNavigator()
 
+const ScreensWithoutBottomTabs = ['Explore/Search']
 
 export default function HomeTabs() {
     const theme = useTheme()
@@ -58,12 +60,16 @@ export default function HomeTabs() {
 
     return (
         <Navigator
-            screenOptions={{
-                ...noHeader,
-                tabBarActiveTintColor: theme.colors.primary,
-                tabBarInactiveTintColor: theme.colors.onSurfaceVariant,
-                tabBarShowLabel: false,
-                tabBarStyle: styles.tabBar,
+            screenOptions={({ route }) => {
+                const routeName = getFocusedRouteNameFromRoute(route)
+                return {
+                    ...noHeader,
+                    tabBarActiveTintColor: theme.colors.primary,
+                    tabBarInactiveTintColor: theme.colors.onSurfaceVariant,
+                    tabBarShowLabel: false,
+                    tabBarStyle: ScreensWithoutBottomTabs.includes(routeName)
+                        ? { display: 'none' } : styles.tabBar,
+                }
             }}
             labeled={false}
             activeColor={theme.colors.primary}
@@ -122,6 +128,6 @@ export default function HomeTabs() {
                     )
                 }}
             />
-        </Navigator>
+        </Navigator >
     )
 }
