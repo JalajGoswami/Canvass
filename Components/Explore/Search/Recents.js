@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { StyleSheet, View } from 'react-native'
 import { FlatList } from 'react-native-gesture-handler'
 import { TouchableRipple, useTheme } from 'react-native-paper'
-import RecentItem from './RecentItem'
+import SearchItem from './SearchItem'
 
 export default function Recents() {
     const [show, setShow] = useState(true)
@@ -43,13 +43,16 @@ export default function Recents() {
                     </StyledText>
                 </TouchableRipple>
             </View>
-            <FlatList
-                data={['account', 'tags', 'tags', 'account']}
-                keyExtractor={(_, i) => i.toString()}
-                renderItem={({ item }) =>
-                    <RecentItem item_type={item} />
-                }
-            />
+            {show &&
+                <FlatList
+                    contentContainerStyle={{ paddingBottom: 120 }}
+                    data={['account', 'tags', 'tags', 'account', 'account', 'tags', 'tags', 'account', 'account', 'tags', 'tags' ]}
+                    keyExtractor={(_, i) => i.toString()}
+                    renderItem={({ item }) =>
+                        <SearchItem item_type={item} withDelete />
+                    }
+                />
+            }
         </View>
     )
 }

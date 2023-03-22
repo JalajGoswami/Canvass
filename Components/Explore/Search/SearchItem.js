@@ -3,29 +3,31 @@ import { Image, StyleSheet, View } from 'react-native'
 import { IconButton, useTheme } from 'react-native-paper'
 import Fontisto from 'react-native-vector-icons/Fontisto'
 
-export default function RecentItem({ item_type }) {
+export default function SearchItem({
+    item_type, withDelete = false
+}) {
     const theme = useTheme()
     const styles = StyleSheet.create({
         container: {
             flexDirection: 'row',
             alignItems: 'center',
-            paddingVertical: 8,
-            paddingHorizontal: 10,
+            paddingVertical: 12,
+            paddingHorizontal: withDelete ? 10 : 12,
             borderBottomColor: theme.colors.surface,
             borderBottomWidth: 0.5,
         },
         userImg: {
-            width: 36,
-            height: 36,
-            borderRadius: 18,
-            marginRight: 8,
+            width: 40,
+            height: 40,
+            borderRadius: 20,
+            marginRight: 16,
         },
         tagIcon: {
-            width: 36,
-            height: 36,
+            width: 40,
+            height: 40,
             textAlign: 'center',
             textAlignVertical: 'center',
-            marginRight: 8,
+            marginRight: 16,
         },
         closeBtn: {
             marginLeft: 'auto',
@@ -52,11 +54,13 @@ export default function RecentItem({ item_type }) {
                             Jalaj Goswami
                         </StyledText>
                     </View>
-                    <IconButton
-                        style={styles.closeBtn}
-                        icon='close' size={15}
-                        onPress={() => null}
-                    />
+                    {withDelete &&
+                        <IconButton
+                            style={styles.closeBtn}
+                            icon='close' size={15}
+                            onPress={() => null}
+                        />
+                    }
                 </>
                 :
                 <>
@@ -64,14 +68,24 @@ export default function RecentItem({ item_type }) {
                         size={25} style={styles.tagIcon}
                         color={theme.colors.onSurfaceVariant}
                     />
-                    <StyledText>
-                        Cars
-                    </StyledText>
-                    <IconButton
-                        style={styles.closeBtn}
-                        icon='close' size={15}
-                        onPress={() => null}
-                    />
+                    <View>
+                        <StyledText>
+                            Cars
+                        </StyledText>
+                        <StyledText
+                            size={5} variant='title'
+                            color='onSurfaceVariant'
+                        >
+                            12K Posts
+                        </StyledText>
+                    </View>
+                    {withDelete &&
+                        <IconButton
+                            style={styles.closeBtn}
+                            icon='close' size={15}
+                            onPress={() => null}
+                        />
+                    }
                 </>
             }
         </View>

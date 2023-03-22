@@ -3,7 +3,9 @@ import { IconButton, TextInput, useTheme } from 'react-native-paper'
 import { useNavigation } from '@react-navigation/native'
 import { useRef } from 'react'
 
-export default function SearchInput({ searchString, onChange }) {
+export default function SearchInput({
+  setTyping, searchString, onChange
+}) {
   const theme = useTheme()
   const inputRef = useRef()
   const { goBack } = useNavigation()
@@ -58,6 +60,8 @@ export default function SearchInput({ searchString, onChange }) {
         cursorColor={theme.colors.secondary}
         placeholder='Search anyone or any topic'
         onChangeText={onChange}
+        onFocus={() => setTyping(true)}
+        onBlur={() => setTyping(false)}
       />
     </View>
   )
