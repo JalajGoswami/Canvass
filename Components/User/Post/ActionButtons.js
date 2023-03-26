@@ -1,5 +1,5 @@
 import { StyleSheet, View } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import { TouchableRipple, useTheme } from 'react-native-paper'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
@@ -8,6 +8,8 @@ import Feather from 'react-native-vector-icons/Feather'
 
 export default function ActionButtons({ compact }) {
     const theme = useTheme()
+    const [liked, setLiked] = useState(false)
+    const [disliked, setDisliked] = useState(false)
 
     const styles = StyleSheet.create({
         actions: {
@@ -24,12 +26,15 @@ export default function ActionButtons({ compact }) {
         },
     })
 
-    function ActionBtn({ children, onPress = () => null }) {
+    function ActionBtn({
+        children, rippleColor, onPress = () => null
+    }) {
         return (
             <TouchableRipple borderless
-                rippleColor={theme.colors.primary + '22'}
+                rippleColor={rippleColor || theme.colors.primary + '22'}
                 style={styles.actionBtn}
                 onPress={onPress}
+
             >
                 {children}
             </TouchableRipple>
@@ -40,16 +45,24 @@ export default function ActionButtons({ compact }) {
 
     return (
         <View style={styles.actions}>
-            <ActionBtn>
+            <ActionBtn
+                rippleColor={theme.colors.secondary + '33'}
+                onPress={() => setLiked(!liked)}
+            >
                 <AntDesign
-                    name='like2' size={18 * fontFactor}
-                    color={theme.colors.primary}
+                    name={liked ? 'like1' : 'like2'}
+                    size={18 * fontFactor}
+                    color={theme.colors[liked ? 'secondary' : 'primary']}
                 />
             </ActionBtn>
-            <ActionBtn>
+            <ActionBtn
+                rippleColor={theme.colors.tertiary + '33'}
+                onPress={() => setDisliked(!disliked)}
+            >
                 <AntDesign
-                    name='dislike2' size={18 * fontFactor}
-                    color={theme.colors.primary}
+                    name={disliked ? 'dislike1' : 'dislike2'}
+                    size={18 * fontFactor}
+                    color={theme.colors[disliked ? 'tertiary' : 'primary']}
                 />
             </ActionBtn>
             <ActionBtn>

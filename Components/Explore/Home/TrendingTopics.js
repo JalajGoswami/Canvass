@@ -16,9 +16,10 @@ export default function TrendingTopics() {
             marginVertical: 4,
             marginHorizontal: 2,
             minWidth: 40,
+            justifyContent: 'center',
         },
         topicBtnTxt: {
-            marginVertical: 2,
+            marginVertical: 0,
             marginHorizontal: 8,
             fontSize: 12,
             fontWeight: 'bold',
@@ -32,8 +33,9 @@ export default function TrendingTopics() {
                     'background' : 'onBackground']}
                 buttonColor={theme.colors[active ?
                     'onBackground' : 'background']}
-                labelStyle={styles.topicBtnTxt}
                 style={styles.topicBtn}
+                labelStyle={styles.topicBtnTxt}
+                contentStyle={{ height: 25 }}
                 onPress={() => setTopic(name)}
             >
                 {name}
