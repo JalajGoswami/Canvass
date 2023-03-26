@@ -6,7 +6,7 @@ import EndReached from 'Components/Explore/Home/EndReached'
 import PostsSkeleton from 'Components/Explore/Home/PostsSkeleton'
 import TopBar from 'Components/Explore/Home/TopBar'
 import TrendingTopics from 'Components/Explore/Home/TrendingTopics'
-import UserPost from 'Components/User/UserPost'
+import UserPost from 'Components/User/Post'
 
 const baseUrl = 'assets/images/categories/'
 const POSTS = [
