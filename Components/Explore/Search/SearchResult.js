@@ -5,9 +5,7 @@ import { DisplayFont } from 'theme/theme'
 import { useTheme } from 'react-native-paper'
 import ResultTab from './ResultTab'
 
-
 const { Navigator, Screen } = createMaterialTopTabNavigator()
-
 
 export default function SearchResult() {
     const theme = useTheme()

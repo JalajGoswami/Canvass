@@ -1,4 +1,4 @@
-import 'react-native-gesture-handler';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { AppRegistry } from 'react-native';
 import App from './App';
 import { name as appName } from './app.json';
@@ -7,9 +7,11 @@ import store from './store/store'
 
 export default function Main() {
     return (
-        <Provider store={store}>
-            <App />
-        </Provider>
+        <GestureHandlerRootView style={{ flex: 1 }}>
+            <Provider store={store}>
+                <App />
+            </Provider>
+        </GestureHandlerRootView>
     );
 }
 

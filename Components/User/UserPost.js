@@ -1,14 +1,12 @@
 import { Image, StyleSheet, View } from 'react-native'
 import React, { useState } from 'react'
 import StyledText from 'Components/Common/StyledText'
-import { IconButton, Menu, TouchableRipple, useTheme } from 'react-native-paper'
-import AntDesign from 'react-native-vector-icons/AntDesign'
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
-import Feather from 'react-native-vector-icons/Feather'
+import { useTheme } from 'react-native-paper'
 import TruncatedText from 'Components/Common/TrucatedText'
 import { DisplayFont } from 'theme/theme'
 import { memo } from 'react'
+import TitleBar from './UserPost/TitleBar'
+import ActionButtons from './UserPost/ActionButtons'
 
 function UserPost({ item: {
     user, text, image, aspect_ratio = 1,
@@ -16,44 +14,11 @@ function UserPost({ item: {
 } }) {
     const theme = useTheme()
     const [compact, setCompact] = useState(false)
-    const [options, setOptions] = useState(false)
     const [contentWidth, setContentWidth] = useState(320)
 
     const styles = StyleSheet.create({
         postContainer: {
             marginVertical: 6,
-        },
-        titleBar: {
-            flexDirection: 'row',
-            alignItems: 'center',
-            borderBottomColor: theme.colors.surface,
-            borderBottomWidth: 0.5,
-        },
-        userImg: {
-            width: 28,
-            height: 28,
-            borderRadius: 14,
-            marginHorizontal: 8,
-        },
-        optionsContainer: {
-            marginLeft: 'auto',
-        },
-        optionsBtn: {
-            marginVertical: 0,
-        },
-        menuItem: {
-            flexDirection: 'row',
-            alignItems: 'center',
-        },
-        menuItemIcon: {
-            width: 40,
-            height: 36,
-            textAlign: 'center',
-            textAlignVertical: 'center',
-        },
-        menuItemTxt: {
-            color: theme.colors.onSurfaceVariant,
-            paddingRight: 12,
         },
         mainContainer: {
             flexDirection: compact ? 'column' : 'row',
@@ -70,18 +35,6 @@ function UserPost({ item: {
             resizeMode: 'contain',
             borderRadius: 4,
         },
-        actions: {
-            flexDirection: compact ? 'row' : 'column',
-            alignItems: 'center',
-            marginRight: 4,
-            marginLeft: compact ? 6 : 0,
-        },
-        actionBtn: {
-            marginHorizontal: 0,
-            marginVertical: 0,
-            padding: 6,
-            borderRadius: 15,
-        },
         statusBar: {
             flexDirection: 'row',
             paddingHorizontal: 6,
@@ -94,79 +47,13 @@ function UserPost({ item: {
             marginRight: 6,
         },
     })
-    function MenuItem({
-        IconComponent, icon, title, onPress = () => null
-    }) {
-        return (
-            <TouchableRipple borderless
-                rippleColor={theme.colors.primary + '22'}
-                style={styles.menuItem}
-                onPress={onPress}
-            >
-                <>
-                    <IconComponent
-                        color={theme.colors.onSurfaceVariant}
-                        name={icon} size={20}
-                        style={styles.menuItemIcon}
-                    />
-                    <StyledText style={styles.menuItemTxt}>
-                        {title}
-                    </StyledText>
-                </>
-            </TouchableRipple>
-        )
-    }
-    function ActionBtn({ children, onPress = () => null }) {
-        return (
-            <TouchableRipple borderless
-                rippleColor={theme.colors.primary + '22'}
-                style={styles.actionBtn}
-                onPress={onPress}
-            >
-                {children}
-            </TouchableRipple>
-        )
-    }
-    const fontFactor = compact ? 1.1 : 1
+
 
     return (
         <View style={styles.postContainer}>
-            <View style={styles.titleBar}>
-                <Image
-                    source={require('assets/images/profile.png')}
-                    style={styles.userImg} resizeMode='cover'
-                />
-                <StyledText>{user}</StyledText>
-                <View style={styles.optionsContainer}>
-                    <Menu
-                        visible={options}
-                        onDismiss={() => setOptions(false)}
-                        anchorPosition='bottom'
-                        anchor={
-                            <IconButton icon='dots-vertical'
-                                style={styles.optionsBtn}
-                                size={18} onPress={() => setOptions(true)}
-                            />
-                        }
-                    >
-                        <MenuItem
-                            IconComponent={MaterialCommunityIcons}
-                            icon='eye-off-outline'
-                            title='Hide for me'
-                        />
-                        <MenuItem
-                            IconComponent={MaterialCommunityIcons}
-                            icon='account-remove'
-                            title='Unfollow'
-                        />
-                        <MenuItem
-                            IconComponent={MaterialIcons}
-                            icon='report'
-                            title='Report'
-                        />
-                    </Menu>
-                </View>
-            </View>
+
+            <TitleBar user={user} />
+
             <View style={styles.mainContainer}>
                 <View style={styles.content}
                     onLayout={({ nativeEvent: { layout } }) =>
@@ -193,43 +80,21 @@ function UserPost({ item: {
                         />
                     }
                 </View>
-                <View style={styles.actions}>
-                    <ActionBtn>
-                        <AntDesign
-                            name='like2' size={18 * fontFactor}
-                            color={theme.colors.primary}
-                        />
-                    </ActionBtn>
-                    <ActionBtn>
-                        <AntDesign
-                            name='dislike2' size={18 * fontFactor}
-                            color={theme.colors.primary}
-                        />
-                    </ActionBtn>
-                    <ActionBtn>
-                        <MaterialCommunityIcons
-                            name='comment-outline' size={17.5 * fontFactor}
-                            color={theme.colors.primary}
-                        />
-                    </ActionBtn>
-                    <ActionBtn>
-                        <MaterialIcons
-                            name='save-alt' size={18.5 * fontFactor}
-                            color={theme.colors.primary}
-                        />
-                    </ActionBtn>
-                    <ActionBtn>
-                        <Feather
-                            name='share' size={17.5 * fontFactor}
-                            color={theme.colors.primary}
-                        />
-                    </ActionBtn>
-                </View>
+
+                <ActionButtons compact={compact} />
+
             </View>
+
             <View style={styles.statusBar}>
-                <StyledText style={styles.counts}>{likes} Likes</StyledText>
-                <StyledText style={styles.counts}>{dislikes} Dislikes</StyledText>
-                <StyledText style={styles.counts}>{comments} Comments</StyledText>
+                <StyledText style={styles.counts}>
+                    {likes} Likes
+                </StyledText>
+                <StyledText style={styles.counts}>
+                    {dislikes} Dislikes
+                </StyledText>
+                <StyledText style={styles.counts}>
+                    {comments} Comments
+                </StyledText>
             </View>
         </View>
     )
