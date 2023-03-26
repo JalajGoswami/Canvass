@@ -6,7 +6,7 @@ import EndReached from 'Components/Explore/Home/EndReached'
 import PostsSkeleton from 'Components/Explore/Home/PostsSkeleton'
 import TopBar from 'Components/Explore/Home/TopBar'
 import TrendingTopics from 'Components/Explore/Home/TrendingTopics'
-import UserPost from 'Components/User/Post'
+import Post from 'Components/User/Post'
 
 const baseUrl = 'assets/images/categories/'
 const POSTS = [
@@ -79,7 +79,9 @@ export default function Explore() {
                 }
                 contentContainerStyle={{ paddingBottom: 50 }}
                 keyExtractor={(_, i) => i.toString()}
-                renderItem={args => <UserPost {...args} />}
+                renderItem={({ item, index }) =>
+                    <Post post={{ id: index, ...item }} />
+                }
                 ListFooterComponent={
                     pages.current >= pages.last ?
                         <EndReached gotoTop={gotoTop} />

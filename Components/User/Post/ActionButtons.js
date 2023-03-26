@@ -5,9 +5,13 @@ import AntDesign from 'react-native-vector-icons/AntDesign'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import Feather from 'react-native-vector-icons/Feather'
+import { useNavigation } from '@react-navigation/native'
 
-export default function ActionButtons({ compact }) {
+export default function ActionButtons({
+    post, compact, postWidth, textExpanded
+}) {
     const theme = useTheme()
+    const { navigate } = useNavigation()
     const [liked, setLiked] = useState(false)
     const [disliked, setDisliked] = useState(false)
 
@@ -65,7 +69,17 @@ export default function ActionButtons({ compact }) {
                     color={theme.colors[disliked ? 'tertiary' : 'primary']}
                 />
             </ActionBtn>
-            <ActionBtn>
+            <ActionBtn
+                onPress={() =>
+                    navigate('Comments', {
+                        post,
+                        postState: {
+                            postWidth: postWidth,
+                            initiallyExpanded: textExpanded
+                        }
+                    })
+                }
+            >
                 <MaterialCommunityIcons
                     name='comment-outline' size={17.5 * fontFactor}
                     color={theme.colors.primary}

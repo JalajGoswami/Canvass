@@ -3,15 +3,23 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { useTheme } from "react-native-paper";
 import StyledText from "./StyledText";
 
-export default function TruncatedText({ text, linesToTruncate, style = {}, ...props }) {
+export default function TruncatedText({
+    text, linesToTruncate, initiallyExpanded = false,
+    onStateChange = () => null, style = {}, ...props
+}) {
     const theme = useTheme()
     const [clippedText, setClippedText] = useState(false)
-    const [more, setMore] = useState(false)
+    const [more, setMore] = useState(initiallyExpanded)
 
     return clippedText ? (
         <StyledText style={style} {...props}>
             {!more ? `${clippedText}...` : text}
-            <TouchableOpacity onPress={() => setMore(!more)}>
+            <TouchableOpacity
+                onPress={() => {
+                    onStateChange(!more)
+                    setMore(!more)
+                }}
+            >
                 <StyledText
                     style={[
                         {

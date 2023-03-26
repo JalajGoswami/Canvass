@@ -7,14 +7,19 @@ import { DisplayFont } from 'theme/theme'
 import { memo } from 'react'
 import TitleBar from './TitleBar'
 import ActionButtons from './ActionButtons'
+import { SharedElement } from 'react-navigation-shared-element'
 
-function UserPost({ item: {
-    user, text, image, aspect_ratio = 1,
-    likes, dislikes, comments
-} }) {
+function Post({ post, postState }) {
+    const {
+        id, user, text, image, aspect_ratio = 1,
+        likes, dislikes, comments
+    } = post
+    const { postWidth = 320, initiallyExpanded = false } = postState ?? {}
+
     const theme = useTheme()
     const [compact, setCompact] = useState(false)
-    const [contentWidth, setContentWidth] = useState(320)
+    const [contentWidth, setContentWidth] = useState(postWidth)
+    const [textExpanded, setTextExpanded] = useState(initiallyExpanded)
 
     const styles = StyleSheet.create({
         postContainer: {
@@ -24,7 +29,7 @@ function UserPost({ item: {
             flexDirection: compact ? 'column' : 'row',
         },
         content: {
-            flex: 1,
+            flex: compact ? 0 : 1,
             paddingHorizontal: 6,
             paddingTop: 4,
         },
@@ -48,55 +53,60 @@ function UserPost({ item: {
         },
     })
 
+    const formattedText = image ?
+        <TruncatedText
+            text={text} linesToTruncate={4}
+            initiallyExpanded={initiallyExpanded}
+            onStateChange={setTextExpanded}
+        />
+        :
+        <TruncatedText
+            text={text} linesToTruncate={7}
+            onLayout={({ nativeEvent: { layout } }) =>
+                setCompact(layout.height < 120)
+            }
+            initiallyExpanded={initiallyExpanded}
+            onStateChange={setTextExpanded}
+        />
 
     return (
-        <View style={styles.postContainer}>
-
-            <TitleBar user={user} />
-
-            <View style={styles.mainContainer}>
-                <View style={styles.content}
-                    onLayout={({ nativeEvent: { layout } }) =>
-                        setContentWidth(layout.width)
-                    }
-                >
-                    <View>
-                        {image ?
-                            <TruncatedText
-                                text={text} linesToTruncate={4}
-                            />
-                            :
-                            <TruncatedText
-                                text={text} linesToTruncate={7}
-                                onLayout={({ nativeEvent: { layout } }) =>
-                                    setCompact(layout.height < 120)
-                                }
+        <SharedElement id={`post.${id}`}>
+            <View style={styles.postContainer}>
+                <TitleBar user={user} />
+                <View style={styles.mainContainer}>
+                    <View style={styles.content}
+                        onLayout={({ nativeEvent: { layout } }) =>
+                            setContentWidth(layout.width)
+                        }
+                    >
+                        <View>{formattedText}</View>
+                        {image &&
+                            <Image source={image}
+                                style={styles.contentImg}
                             />
                         }
                     </View>
-                    {image &&
-                        <Image source={image}
-                            style={styles.contentImg}
-                        />
-                    }
+                    <ActionButtons
+                        post={post}
+                        compact={compact}
+                        postWidth={contentWidth}
+                        textExpanded={textExpanded}
+                    />
                 </View>
-
-                <ActionButtons compact={compact} />
-
+                <View style={styles.statusBar}>
+                    <StyledText style={styles.counts}>
+                        {likes} Likes
+                    </StyledText>
+                    <StyledText style={styles.counts}>
+                        {dislikes} Dislikes
+                    </StyledText>
+                    <StyledText style={styles.counts}>
+                        {comments} Comments
+                    </StyledText>
+                </View>
             </View>
-
-            <View style={styles.statusBar}>
-                <StyledText style={styles.counts}>
-                    {likes} Likes
-                </StyledText>
-                <StyledText style={styles.counts}>
-                    {dislikes} Dislikes
-                </StyledText>
-                <StyledText style={styles.counts}>
-                    {comments} Comments
-                </StyledText>
-            </View>
-        </View>
+        </SharedElement>
     )
 }
-export default memo(UserPost)
+
+export default memo(Post)
