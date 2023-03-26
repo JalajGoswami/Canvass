@@ -5,8 +5,8 @@ import { useTheme } from 'react-native-paper'
 import TruncatedText from 'Components/Common/TrucatedText'
 import { DisplayFont } from 'theme/theme'
 import { memo } from 'react'
-import TitleBar from './UserPost/TitleBar'
-import ActionButtons from './UserPost/ActionButtons'
+import TitleBar from './TitleBar'
+import ActionButtons from './ActionButtons'
 
 function UserPost({ item: {
     user, text, image, aspect_ratio = 1,
