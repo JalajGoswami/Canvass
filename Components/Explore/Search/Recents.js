@@ -46,7 +46,7 @@ export default function Recents() {
             {show &&
                 <FlatList
                     contentContainerStyle={{ paddingBottom: 120 }}
-                    data={['account', 'tags', 'tags', 'account', 'account', 'tags', 'tags', 'account', 'account', 'tags', 'tags' ]}
+                    data={['account', 'tag', 'tag', 'account', 'account', 'tag', 'tag', 'account', 'account', 'tag', 'tag' ]}
                     keyExtractor={(_, i) => i.toString()}
                     renderItem={({ item }) =>
                         <SearchItem item_type={item} withDelete />
