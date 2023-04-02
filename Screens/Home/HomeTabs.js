@@ -8,7 +8,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import Box from 'Components/Common/Box'
-import { dropShadow } from 'theme/dropShadow'
+import dropShadow from 'theme/dropShadow'
 import { getFocusedRouteNameFromRoute } from '@react-navigation/native'
 
 const { Navigator, Screen } = createBottomTabNavigator()

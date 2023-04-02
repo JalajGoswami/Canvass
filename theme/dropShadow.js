@@ -1,4 +1,4 @@
-export function dropShadow(variant = 'low', color, direction = 'down') {
+export default function dropShadow(variant = 'low', color, direction = 'down') {
     let sign = direction == 'up' ? -1 : (direction == 'center' ? 0 : 1)
 
     if (variant === 'none' || !color)
