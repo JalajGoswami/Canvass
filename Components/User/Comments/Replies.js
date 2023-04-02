@@ -12,7 +12,6 @@ const REPLIES = ['Lorem ipsum dolor Lorem ipsum dolor dolor Lorem ipsum dolor do
     'Lorem ipsum dolor Lorem ipsum dolor dolor Lorem ipsum dolor dolor'
 ]
 export default function Replies() {
-    const theme = useTheme()
     const [expanded, setExpanded] = useState(false)
 
     const styles = StyleSheet.create({

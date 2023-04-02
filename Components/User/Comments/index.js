@@ -8,7 +8,7 @@ import OptionMenu from './OptionMenu'
 import Replies from './Replies'
 import { memo } from 'react'
 
-function Comment({ showReply }) {
+function Comment({ showReply, setText }) {
     const theme = useTheme()
     const [compact, setCompact] = useState(false)
     const [options, setOptions] = useState(false)
@@ -44,6 +44,7 @@ function Comment({ showReply }) {
                 <>
                     <ActionButtons
                         compact={compact}
+                        setText={setText}
                     />
                     <View style={styles.content}>
                         <TitleBar

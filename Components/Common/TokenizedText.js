@@ -39,10 +39,10 @@ export default function TokenizedText({
     parts.push(_text)
 
     // highlight mention & hashtags
-    parts = parts.map((text) => {
+    parts = parts.map((text, i) => {
         if (/^@/.test(text))
             return (
-                <StyledText
+                <StyledText key={i}
                     style={[styles.mention, mentionStyle]}
                 >
                     {text}
@@ -50,7 +50,7 @@ export default function TokenizedText({
             )
         if (/^#/.test(text))
             return (
-                <StyledText
+                <StyledText key={i}
                     style={[styles.hashtag, hashtagStyle]}
                 >
                     {text}

@@ -4,7 +4,7 @@ import { TouchableRipple, useTheme } from 'react-native-paper'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import Octicons from 'react-native-vector-icons/Octicons'
 
-export default function ActionButtons({ compact }) {
+export default function ActionButtons({ compact, setText }) {
     const theme = useTheme()
     const [liked, setLiked] = useState(false)
     const [disliked, setDisliked] = useState(false)
@@ -52,6 +52,17 @@ export default function ActionButtons({ compact }) {
         )
     }
 
+    function handleReply() {
+        setText(text => {
+            if (text.charAt(0) == '@') {
+                let words = text.split(' ')
+                words.shift()
+                return '@user_name ' + words.join(' ')
+            }
+            else return '@user_name ' + text
+        })
+    }
+
     return (
         <View style={styles.actions}>
             <ActionBtn
@@ -74,7 +85,7 @@ export default function ActionButtons({ compact }) {
                     color={theme.colors[disliked ? 'tertiary' : 'primary']}
                 />
             </ActionBtn>
-            <ActionBtn>
+            <ActionBtn onPress={handleReply}>
                 <Octicons
                     name='reply' size={18}
                     color={theme.colors.primary}

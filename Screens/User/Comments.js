@@ -1,12 +1,14 @@
-import React from 'react'
 import StyledBody from 'Components/Common/StyledBody'
 import Post from 'Components/User/Post'
 import Comment from 'Components/User/Comments'
 import { useTheme } from 'react-native-paper'
 import { FlatList, RefreshControl } from 'react-native-gesture-handler'
+import InputBox from 'Components/User/Comments/InputBox'
+import { useState } from 'react'
 
 export default function Comments({ route }) {
   const { post, postState } = route.params
+  const [text, setText] = useState('')
   const theme = useTheme()
 
   return (
@@ -28,8 +30,15 @@ export default function Comments({ route }) {
         contentContainerStyle={{ paddingBottom: 20 }}
         keyExtractor={(_, i) => i.toString()}
         renderItem={({ index }) =>
-          <Comment showReply={Boolean(index % 2)} />
+          <Comment
+            showReply={Boolean(index % 2)}
+            setText={setText}
+          />
         }
+      />
+      <InputBox
+        text={text}
+        setText={setText}
       />
     </StyledBody>
   )
