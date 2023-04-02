@@ -5,8 +5,10 @@ import { useTheme } from 'react-native-paper'
 import ActionButtons from './ActionButtons'
 import TruncatedText from 'Components/Common/TrucatedText'
 import OptionMenu from './OptionMenu'
+import Replies from './Replies'
+import { memo } from 'react'
 
-export default function Comment() {
+function Comment({ showReply }) {
     const theme = useTheme()
     const [compact, setCompact] = useState(false)
     const [options, setOptions] = useState(false)
@@ -31,6 +33,7 @@ export default function Comment() {
             marginLeft: compact ? 12 : 8,
         }
     })
+
     return (
         <View style={styles.wrapper}>
             <TouchableOpacity
@@ -51,10 +54,9 @@ export default function Comment() {
                             style={styles.txt}
                             text={'Lorem ipsum dolor Lorem ipsum dolor dolor Lorem ipsum dolor dolor'}
                             linesToTruncate={3}
-                            onLayout={({ nativeEvent: { layout } }) => {
-                                console.log(layout.height)
+                            onLayout={({ nativeEvent: { layout } }) =>
                                 setCompact(layout.height < 50)
-                            }}
+                            }
                         />
                         <OptionMenu
                             options={options}
@@ -63,6 +65,11 @@ export default function Comment() {
                     </View>
                 </>
             </TouchableOpacity>
+            {showReply &&
+                <Replies />
+            }
         </View>
     )
 }
+
+export default memo(Comment)
