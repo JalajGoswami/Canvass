@@ -5,7 +5,7 @@ import StyledText from "./StyledText";
 
 export default function TruncatedText({
     text, linesToTruncate, initiallyExpanded = false,
-    onStateChange = () => null, style = {}, ...props
+    onStateChange = () => null, style = {}, btnStyle = {}, ...props
 }) {
     const theme = useTheme()
     const [clippedText, setClippedText] = useState(false)
@@ -29,7 +29,7 @@ export default function TruncatedText({
                         !more ?
                             { lineHeight: 12 } :
                             { lineHeight: 14 }
-                        , style
+                        , btnStyle
                     ]}
                 >
                     {more ? ' less' : ' more'}

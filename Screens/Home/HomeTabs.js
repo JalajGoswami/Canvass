@@ -1,4 +1,3 @@
-import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs'
 import React from 'react'
 import { StyleSheet } from 'react-native'
 import { useTheme } from 'react-native-paper'
@@ -14,7 +13,7 @@ import { getFocusedRouteNameFromRoute } from '@react-navigation/native'
 
 const { Navigator, Screen } = createBottomTabNavigator()
 
-const ScreensWithoutBottomTabs = ['Explore/Search']
+const ScreensWithoutTabs = ['Explore/Search', 'Comments']
 
 export default function HomeTabs() {
     const theme = useTheme()
@@ -67,7 +66,7 @@ export default function HomeTabs() {
                     tabBarActiveTintColor: theme.colors.primary,
                     tabBarInactiveTintColor: theme.colors.onSurfaceVariant,
                     tabBarShowLabel: false,
-                    tabBarStyle: ScreensWithoutBottomTabs.includes(routeName)
+                    tabBarStyle: ScreensWithoutTabs.includes(routeName)
                         ? { display: 'none' } : styles.tabBar,
                 }
             }}
