@@ -26,7 +26,7 @@ function Comment({ showReply, setText }) {
         },
         content: {
             flex: compact ? 0 : 1,
-            paddingBottom: compact ? 8 : 10,
+            paddingBottom: compact ? 5 : 10,
         },
         txt: {
             marginRight: 14,
@@ -52,6 +52,7 @@ function Comment({ showReply, setText }) {
                             compact={compact}
                         />
                         <TruncatedText
+                            size={9} btnProps={{ size: 9 }}
                             style={styles.txt}
                             text={'Lorem ipsum dolor Lorem ipsum dolor dolor Lorem ipsum dolor dolor'}
                             linesToTruncate={3}

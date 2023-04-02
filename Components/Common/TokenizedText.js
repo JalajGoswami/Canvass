@@ -19,8 +19,9 @@ export default function TokenizedText({
     let delimiter = /\s+/
 
     // split string
-    let _text = children
+    let _text = Array.isArray(children) ? children[0] : children
     let token, index, parts = []
+
     while (_text) {
         delimiter.lastIndex = 0;
         token = delimiter.exec(_text)
@@ -62,6 +63,9 @@ export default function TokenizedText({
     return (
         <StyledText {...props}>
             {parts}
+            {Array.isArray(children) &&
+                children.slice(1)
+            }
         </StyledText>
     )
 }

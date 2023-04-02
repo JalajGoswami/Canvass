@@ -12,14 +12,14 @@ const baseUrl = 'assets/images/categories/'
 const POSTS = [
     {
         user: 'First User',
-        text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore elaboris nisi ut aliquip ex ea commodo consequat.',
+        text: 'Lorem ipsum dolor sit amet, consectetur adipiscing @user_name, sed do eiusmod tempor incididunt ut labore elaboris nisi ut aliquip ex ea commodo consequat.',
         likes: 45,
         dislikes: 15,
         comments: 21
     },
     {
         user: 'Second User',
-        text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore elaboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+        text: 'Lorem ipsum @user_name sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore elaboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
         image: require(baseUrl + 'science-cosmos.webp'),
         aspect_ratio: 1.6,
         likes: 52,
@@ -28,7 +28,7 @@ const POSTS = [
     },
     {
         user: 'Third User',
-        text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+        text: 'Lorem ipsum dolor sit @user_name, consectetur adipiscing elit.',
         image: require(baseUrl + 'art-illustration.webp'),
         aspect_ratio: 1.332,
         likes: 68,

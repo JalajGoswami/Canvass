@@ -2,17 +2,19 @@ import React, { useState } from "react"
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useTheme } from "react-native-paper";
 import StyledText from "./StyledText";
+import TokenizedText from "./TokenizedText";
 
 export default function TruncatedText({
     text, linesToTruncate, initiallyExpanded = false,
-    onStateChange = () => null, style = {}, btnStyle = {}, ...props
+    onStateChange = () => null, style = {}, btnStyle = {},
+    btnProps = {}, ...props
 }) {
     const theme = useTheme()
     const [clippedText, setClippedText] = useState(false)
     const [more, setMore] = useState(initiallyExpanded)
 
     return clippedText ? (
-        <StyledText style={style} {...props}>
+        <TokenizedText style={style} {...props}>
             {!more ? `${clippedText}...` : text}
             <TouchableOpacity
                 onPress={() => {
@@ -31,13 +33,14 @@ export default function TruncatedText({
                             { lineHeight: 14 }
                         , btnStyle
                     ]}
+                    {...btnProps}
                 >
                     {more ? ' less' : ' more'}
                 </StyledText>
             </TouchableOpacity>
-        </StyledText>
+        </TokenizedText>
     ) : (
-        <StyledText
+        <TokenizedText
             style={style} {...props}
             numberOfLines={linesToTruncate}
             ellipsizeMode={'tail'}
@@ -58,6 +61,6 @@ export default function TruncatedText({
                 setClippedText(truncated.substr(0, truncated.length - 10))
             }}>
             {text}
-        </StyledText>
+        </TokenizedText>
     )
 }

@@ -7,9 +7,9 @@ import TruncatedText from 'Components/Common/TrucatedText'
 import OptionMenu from './OptionMenu'
 import StyledText from 'Components/Common/StyledText'
 
-const REPLIES = ['Lorem ipsum dolor Lorem ipsum dolor dolor Lorem ipsum dolor dolor',
-    'Lorem ipsum dolor Lorem ipsum',
-    'Lorem ipsum dolor Lorem ipsum dolor dolor Lorem ipsum dolor dolor'
+const REPLIES = ['@user_name ipsum dolor Lorem ipsum dolor dolor Lorem ipsum dolor dolor',
+    '@user_name Lorem ipsum dolor Lorem ipsum',
+    '@user_name Lorem ipsum dolor Lorem ipsum dolor dolor Lorem ipsum dolor dolor'
 ]
 export default function Replies() {
     const [expanded, setExpanded] = useState(false)
