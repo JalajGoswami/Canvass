@@ -1,7 +1,7 @@
 import { createSharedElementStackNavigator } from 'react-navigation-shared-element'
 import React from 'react'
 import { noHeader } from 'theme/header'
-import Explore from './Explore/Explore'
+import Explore from './Explore'
 import Search from 'Screens/Home/Explore/Search'
 import Comments from 'Screens/User/Comments'
 
