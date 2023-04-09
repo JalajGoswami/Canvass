@@ -11,6 +11,7 @@ export default function TrendingTopics() {
         container: {
             flexDirection: 'row',
             flexGrow: 0,
+            marginVertical: 2,
         },
         topicBtn: {
             marginVertical: 4,

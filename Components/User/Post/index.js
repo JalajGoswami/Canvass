@@ -23,7 +23,7 @@ function Post({ post, postState }) {
 
     const styles = StyleSheet.create({
         postContainer: {
-            marginVertical: 6,
+            marginVertical: 8,
         },
         mainContainer: {
             flexDirection: compact ? 'column' : 'row',
