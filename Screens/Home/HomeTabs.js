@@ -4,6 +4,7 @@ import { useTheme } from 'react-native-paper'
 import { noHeader } from 'theme/header'
 import Explore from './Explore'
 import Notifications from './Notifications'
+import Profile from './Profile'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import AntDesign from 'react-native-vector-icons/AntDesign'
@@ -61,7 +62,8 @@ export default function HomeTabs() {
     return (
         <Navigator
             screenOptions={({ route }) => {
-                const routeName = getFocusedRouteNameFromRoute(route)
+                let routeName = getFocusedRouteNameFromRoute(route)
+                routeName = routeName ?? route.name
                 return {
                     ...noHeader,
                     tabBarActiveTintColor: theme.colors.primary,
@@ -117,7 +119,7 @@ export default function HomeTabs() {
                     )
                 }}
             />
-            <Screen name='Profile' component={Explore}
+            <Screen name='Profile' component={Profile}
                 options={{
                     tabBarIcon: ({ color, focused }) => (
                         <IconBox focused={focused}>
