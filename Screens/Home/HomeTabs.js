@@ -3,6 +3,7 @@ import { StyleSheet } from 'react-native'
 import { useTheme } from 'react-native-paper'
 import { noHeader } from 'theme/header'
 import Explore from './Explore'
+import Notifications from './Notifications'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import AntDesign from 'react-native-vector-icons/AntDesign'
@@ -105,7 +106,7 @@ export default function HomeTabs() {
                     )
                 }}
             />
-            <Screen name='Notifications' component={Explore}
+            <Screen name='Notifications' component={Notifications}
                 options={{
                     tabBarIcon: ({ color, focused }) => (
                         <IconBox focused={focused}>

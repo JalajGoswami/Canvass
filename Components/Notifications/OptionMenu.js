@@ -5,7 +5,7 @@ import React from 'react'
 import StyledText from 'Components/Common/StyledText'
 import MenuItem from 'Components/Common/MenuItem'
 
-export default function OptionMenu({ options, setOptions }) {
+export default function OptionMenu({ options, setOptions, user }) {
 
     const styles = StyleSheet.create({
         optionsBtn: {
@@ -26,12 +26,12 @@ export default function OptionMenu({ options, setOptions }) {
             <MenuItem
                 IconComponent={MaterialIcons}
                 icon='delete-forever'
-                title='Delete'
+                title='Delete Notification'
             />
             <MenuItem
                 IconComponent={MaterialIcons}
-                icon='report'
-                title='Report'
+                icon='block' iconSize={19}
+                title={`Block ${user}`}
             />
         </Menu>
     )

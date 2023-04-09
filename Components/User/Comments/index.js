@@ -1,4 +1,4 @@
-import { StyleSheet, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import React, { useState } from 'react'
 import TitleBar from './TitleBar'
 import { useTheme } from 'react-native-paper'
@@ -7,6 +7,7 @@ import TruncatedText from 'Components/Common/TrucatedText'
 import OptionMenu from './OptionMenu'
 import Replies from './Replies'
 import { memo } from 'react'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 
 function Comment({ showReply, setText }) {
     const theme = useTheme()
