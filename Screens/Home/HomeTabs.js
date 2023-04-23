@@ -17,7 +17,7 @@ const { Navigator, Screen } = createBottomTabNavigator()
 
 const ScreensWithoutTabs = [
     'Explore/Search', 'Explore/Comments', 'Profile/Comments',
-    'Profile/Edit'
+    'Profile/Edit', 'Profile/Actions'
 ]
 
 export default function HomeTabs() {

@@ -6,6 +6,8 @@ import dropShadow from 'theme/dropShadow'
 import DocumentPicker from 'react-native-document-picker'
 import { useNavigation } from '@react-navigation/native'
 import { SharedElement } from 'react-navigation-shared-element'
+import Ionicons from 'react-native-vector-icons/Ionicons'
+import { TouchableOpacity } from 'react-native'
 
 export default function ProfilePic({ editing = false }) {
     const theme = useTheme()
@@ -16,6 +18,11 @@ export default function ProfilePic({ editing = false }) {
         container: {
             marginTop: 10,
             alignSelf: 'center',
+        },
+        settingBtn: {
+            position: 'absolute',
+            right: 15,
+            top: 10,
         },
         img: {
             width: editing ? 100 : 160,
@@ -43,33 +50,43 @@ export default function ProfilePic({ editing = false }) {
     }
 
     return (
-        <View style={styles.container}>
-            <SharedElement id='profile-pic'>
-                <Image
-                    source={
-                        imgFile ? { uri: imgFile.uri } :
-                            require('assets/images/profile.png')
-                    }
-                    style={styles.img}
+        <View>
+            <TouchableOpacity activeOpacity={0.7}
+                style={styles.settingBtn}
+                onPress={() => navigate('Profile/Actions')}
+            >
+                <Ionicons name='settings-sharp'
+                    size={20} color={theme.colors.outline}
                 />
-            </SharedElement>
-            <SharedElement id='profile-edit-btn'>
-                <TouchableRipple
-                    rippleColor={theme.colors.tertiary + '55'}
-                    style={styles.editBtn}
-                    onPress={
-                        editing ? handleFileSelect
-                            : () => navigate('Profile/Edit')
-                    }
-                    borderless
-                >
-                    <Entypo
-                        name='pencil' size={editing ? 22 : 30}
-                        color={theme.colors.tertiary}
-                        style={{ transform: [{ translateX: 1 }] }}
+            </TouchableOpacity>
+            <View style={styles.container}>
+                <SharedElement id='profile-pic'>
+                    <Image
+                        source={
+                            imgFile ? { uri: imgFile.uri } :
+                                require('assets/images/profile.png')
+                        }
+                        style={styles.img}
                     />
-                </TouchableRipple>
-            </SharedElement>
+                </SharedElement>
+                <SharedElement id='profile-edit-btn'>
+                    <TouchableRipple
+                        rippleColor={theme.colors.tertiary + '55'}
+                        style={styles.editBtn}
+                        onPress={
+                            editing ? handleFileSelect
+                                : () => navigate('Profile/Edit')
+                        }
+                        borderless
+                    >
+                        <Entypo
+                            name='pencil' size={editing ? 22 : 30}
+                            color={theme.colors.tertiary}
+                            style={{ transform: [{ translateX: 1 }] }}
+                        />
+                    </TouchableRipple>
+                </SharedElement>
+            </View>
         </View>
     )
 }
