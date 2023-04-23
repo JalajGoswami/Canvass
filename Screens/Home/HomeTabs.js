@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet } from 'react-native'
 import { useTheme } from 'react-native-paper'
-import { noHeader } from 'theme/header'
+import { noHeader } from 'theme/ScreenOptions'
 import Explore from './Explore'
 import Notifications from './Notifications'
 import Profile from './Profile'
@@ -15,7 +15,10 @@ import { getFocusedRouteNameFromRoute } from '@react-navigation/native'
 
 const { Navigator, Screen } = createBottomTabNavigator()
 
-const ScreensWithoutTabs = ['Explore/Search', 'Comments']
+const ScreensWithoutTabs = [
+    'Explore/Search', 'Explore/Comments', 'Profile/Comments',
+    'Profile/Edit'
+]
 
 export default function HomeTabs() {
     const theme = useTheme()

@@ -11,7 +11,7 @@ import React, { Suspense, useEffect } from 'react';
 import { useColorScheme } from 'react-native';
 import Loading from './Screens/Common/Loading';
 import { useDispatch, useSelector } from 'react-redux';
-import { noHeader } from './theme/header';
+import { noHeader } from './theme/ScreenOptions';
 import StyledToast from './Components/Common/StyledToast';
 import AuthStack from './Screens/AuthStack/AuthStack';
 import HomeTabs from './Screens/Home/HomeTabs';
