@@ -12,7 +12,7 @@ export default function ExploreStack() {
         <Navigator screenOptions={noHeader}>
             <Screen name='Explore/Home' component={Explore} />
             <Screen name='Explore/Search' component={Search} />
-            <Screen name='Comments' component={Comments}
+            <Screen name='Explore/Comments' component={Comments}
                 sharedElements={(route) => {
                     const { post } = route.params
                     return [`post.${post.id}`]

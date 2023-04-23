@@ -25,6 +25,7 @@ export default function ProfileStats() {
         border: {
             backgroundColor: theme.colors.surfaceVariant,
             height: 0.5,
+            marginBottom: 8,
             ...dropShadow('low', theme.colors.surfaceVariant)
         }
     })

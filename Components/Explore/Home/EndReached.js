@@ -4,7 +4,7 @@ import StyledText from 'Components/Common/StyledText'
 import Entypo from 'react-native-vector-icons/Entypo'
 import { TouchableRipple, useTheme } from 'react-native-paper'
 
-export default function EndReached({ gotoTop }) {
+export default function EndReached({ gotoTop, text }) {
     const theme = useTheme()
     const styles = StyleSheet.create({
         container: {
@@ -33,7 +33,7 @@ export default function EndReached({ gotoTop }) {
                 You've reached the end..😼
             </StyledText>
             <StyledText size={8}>
-                Click on icon to Explore something New
+                Click on icon to {text ?? 'Explore something New'}
             </StyledText>
         </View>
     )

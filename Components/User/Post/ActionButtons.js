@@ -5,15 +5,19 @@ import AntDesign from 'react-native-vector-icons/AntDesign'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import Feather from 'react-native-vector-icons/Feather'
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation, useRoute } from '@react-navigation/native'
 
 export default function ActionButtons({
     post, compact, postWidth, textExpanded
 }) {
     const theme = useTheme()
     const { navigate } = useNavigation()
+    const route = useRoute()
     const [liked, setLiked] = useState(false)
     const [disliked, setDisliked] = useState(false)
+    const CommentRoute = route.name.split('/')
+    CommentRoute.pop()
+    CommentRoute.push('Comments')
 
     const styles = StyleSheet.create({
         actions: {
@@ -71,7 +75,7 @@ export default function ActionButtons({
             </ActionBtn>
             <ActionBtn
                 onPress={() =>
-                    navigate('Comments', {
+                    navigate(CommentRoute.join('/'), {
                         post,
                         postState: {
                             postWidth: postWidth,

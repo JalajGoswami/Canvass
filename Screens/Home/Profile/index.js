@@ -1,15 +1,21 @@
+import { createSharedElementStackNavigator } from 'react-navigation-shared-element'
 import React from 'react'
-import StyledBody from 'Components/Common/StyledBody'
-import ProfilePic from 'Components/User/Profile/ProfilePic'
-import UserBio from 'Components/User/Profile/UserBio'
-import ProfileStats from 'Components/User/Profile/ProfileStats'
+import { noHeader } from 'theme/header'
+import Profile from './Profile'
+import Comments from 'Screens/User/Comments'
 
-export default function Profile() {
+const { Navigator, Screen } = createSharedElementStackNavigator()
+
+export default function ExploreStack() {
     return (
-        <StyledBody>
-            <ProfilePic />
-            <UserBio />
-            <ProfileStats />
-        </StyledBody>
+        <Navigator screenOptions={noHeader}>
+            <Screen name='Profile/Home' component={Profile} />
+            <Screen name='Profile/Comments' component={Comments}
+                sharedElements={(route) => {
+                    const { post } = route.params
+                    return [`post.${post.id}`]
+                }}
+            />
+        </Navigator>
     )
 }
