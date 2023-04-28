@@ -12,10 +12,12 @@ const user = createSlice({
     name: 'user',
     initialState,
     reducers: {
-        
+        toggleAuthorized: (state) => {
+            state.isAuthorized = !state.isAuthorized
+        }
     }
 });
 
-export const { } = user.actions
+export const { toggleAuthorized } = user.actions
 
 export default user.reducer

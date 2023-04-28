@@ -49,7 +49,7 @@ const App = () => {
             {loading ?
               <Screen name='Loading' component={Loading} />
               :
-              true ?
+              isAuthorized ?
                 <Screen name='Home' component={HomeTabs} />
                 :
                 <Screen name='Auth' component={AuthStack} />
