@@ -7,9 +7,11 @@ import { TouchableRipple, useTheme } from 'react-native-paper'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import AntDesign from 'react-native-vector-icons/AntDesign'
+import { useNavigation } from '@react-navigation/native'
 
 export default function Actions() {
   const { isDarkTheme } = getTheme()
+  const { navigate } = useNavigation()
   const theme = useTheme()
   const styles = StyleSheet.create({
     box: {
@@ -60,6 +62,9 @@ export default function Actions() {
         Icon={FontAwesome}
         iconName='moon-o'
         label='App Theme'
+        onPress={() =>
+          navigate('Settings', { screen: 'Settings/Theme' })
+        }
       />
       <ActionItem
         Icon={MaterialCommunityIcons}

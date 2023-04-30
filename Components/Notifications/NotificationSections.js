@@ -1,8 +1,7 @@
 import { SectionList, StyleSheet, View } from 'react-native'
 import React from 'react'
-import StyledText from 'Components/Common/StyledText'
-import { useTheme } from 'react-native-paper'
 import Notification from './Notification'
+import SectionHeader from 'Components/Common/SectionHeader'
 
 const SECTIONS = ['New', 'Today', 'This Week', 'Older']
 
@@ -28,7 +27,9 @@ export default function NotificationSections({ notifications }) {
                 }
                 renderSectionHeader={({ section: { title, data } }) =>
                     data.length ?
-                        <SectionHeader title={title} />
+                        <SectionHeader title={title}
+                            style={{ marginTop: 5 }}
+                        />
                         : <></>
                 }
             />
@@ -36,32 +37,3 @@ export default function NotificationSections({ notifications }) {
     )
 }
 
-
-function SectionHeader({ title }) {
-    const theme = useTheme()
-    const styles = StyleSheet.create({
-        titleContainer: {
-            flexDirection: 'row',
-            alignItems: 'center',
-            marginTop: 5,
-        },
-        line: {
-            backgroundColor: theme.colors.surfaceVariant,
-            height: 0.75,
-            flexGrow: 1,
-            transform: [{ translateY: 1 }]
-        },
-        title: {
-            paddingHorizontal: 8,
-        }
-    })
-    return (
-        <View style={styles.titleContainer}>
-            <View style={styles.line} />
-            <StyledText style={styles.title} color='outline'>
-                {title}
-            </StyledText>
-            <View style={styles.line} />
-        </View>
-    )
-}

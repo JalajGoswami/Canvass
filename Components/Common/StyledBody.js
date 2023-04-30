@@ -1,5 +1,6 @@
+import getTheme from 'hooks/getTheme'
 import React from 'react'
-import { StatusBar, StyleSheet, useColorScheme } from 'react-native'
+import { StatusBar, StyleSheet } from 'react-native'
 import { useTheme } from 'react-native-paper'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
@@ -8,7 +9,7 @@ export default function StyledBody({
     statusBarColor, style, ...props
 }) {
     const theme = useTheme()
-    const isDarkTheme = useColorScheme() === 'dark'
+    const { isDarkTheme } = getTheme()
 
     const BgColors = {
         neutral: theme.colors.background,

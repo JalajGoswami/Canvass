@@ -9,3 +9,8 @@ export const FadeInTransition = {
         }
     })
 }
+
+export const ModalScreen = {
+    presentation: 'transparentModal'
+}
+

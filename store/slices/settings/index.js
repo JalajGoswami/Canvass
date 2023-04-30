@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
+import theme from './theme'
 
 const initialState = {
     appTheme: null,
@@ -9,12 +10,10 @@ const settings = createSlice({
     name: 'settings',
     initialState,
     reducers: {
-        setSystemTheme: (state, { payload }) => {
-            state.systemTheme = payload
-        }
+        ...theme.reducers
     }
-});
+})
 
-export const { setSystemTheme } = settings.actions
+export const { setAppTheme, setSystemTheme } = settings.actions
 
 export default settings.reducer

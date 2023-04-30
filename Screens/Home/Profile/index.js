@@ -1,6 +1,6 @@
 import { createSharedElementStackNavigator } from 'react-navigation-shared-element'
 import React from 'react'
-import { FadeInTransition, noHeader } from 'theme/ScreenOptions'
+import { FadeInTransition, ModalScreen, noHeader } from 'theme/ScreenOptions'
 import Profile from './Profile'
 import Edit from './Edit'
 import Comments from 'Screens/User/Comments'
@@ -30,12 +30,11 @@ export default function ExploreStack() {
             />
             <Screen name='Profile/Actions' component={Actions}
                 options={{
-                    presentation: 'modal',
+                    ...ModalScreen,
                     ...TransitionPresets.ModalPresentationIOS,
                     gestureEnabled: true,
                     gestureDirection: 'vertical',
                     gestureResponseDistance: Dimensions.get('screen').height,
-                    cardStyle: { backgroundColor: 'transparent' }
                 }}
             />
         </Navigator>

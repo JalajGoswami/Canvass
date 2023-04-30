@@ -5,18 +5,19 @@ import {
 import {
   DarkTheme as NavigationDarkTheme,
   DefaultTheme, NavigationContainer
-} from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import React, { Suspense, useEffect } from 'react';
-import { useColorScheme } from 'react-native';
-import Loading from './Screens/Common/Loading';
-import { useDispatch, useSelector } from 'react-redux';
-import { noHeader } from './theme/ScreenOptions';
-import StyledToast from './Components/Common/StyledToast';
-import AuthStack from './Screens/AuthStack/AuthStack';
-import HomeTabs from './Screens/Home/HomeTabs';
-import { setSystemTheme } from './store/slices/settings';
-import { darkTheme, lightTheme } from './theme/theme';
+} from '@react-navigation/native'
+import { createStackNavigator } from '@react-navigation/stack'
+import React, { Suspense, useEffect } from 'react'
+import { useColorScheme } from 'react-native'
+import Loading from 'Screens/Common/Loading'
+import { useDispatch, useSelector } from 'react-redux'
+import { noHeader } from 'theme/ScreenOptions'
+import StyledToast from 'Components/Common/StyledToast'
+import AuthStack from 'Screens/AuthStack/AuthStack'
+import HomeTabs from 'Screens/Home/HomeTabs'
+import Settings from 'Screens/Settings'
+import { setSystemTheme } from 'store/slices/settings'
+import { darkTheme, lightTheme } from 'theme/theme'
 
 const mainThemes = {
   'dark': darkTheme,
@@ -50,7 +51,10 @@ const App = () => {
               <Screen name='Loading' component={Loading} />
               :
               isAuthorized ?
-                <Screen name='Home' component={HomeTabs} />
+                <>
+                  <Screen name='Home' component={HomeTabs} />
+                  <Screen name='Settings' component={Settings} />
+                </>
                 :
                 <Screen name='Auth' component={AuthStack} />
             }
@@ -59,7 +63,7 @@ const App = () => {
         <StyledToast />
       </Suspense>
     </PaperProvider>
-  );
-};
+  )
+}
 
-export default App;
+export default App
