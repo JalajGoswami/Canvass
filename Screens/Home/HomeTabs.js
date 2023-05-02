@@ -6,6 +6,7 @@ import Explore from './Explore'
 import Notifications from './Notifications'
 import Profile from './Profile'
 import CreatePost from './CreatePost'
+import Chats from './Chats'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import AntDesign from 'react-native-vector-icons/AntDesign'
@@ -96,7 +97,7 @@ export default function HomeTabs() {
                     ),
                 }}
             />
-            <Screen name='Messages' component={Explore}
+            <Screen name='Messages' component={Chats}
                 options={{
                     tabBarIcon: ({ color, focused }) => (
                         <IconBox focused={focused}>

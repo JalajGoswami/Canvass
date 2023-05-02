@@ -55,9 +55,8 @@ export default function SearchInput({
         outlineStyle={{ borderRadius: 16 }}
         outlineColor={theme.colors.outline}
         activeOutlineColor={theme.colors.secondary}
-        selectionColor={theme.colors.surfaceVariant}
+        selectionColor={theme.colors.secondaryContainer}
         spellCheck={false}
-        cursorColor={theme.colors.secondary}
         placeholder='Search anyone or any topic'
         onChangeText={onChange}
         onFocus={() => setTyping(true)}

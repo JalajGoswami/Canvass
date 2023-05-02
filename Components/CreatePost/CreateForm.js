@@ -15,7 +15,7 @@ export default function CreateForm() {
     const styles = StyleSheet.create({
         input: {
             marginBottom: 5,
-            maxHeight: 300
+            maxHeight: 250
         },
         addPhoto: {
             borderColor: theme.colors.outline,
