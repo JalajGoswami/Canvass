@@ -1,9 +1,12 @@
 import { Image, StyleSheet, View } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import { FlatList } from 'react-native-gesture-handler'
 import StyledText from 'Components/Common/StyledText'
 import { SvgUri } from 'react-native-svg'
-import { TouchableRipple } from 'react-native-paper'
+import { TouchableRipple, Menu } from 'react-native-paper'
+import MenuItem from 'Components/Common/MenuItem'
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
+import Octicons from 'react-native-vector-icons/Octicons'
 
 const DATA = [
     { name: 'User', lastMsg: 'how you doing', active: false },
@@ -27,6 +30,7 @@ export default function Chats() {
 }
 
 function Chat({ name, lastMsg, active }) {
+    const [showOptions, setShowOptions] = useState(false)
     const styles = StyleSheet.create({
         container: {
             paddingVertical: 12,
@@ -50,13 +54,17 @@ function Chat({ name, lastMsg, active }) {
             height: 20,
             flexShrink: 0,
             marginLeft: 5,
-        }
+        },
+        optionsBtn: {
+            opacity: 0,
+        },
     })
 
     return (
         <TouchableRipple
             style={styles.container}
             onPress={() => null}
+            onLongPress={() => setShowOptions(true)}
         >
             <>
                 <Image
@@ -78,6 +86,25 @@ function Chat({ name, lastMsg, active }) {
                         {lastMsg}
                     </StyledText>
                 </View>
+                <Menu
+                    visible={showOptions}
+                    onDismiss={() => setShowOptions(false)}
+                    anchorPosition='bottom'
+                    anchor={
+                        <StyledText style={styles.optionsBtn}>.</StyledText>
+                    }
+                >
+                    <MenuItem
+                        IconComponent={MaterialIcons}
+                        icon='delete-forever'
+                        title='Delete Chat'
+                    />
+                    <MenuItem
+                        IconComponent={Octicons}
+                        icon='mute'
+                        title='Mute Messages'
+                    />
+                </Menu>
                 {active &&
                     <Image
                         source={require('assets/images/voltage.webp')}
