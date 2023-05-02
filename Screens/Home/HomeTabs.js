@@ -5,6 +5,7 @@ import { noHeader } from 'theme/ScreenOptions'
 import Explore from './Explore'
 import Notifications from './Notifications'
 import Profile from './Profile'
+import CreatePost from './CreatePost'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import AntDesign from 'react-native-vector-icons/AntDesign'
@@ -45,14 +46,17 @@ export default function HomeTabs() {
             backgroundColor: '#00000000'
         },
         postBtn: {
-            transform: [{ translateY: -10 }],
             color: theme.colors.secondary,
             ...dropShadow(
                 'medium', theme.colors.onSecondaryContainer, 'center'
             ),
             backgroundColor: theme.colors.onPrimary,
             borderRadius: 22,
+            transform: [{ translateY: -2 }],
         },
+        elevated: {
+            transform: [{ translateY: -10 }],
+        }
     })
     function IconBox({ focused, children }) {
         return <Box
@@ -69,6 +73,7 @@ export default function HomeTabs() {
                 routeName = routeName ?? route.name
                 return {
                     ...noHeader,
+                    tabBarHideOnKeyboard: true,
                     tabBarActiveTintColor: theme.colors.primary,
                     tabBarInactiveTintColor: theme.colors.onSurfaceVariant,
                     tabBarShowLabel: false,
@@ -102,13 +107,17 @@ export default function HomeTabs() {
                     )
                 }}
             />
-            <Screen name='Create-Post' component={Explore}
+            <Screen name='Create-Post' component={CreatePost}
                 options={{
-                    tabBarIcon: () => (
-                        <AntDesign name='pluscircle' size={44}
-                            style={styles.postBtn}
+                    tabBarIcon: ({ focused }) => {
+                        return <AntDesign name='pluscircle'
+                            size={focused ? 35 : 44}
+                            style={[
+                                styles.postBtn,
+                                focused ? {} : styles.elevated
+                            ]}
                         />
-                    )
+                    }
                 }}
             />
             <Screen name='Notifications' component={Notifications}
