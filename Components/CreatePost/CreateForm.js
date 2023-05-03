@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { Button, TextInput, TouchableRipple, useTheme } from 'react-native-paper'
 import StyledText from 'Components/Common/StyledText'
 import DocumentPicker from 'react-native-document-picker'
-import { ScrollView } from 'react-native-gesture-handler'
+import TagsInput from './TagsInput'
 
 export default function CreateForm() {
     const theme = useTheme()
@@ -15,7 +15,7 @@ export default function CreateForm() {
     const styles = StyleSheet.create({
         input: {
             marginBottom: 5,
-            maxHeight: 250
+            maxHeight: 150
         },
         addPhoto: {
             borderColor: theme.colors.outline,
@@ -27,13 +27,16 @@ export default function CreateForm() {
             marginHorizontal: 15,
         },
         imageWrapper: {
-            marginHorizontal: 15,
+            width: 200,
+            alignSelf: 'center',
+            borderWidth: 0.5,
+            borderColor: theme.colors.outline
         },
         image: {
-            width: contentWidth,
+            width: 200,
             height: imgFile ?
-                contentWidth / aspect_ratio
-                : contentWidth,
+                200 / aspect_ratio
+                : 200,
             resizeMode: 'contain',
         },
         imgBtns: {
@@ -62,7 +65,7 @@ export default function CreateForm() {
     }
 
     return (
-        <ScrollView>
+        <View>
             <TextInput
                 placeholder='Write something splendid of your own'
                 style={styles.input}
@@ -98,6 +101,7 @@ export default function CreateForm() {
                     </StyledText>
                 </TouchableRipple>
             }
+            <TagsInput />
             <Button
                 onPress={() => null}
                 buttonColor={theme.colors.secondary}
@@ -106,6 +110,6 @@ export default function CreateForm() {
             >
                 Share this Post
             </Button>
-        </ScrollView>
+        </View>
     )
 }

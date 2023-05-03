@@ -34,7 +34,7 @@ export default function ExploreStack() {
                     ...TransitionPresets.ModalPresentationIOS,
                     gestureEnabled: true,
                     gestureDirection: 'vertical',
-                    gestureResponseDistance: Dimensions.get('screen').height,
+                    gestureResponseDistance: Dimensions.get('window').height,
                 }}
             />
         </Navigator>

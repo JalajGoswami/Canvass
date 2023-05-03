@@ -23,6 +23,7 @@ export default function StyledToast() {
         </Snackbar>
     )
 }
+
 export function showToast(message, duration = 3) {
     store.dispatch(createToast(message))
     setTimeout(() => store.dispatch(hideToast()), duration * 1000)
