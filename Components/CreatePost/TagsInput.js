@@ -142,7 +142,7 @@ export default function TagsInput() {
                     backgroundColor: theme.colors.surface
                 }}
                 textInputProps={{
-                    placeholder: 'Search Tag here..',
+                    placeholder: 'Search Tags here..',
                     placeholderTextColor: theme.colors.outline,
                     style: styles.dropdownInp,
                     autoCorrect: false,

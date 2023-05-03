@@ -1,14 +1,14 @@
-import { Dimensions, Image, StyleSheet, View } from 'react-native'
+import { Image, StyleSheet, View } from 'react-native'
 import React, { useState } from 'react'
 import { Button, TextInput, TouchableRipple, useTheme } from 'react-native-paper'
 import StyledText from 'Components/Common/StyledText'
 import DocumentPicker from 'react-native-document-picker'
 import TagsInput from './TagsInput'
+import SelectTopic from './SelectTopic'
 
 export default function CreateForm() {
     const theme = useTheme()
     const [imgFile, setImgFile] = useState()
-    const contentWidth = Dimensions.get('screen').width - 30
     const aspect_ratio = imgFile?.aspect_ratio > 0.75
         ? imgFile.aspect_ratio : 0.75
 
@@ -101,6 +101,7 @@ export default function CreateForm() {
                     </StyledText>
                 </TouchableRipple>
             }
+            <SelectTopic />
             <TagsInput />
             <Button
                 onPress={() => null}
