@@ -49,8 +49,7 @@ export default function InputBox({ text, setText }) {
             <TextInput
                 style={styles.input}
                 placeholder='Post a comment..'
-                underlineStyle={{ height: 0 }}
-                selectionColor={theme.colors.secondary + '33'}
+                selectionColor={theme.colors.secondary + '44'}
                 autoCorrect={false} multiline
                 onChangeText={txt => {
                     typing.current = true

@@ -3,9 +3,11 @@ import React, { useState, useRef } from 'react'
 import StyledText from 'Components/Common/StyledText'
 import { Button, TextInput, useTheme } from 'react-native-paper'
 import Entypo from 'react-native-vector-icons/Entypo'
+import { useNavigation } from '@react-navigation/native'
 
 export default function Header() {
     const theme = useTheme()
+    const { navigate } = useNavigation()
     const inputRef = useRef()
     const [searchStr, setSearchStr] = useState()
     const styles = StyleSheet.create({
@@ -38,7 +40,7 @@ export default function Header() {
                 </StyledText>
                 <Button
                     rippleColor={theme.colors.primary}
-                    onPress={() => null}
+                    onPress={() => navigate('Chats/SendMessage')}
                     style={styles.newMsgBtn}
                 >
                     <Entypo
