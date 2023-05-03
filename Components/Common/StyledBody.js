@@ -33,8 +33,8 @@ export default function StyledBody({
 
     return (
         <SafeAreaView
-            style={[styles.defaultStyle, ...getUserStyles()]}
             {...props}
+            style={[styles.defaultStyle, ...getUserStyles()]}
         >
             <StatusBar animated
                 barStyle={isDarkTheme ? 'light-content' : 'dark-content'}

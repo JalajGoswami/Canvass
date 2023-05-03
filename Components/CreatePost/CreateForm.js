@@ -15,7 +15,7 @@ export default function CreateForm() {
     const styles = StyleSheet.create({
         input: {
             marginBottom: 5,
-            maxHeight: 150
+            maxHeight: 145
         },
         addPhoto: {
             borderColor: theme.colors.outline,
@@ -50,7 +50,7 @@ export default function CreateForm() {
         submtBtn: {
             marginHorizontal: 15,
             borderRadius: 5,
-            marginTop: 15,
+            marginTop: 15
         }
     })
 

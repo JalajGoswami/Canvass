@@ -133,7 +133,7 @@ export default function TagsInput() {
                 onSelectItem={handleSelect}
                 dataSet={suggestions}
                 onChangeText={getSuggestions}
-                debounce={500}
+                debounce={500} direction='up'
                 containerStyle={styles.dropdownWrapper}
                 suggestionsListContainerStyle={styles.listWrapper}
                 suggestionsListTextStyle={styles.listItem}

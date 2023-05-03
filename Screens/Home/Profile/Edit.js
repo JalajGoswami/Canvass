@@ -1,4 +1,4 @@
-import { KeyboardAvoidingView, View } from 'react-native'
+import { KeyboardAvoidingView } from 'react-native'
 import React from 'react'
 import ProfilePic from 'Components/User/Profile/ProfilePic'
 import StyledBody from 'Components/Common/StyledBody'

@@ -49,7 +49,7 @@ export default function SelectTopic() {
                 clearOnFocus={false}
                 closeOnBlur={true}
                 closeOnSubmit={true}
-                dataSet={DATA}
+                dataSet={DATA} direction='up'
                 containerStyle={styles.dropdownWrapper}
                 suggestionsListContainerStyle={styles.listWrapper}
                 suggestionsListTextStyle={styles.listItem}
