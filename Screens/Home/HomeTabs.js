@@ -1,5 +1,5 @@
-import React from 'react'
-import { StyleSheet } from 'react-native'
+import React, { useRef, useEffect } from 'react'
+import { Animated, StyleSheet } from 'react-native'
 import { useTheme } from 'react-native-paper'
 import { noHeader } from 'theme/ScreenOptions'
 import Explore from './Explore'
@@ -13,7 +13,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import Box from 'Components/Common/Box'
 import dropShadow from 'theme/dropShadow'
-import { getFocusedRouteNameFromRoute } from '@react-navigation/native'
+import { getFocusedRouteNameFromRoute, useRoute } from '@react-navigation/native'
 
 const { Navigator, Screen } = createBottomTabNavigator()
 
@@ -22,8 +22,15 @@ const ScreensWithoutTabs = [
     'Profile/Edit', 'Profile/Actions'
 ]
 
+const AnimatedIcon = Animated.createAnimatedComponent(AntDesign)
+
 export default function HomeTabs() {
     const theme = useTheme()
+    const route = useRoute()
+    const iconElevated = !getFocusedRouteNameFromRoute(route)
+        ?.includes('Create-Post')
+    const translateY = useRef(new Animated.Value(-10)).current
+    const iconSize = useRef(new Animated.Value(1.25)).current
     const styles = StyleSheet.create({
         tabBar: {
             backgroundColor: theme.colors.onPrimary,
@@ -53,12 +60,30 @@ export default function HomeTabs() {
             ),
             backgroundColor: theme.colors.onPrimary,
             borderRadius: 22,
-            transform: [{ translateY: -2 }],
+            transform: [
+                { translateY }, { scale: iconSize }
+            ],
         },
-        elevated: {
-            transform: [{ translateY: -10 }],
-        }
     })
+
+    useEffect(() => {
+        animateIcon(iconElevated)
+    }, [iconElevated])
+
+    function animateIcon(elevated) {
+        translateY.stopAnimation()
+        Animated.timing(translateY, {
+            toValue: elevated ? -10 : -2,
+            duration: 250,
+            useNativeDriver: true,
+        }).start()
+        Animated.timing(iconSize, {
+            toValue: elevated ? 1.25 : 1,
+            duration: 250,
+            useNativeDriver: true,
+        }).start()
+    }
+
     function IconBox({ focused, children }) {
         return <Box
             style={styles[focused ? 'activeIconBox' : 'inactiveIconBox']}
@@ -110,15 +135,12 @@ export default function HomeTabs() {
             />
             <Screen name='Create-Post' component={CreatePost}
                 options={{
-                    tabBarIcon: ({ focused }) => {
-                        return <AntDesign name='pluscircle'
-                            size={focused ? 35 : 44}
-                            style={[
-                                styles.postBtn,
-                                focused ? {} : styles.elevated
-                            ]}
+                    tabBarIcon: () => (
+                        <AnimatedIcon name='pluscircle'
+                            size={35}
+                            style={styles.postBtn}
                         />
-                    }
+                    )
                 }}
             />
             <Screen name='Notifications' component={Notifications}
