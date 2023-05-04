@@ -7,6 +7,8 @@ import { TouchableRipple, Menu } from 'react-native-paper'
 import MenuItem from 'Components/Common/MenuItem'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import Octicons from 'react-native-vector-icons/Octicons'
+import { SharedElement } from 'react-navigation-shared-element'
+import { useNavigation } from '@react-navigation/native'
 
 const DATA = [
     { name: 'User', lastMsg: 'how you doing', active: false },
@@ -24,13 +26,14 @@ export default function Chats() {
         <FlatList
             contentContainerStyle={styles.container}
             data={new Array(4).fill(DATA).flat()} keyExtractor={(_, i) => i.toString()}
-            renderItem={({ item }) => <Chat {...item} />}
+            renderItem={({ item, index }) => <Chat id={index} {...item} />}
         />
     )
 }
 
-function Chat({ name, lastMsg, active }) {
+function Chat({ id, name, lastMsg, active }) {
     const [showOptions, setShowOptions] = useState(false)
+    const { navigate } = useNavigation()
     const styles = StyleSheet.create({
         container: {
             paddingVertical: 12,
@@ -63,14 +66,16 @@ function Chat({ name, lastMsg, active }) {
     return (
         <TouchableRipple
             style={styles.container}
-            onPress={() => null}
+            onPress={() => navigate('Chats/Chat', { id })}
             onLongPress={() => setShowOptions(true)}
         >
             <>
-                <Image
-                    source={require('assets/images/profile.png')}
-                    style={styles.img}
-                />
+                <SharedElement id={`chat.${id}.usrImg`}>
+                    <Image
+                        source={require('assets/images/profile.png')}
+                        style={styles.img}
+                    />
+                </SharedElement>
                 <View style={styles.txt}>
                     <StyledText
                         numberOfLines={1} ellipsizeMode='tail'

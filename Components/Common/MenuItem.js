@@ -5,23 +5,24 @@ import StyledText from 'Components/Common/StyledText'
 
 export default function MenuItem({
   IconComponent, icon, iconSize = 20, title,
-  onPress = () => null
+  onPress = () => null, compact = true
 }) {
   const theme = useTheme()
+  const scale = compact ? 1 : 1.1
   const styles = StyleSheet.create({
     menuItem: {
       flexDirection: 'row',
       alignItems: 'center',
     },
     menuItemIcon: {
-      width: 40,
-      height: 36,
+      width: 40 * scale,
+      height: 36 * scale,
       textAlign: 'center',
       textAlignVertical: 'center',
     },
     menuItemTxt: {
       color: theme.colors.onSurfaceVariant,
-      paddingRight: 12,
+      paddingRight: 12 * scale,
     },
   })
 
@@ -34,10 +35,13 @@ export default function MenuItem({
       <>
         <IconComponent
           color={theme.colors.onSurfaceVariant}
-          name={icon} size={iconSize}
+          name={icon} size={iconSize * scale}
           style={styles.menuItemIcon}
         />
-        <StyledText style={styles.menuItemTxt}>
+        <StyledText
+          style={styles.menuItemTxt}
+          size={10 * scale}
+        >
           {title}
         </StyledText>
       </>
