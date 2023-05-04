@@ -17,6 +17,7 @@ export default function Header() {
     const styles = StyleSheet.create({
         titleBar: {
             flexDirection: 'row',
+            alignItems: 'center',
             paddingHorizontal: 10,
             paddingVertical: 5,
         },
@@ -25,39 +26,31 @@ export default function Header() {
             height: 32,
             marginVertical: 0,
             marginLeft: 0,
-            marginRight: 10
-        },
-        srchInp: {
-            marginHorizontal: 10,
-            fontSize: 14,
-            marginTop: 5
-        },
-        msgInpContainer: {
-            flexDirection: 'row',
-            paddingHorizontal: 6,
-            borderWidth: 1,
-            borderColor: theme.colors.outline,
-            borderRadius: 20,
-            marginHorizontal: 10,
-            marginTop: 10
-        },
-        msgInp: {
-            flexGrow: 1,
-            fontFamily: BodyFont,
-            marginLeft: 2,
-            color: theme.colors.onBackground,
-            maxWidth: Dimensions.get('window').width - 76,
-            maxHeight: 106,
+            marginRight: 10,
         },
         postBtn: {
             justifyContent: 'center',
             padding: 10,
             alignSelf: 'center',
             borderRadius: 50,
+            marginLeft: 'auto'
         },
-        btnIcon: {
-            transform: [{ translateX: -1.5 }]
-        }
+        srchInp: {
+            marginHorizontal: 10,
+            fontSize: 14,
+            marginTop: 5
+        },
+        msgInp: {
+            fontFamily: BodyFont,
+            color: theme.colors.onBackground,
+            paddingHorizontal: 16,
+            borderWidth: 1,
+            borderColor: theme.colors.outline,
+            borderRadius: 20,
+            marginHorizontal: 10,
+            marginTop: 10,
+            maxHeight: 106,
+        },
     })
 
     return (
@@ -76,23 +69,10 @@ export default function Header() {
                 >
                     Send Message
                 </StyledText>
-            </View>
-            <View style={styles.msgInpContainer}>
-                <NativeTextInput
-                    style={styles.msgInp}
-                    placeholder='Type message here..'
-                    underlineStyle={{ height: 0 }}
-                    selectionColor={theme.colors.secondary + '44'}
-                    autoCorrect={false} multiline
-                    onChangeText={setMsg}
-                    // onFocus={e => e.target.setNativeProps({borderColor: theme.colors.primary})}
-                >
-                    <TokenizedText>{msg}</TokenizedText>
-                </NativeTextInput>
                 <TouchableRipple
                     onPress={() => null}
                     style={styles.postBtn} borderless
-                    rippleColor={theme.colors.secondary + '22'}
+                    rippleColor={theme.colors.secondary + '33'}
                 >
                     <FontAwesome name='send-o'
                         size={22} color={theme.colors.secondary}
@@ -100,6 +80,32 @@ export default function Header() {
                     />
                 </TouchableRipple>
             </View>
+            <NativeTextInput
+                style={styles.msgInp}
+                placeholder='Type message here..'
+                underlineStyle={{ height: 0 }}
+                selectionColor={theme.colors.primary + '44'}
+                autoCorrect={false} multiline
+                onChangeText={setMsg}
+                onFocus={({ target }) =>
+                    target.setNativeProps({
+                        style: {
+                            borderWidth: 2,
+                            borderColor: theme.colors.primary,
+                        }
+                    })
+                }
+                onBlur={({ target }) =>
+                    target.setNativeProps({
+                        style: {
+                            borderWidth: 1,
+                            borderColor: theme.colors.outline,
+                        }
+                    })
+                }
+            >
+                <TokenizedText>{msg}</TokenizedText>
+            </NativeTextInput>
             <TextInput
                 ref={inputRef}
                 mode='outlined' dense
@@ -109,7 +115,8 @@ export default function Header() {
                     <TextInput.Icon
                         icon={searchStr ? 'close' : 'magnify'}
                         rippleColor='#00000000' animated
-                        size={22}
+                        size={22} iconColor={theme.colors.outline}
+                        style={{ transform: [{ translateY: -1.5 }] }}
                         onPress={() => {
                             inputRef.current?.clear()
                             setSearchStr('')
