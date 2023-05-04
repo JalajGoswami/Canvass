@@ -19,7 +19,7 @@ const { Navigator, Screen } = createBottomTabNavigator()
 
 const ScreensWithoutTabs = [
     'Explore/Search', 'Explore/Comments', 'Profile/Comments',
-    'Profile/Edit', 'Profile/Actions', 'Chats/SendMessage'
+    'Profile/Edit', 'Profile/Actions', 'Chats/SendMessage', 'Chats/Chat'
 ]
 
 const AnimatedIcon = Animated.createAnimatedComponent(AntDesign)
