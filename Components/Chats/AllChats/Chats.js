@@ -74,7 +74,6 @@ function Chat({ name, lastMsg, active }) {
                 <View style={styles.txt}>
                     <StyledText
                         numberOfLines={1} ellipsizeMode='tail'
-
                         variant='content-bold'
                     >
                         {name}
