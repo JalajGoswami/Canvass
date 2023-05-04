@@ -18,7 +18,7 @@ export default function Message({ message, status }) {
             paddingHorizontal: 15,
             maxWidth: '65%',
             marginHorizontal: 10,
-            marginVertical: 5,
+            marginVertical: 2,
             borderRadius: 10,
             flexDirection: 'row',
             alignItems: 'flex-end'
@@ -40,6 +40,7 @@ export default function Message({ message, status }) {
             variant={received ?
                 'secondary' : 'primary'
             }
+            shadow='low'
         >
             <StyledText
                 style={styles.txt}

@@ -1,5 +1,11 @@
+import store from 'store/store'
+
 export default function dropShadow(variant = 'low', color, direction = 'down') {
-    let sign = direction == 'up' ? -1 : (direction == 'center' ? 0 : 1)
+    const { appTheme, systemTheme } = store.getState().settings
+    const isDarkTheme = (appTheme || systemTheme) == 'dark'
+
+    const themeFactor = isDarkTheme ? 0.8 : 1
+    const sign = direction == 'up' ? -1 : (direction == 'center' ? 0 : 1)
 
     if (variant === 'none' || !color)
         return {}
@@ -9,11 +15,11 @@ export default function dropShadow(variant = 'low', color, direction = 'down') {
             shadowColor: color,
             shadowOffset: {
                 width: 0,
-                height: 1 * sign,
+                height: 1 * sign * themeFactor,
             },
-            shadowOpacity: 0.16,
+            shadowOpacity: 0.16 * themeFactor,
             shadowRadius: 1.51,
-            elevation: 2
+            elevation: 2 * themeFactor
         }
 
     if (variant === 'medium')
@@ -21,11 +27,11 @@ export default function dropShadow(variant = 'low', color, direction = 'down') {
             shadowColor: color,
             shadowOffset: {
                 width: 0,
-                height: 3 * sign,
+                height: 3 * sign * themeFactor,
             },
-            shadowOpacity: 0.17,
+            shadowOpacity: 0.17 * themeFactor,
             shadowRadius: 3.05,
-            elevation: 4
+            elevation: 4 * themeFactor
         }
 
     if (variant === 'high')
@@ -33,10 +39,10 @@ export default function dropShadow(variant = 'low', color, direction = 'down') {
             shadowColor: color,
             shadowOffset: {
                 width: 0,
-                height: 4 * sign,
+                height: 4 * sign * themeFactor,
             },
-            shadowOpacity: 0.19,
+            shadowOpacity: 0.19 * themeFactor,
             shadowRadius: 5.62,
-            elevation: 6
+            elevation: 6 * themeFactor
         }
 }

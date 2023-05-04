@@ -10,7 +10,8 @@ export default function SectionHeader({ title }) {
             paddingHorizontal: 10,
             paddingVertical: 4,
             borderRadius: 10,
-            marginVertical: 10,
+            marginTop: 15,
+            marginBottom: 10,
         }
     })
 
