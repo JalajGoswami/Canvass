@@ -54,7 +54,7 @@ export default function Header() {
                 variant='title-bold' size={9}
                 numberOfLines={1} ellipsizeMode='tail'
             >
-                User name
+                Jalaj Goswami
             </StyledText>
             <Menu
                 visible={showOpts}

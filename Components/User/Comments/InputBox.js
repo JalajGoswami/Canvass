@@ -49,6 +49,7 @@ export default function InputBox({ text, setText }) {
             <TextInput
                 style={styles.input}
                 placeholder='Post a comment..'
+                placeholderTextColor={theme.colors.outline + 'bb'}
                 selectionColor={theme.colors.secondary + '44'}
                 autoCorrect={false} multiline
                 onChangeText={txt => {
@@ -62,7 +63,7 @@ export default function InputBox({ text, setText }) {
             <TouchableRipple
                 onPress={() => null}
                 style={styles.postBtn} borderless
-                rippleColor={theme.colors.secondary + '22'}
+                rippleColor={theme.colors.secondary + '33'}
             >
                 <FontAwesome name='send-o'
                     size={22} color={theme.colors.secondary}

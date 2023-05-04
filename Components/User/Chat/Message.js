@@ -1,9 +1,9 @@
 import { StyleSheet } from 'react-native'
 import React from 'react'
-import StyledText from 'Components/Common/StyledText'
 import Box from 'Components/Common/Box'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { useTheme } from 'react-native-paper'
+import TokenizedText from 'Components/Common/TokenizedText'
 
 export default function Message({ message, status }) {
     const theme = useTheme()
@@ -42,11 +42,11 @@ export default function Message({ message, status }) {
             }
             shadow='low'
         >
-            <StyledText
+            <TokenizedText
                 style={styles.txt}
             >
                 {message}
-            </StyledText>
+            </TokenizedText>
             {!received &&
                 <Ionicons
                     style={styles.seenIcon}

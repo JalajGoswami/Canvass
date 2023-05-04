@@ -28,7 +28,7 @@ const DATA = [
             { message: 'Some very very very very very very long text msg', status: 'received' },
             { message: 'Some normally long text msg', status: 'seen' },
             { message: 'Some text msg', status: 'sent' },
-            { message: 'Some random msg', status: 'sent' },
+            { message: 'Some #random msg', status: 'sent' },
             { message: 'Some text msg', status: 'received' },
         ]
     }
@@ -50,7 +50,7 @@ export default function Messages() {
                 trailingItem.status !== 'received' &&
                 <View style={{ height: 5 }} />
             )}
-            contentContainerStyle={{ paddingBottom: 80 }}
+            contentContainerStyle={{ paddingBottom: 15 }}
             onLayout={({ target }) =>
                 target.scrollToEnd()
             }
