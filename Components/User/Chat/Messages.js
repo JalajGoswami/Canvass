@@ -1,5 +1,5 @@
 import { SectionList, View } from 'react-native'
-import React from 'react'
+import React, { useRef } from 'react'
 import SectionHeader from './SectionHeader'
 import Message from './Message'
 
@@ -35,6 +35,11 @@ const DATA = [
 ]
 
 export default function Messages() {
+    const listRef = useRef()
+
+    const scrollToEnd = (target) =>
+        (target ?? listRef.current).scrollToEnd()
+
     return (
         <SectionList
             sections={DATA}
@@ -42,18 +47,25 @@ export default function Messages() {
             renderSectionHeader={({ section }) =>
                 <SectionHeader title={section.time} />
             }
-            renderItem={({ item }) =>
-                <Message {...item} />
+            renderItem={({ item, index, section }) =>
+                <Message {...item}
+                    lastItem={
+                        section.time == DATA[DATA.length - 1].time
+                        && index == section.data.length - 1
+                    }
+                    scrollToEnd={scrollToEnd}
+                />
             }
             ItemSeparatorComponent={({ leadingItem, trailingItem }) => (
-                leadingItem.status !== trailingItem.status &&
-                [leadingItem.status, trailingItem.status].includes('received')
+                leadingItem.status !== trailingItem?.status &&
+                [leadingItem.status, trailingItem?.status].includes('received')
                 && <View style={{ height: 5 }} />
             )}
             contentContainerStyle={{ paddingBottom: 15 }}
-            onLayout={({ target }) =>
-                target.scrollToEnd()
-            }
+            onLayout={({ target }) => {
+                listRef.current = target
+                scrollToEnd(target)
+            }}
         />
     )
 }

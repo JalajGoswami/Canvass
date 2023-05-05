@@ -1,15 +1,21 @@
-import { Dimensions, Image, StyleSheet, TouchableOpacity } from 'react-native'
-import React, { useState } from 'react'
+import { Animated, Dimensions, Image, StyleSheet, TouchableOpacity } from 'react-native'
+import React, { useState, useEffect, useRef } from 'react'
 import Box from 'Components/Common/Box'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { TouchableRipple, useTheme } from 'react-native-paper'
 import TokenizedText from 'Components/Common/TokenizedText'
 import OptionMenu from './OptionMenu'
 
-export default function Message({ body, status, type }) {
+const AnimateTouchableOpacity = Animated.createAnimatedComponent(TouchableOpacity)
+
+export default function Message({
+    body, status, type, lastItem, scrollToEnd
+}) {
     const theme = useTheme()
     const [showOptions, setShowOptions] = useState(false)
     const [saved, setSaved] = useState(false)
+    const translateY = useRef(new Animated.Value(10)).current
+    const opacity = useRef(new Animated.Value(0)).current
     const received = status === 'received'
     const seen = status === 'seen'
     const text = type === 'text'
@@ -23,6 +29,8 @@ export default function Message({ body, status, type }) {
             alignSelf: received ?
                 'flex-start' : 'flex-end',
             flexDirection: received ? 'row' : 'row-reverse',
+            transform: [{ translateY: lastItem ? translateY : 0 }],
+            opacity: lastItem ? opacity : 1
         },
         msg: {
             paddingVertical: image ? 3 : 8,
@@ -66,8 +74,26 @@ export default function Message({ body, status, type }) {
         }
     })
 
+    useEffect(() => {
+        if (lastItem) {
+            scrollToEnd()
+            Animated.parallel(
+                [Animated.timing(translateY, {
+                    toValue: 0,
+                    duration: 250,
+                    useNativeDriver: true
+                }),
+                Animated.timing(opacity, {
+                    toValue: 1,
+                    duration: 250,
+                    useNativeDriver: true
+                })]
+            ).start()
+        }
+    }, [])
+
     return (
-        <TouchableOpacity
+        <AnimateTouchableOpacity
             activeOpacity={0.75}
             style={styles.msgContainer}
             onLongPress={() => setShowOptions(true)}
@@ -124,6 +150,6 @@ export default function Message({ body, status, type }) {
                     />
                 </TouchableRipple>
             }
-        </TouchableOpacity>
+        </AnimateTouchableOpacity>
     )
 }
