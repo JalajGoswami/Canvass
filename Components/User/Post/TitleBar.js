@@ -20,7 +20,7 @@ export default function TitleBar({ user }) {
             width: 28,
             height: 28,
             borderRadius: 14,
-            marginHorizontal: 8,
+            marginHorizontal: 9,
         },
         optionsContainer: {
             marginLeft: 'auto',

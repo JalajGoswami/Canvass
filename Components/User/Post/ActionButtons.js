@@ -8,7 +8,7 @@ import Feather from 'react-native-vector-icons/Feather'
 import { useNavigation, useRoute } from '@react-navigation/native'
 
 export default function ActionButtons({
-    post, postWidth, textExpanded
+    post, textExpanded
 }) {
     const theme = useTheme()
     const { navigate } = useNavigation()
@@ -80,7 +80,6 @@ export default function ActionButtons({
                     navigate(CommentRoute.join('/'), {
                         post,
                         postState: {
-                            postWidth: postWidth,
                             initiallyExpanded: textExpanded
                         }
                     })

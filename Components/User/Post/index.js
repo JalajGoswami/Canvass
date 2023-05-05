@@ -1,4 +1,4 @@
-import { Image, StyleSheet, View } from 'react-native'
+import { Dimensions, Image, StyleSheet, View } from 'react-native'
 import React, { useState } from 'react'
 import StyledText from 'Components/Common/StyledText'
 import { useTheme } from 'react-native-paper'
@@ -14,10 +14,10 @@ function Post({ post, postState }) {
         id, user, text, image, aspect_ratio = 1,
         likes, dislikes, comments
     } = post
-    const { postWidth = 320, initiallyExpanded = false } = postState ?? {}
+    const { initiallyExpanded = false } = postState ?? {}
 
     const theme = useTheme()
-    const [contentWidth, setContentWidth] = useState(postWidth)
+    const contentWidth = Dimensions.get('window').width - 16
     const [textExpanded, setTextExpanded] = useState(initiallyExpanded)
 
     const styles = StyleSheet.create({
@@ -29,19 +29,19 @@ function Post({ post, postState }) {
         },
         content: {
             flex: 0,
-            paddingHorizontal: 6,
+            paddingHorizontal: 8,
             paddingTop: 4,
         },
         contentImg: {
             width: '100%',
-            height: (Math.round(contentWidth - 12) / aspect_ratio),
+            height: (contentWidth / aspect_ratio),
             marginTop: 6,
             resizeMode: 'contain',
             borderRadius: 4,
         },
         statusBar: {
             flexDirection: 'row',
-            paddingHorizontal: 6,
+            paddingHorizontal: 8,
             marginVertical: 2,
         },
         counts: {
@@ -71,11 +71,7 @@ function Post({ post, postState }) {
             <View style={styles.postContainer}>
                 <TitleBar user={user} />
                 <View style={styles.mainContainer}>
-                    <View style={styles.content}
-                        onLayout={({ nativeEvent: { layout } }) =>
-                            setContentWidth(layout.width)
-                        }
-                    >
+                    <View style={styles.content}>
                         <View>{formattedText}</View>
                         {image &&
                             <Image source={image}
@@ -85,7 +81,6 @@ function Post({ post, postState }) {
                     </View>
                     <ActionButtons
                         post={post}
-                        postWidth={contentWidth}
                         textExpanded={textExpanded}
                     />
                 </View>
