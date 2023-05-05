@@ -2,35 +2,38 @@ import { StyleSheet, View } from 'react-native'
 import React, { useState } from 'react'
 import { TouchableRipple, useTheme } from 'react-native-paper'
 import AntDesign from 'react-native-vector-icons/AntDesign'
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
+import Ionicons from 'react-native-vector-icons/Ionicons'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import Feather from 'react-native-vector-icons/Feather'
 import { useNavigation, useRoute } from '@react-navigation/native'
 
 export default function ActionButtons({
-    post, compact, postWidth, textExpanded
+    post, postWidth, textExpanded
 }) {
     const theme = useTheme()
     const { navigate } = useNavigation()
     const route = useRoute()
     const [liked, setLiked] = useState(false)
     const [disliked, setDisliked] = useState(false)
+    const [saved, setSaved] = useState(false)
     const CommentRoute = route.name.split('/')
     CommentRoute.pop()
     CommentRoute.push('Comments')
 
     const styles = StyleSheet.create({
         actions: {
-            flexDirection: compact ? 'row' : 'column',
+            flexDirection: 'row',
             alignItems: 'center',
-            marginRight: 4,
-            marginLeft: compact ? 6 : 0,
+            marginLeft: 6,
+            marginTop: 2,
         },
         actionBtn: {
-            marginHorizontal: 0,
-            marginVertical: 0,
-            padding: 6,
-            borderRadius: 15,
+            marginRight: 2,
+            width: 36,
+            height: 36,
+            alignItems: 'center',
+            justifyContent: 'center',
+            borderRadius: 20,
         },
     })
 
@@ -49,8 +52,6 @@ export default function ActionButtons({
         )
     }
 
-    const fontFactor = compact ? 1.1 : 1
-
     return (
         <View style={styles.actions}>
             <ActionBtn
@@ -59,7 +60,7 @@ export default function ActionButtons({
             >
                 <AntDesign
                     name={liked ? 'like1' : 'like2'}
-                    size={18 * fontFactor}
+                    size={22}
                     color={theme.colors[liked ? 'secondary' : 'primary']}
                 />
             </ActionBtn>
@@ -69,8 +70,9 @@ export default function ActionButtons({
             >
                 <AntDesign
                     name={disliked ? 'dislike1' : 'dislike2'}
-                    size={18 * fontFactor}
+                    size={22}
                     color={theme.colors[disliked ? 'tertiary' : 'primary']}
+                    style={{ transform: [{ translateY: 1.2 }] }}
                 />
             </ActionBtn>
             <ActionBtn
@@ -85,20 +87,29 @@ export default function ActionButtons({
                 }
             >
                 <MaterialCommunityIcons
-                    name='comment-outline' size={17.5 * fontFactor}
+                    name='comment-outline' size={21}
                     color={theme.colors.primary}
+                    style={{ transform: [{ translateY: 0.8 }] }}
                 />
             </ActionBtn>
-            <ActionBtn>
-                <MaterialIcons
-                    name='save-alt' size={18.5 * fontFactor}
-                    color={theme.colors.primary}
+            <ActionBtn
+                rippleColor={theme.colors.primary + '33'}
+                onPress={() => setSaved(!saved)}
+            >
+                <Ionicons
+                    name={saved ? 'download' : 'download-outline'}
+                    size={24}
+                    color={theme.colors[saved
+                        ? 'primary' : 'primary'
+                    ]}
+                    style={{ transform: [{ translateY: -1 }] }}
                 />
             </ActionBtn>
             <ActionBtn>
                 <Feather
-                    name='share' size={17.5 * fontFactor}
+                    name='share' size={21}
                     color={theme.colors.primary}
+                    style={{ transform: [{ translateY: -0.5 }] }}
                 />
             </ActionBtn>
         </View>

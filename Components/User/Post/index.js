@@ -17,7 +17,6 @@ function Post({ post, postState }) {
     const { postWidth = 320, initiallyExpanded = false } = postState ?? {}
 
     const theme = useTheme()
-    const [compact, setCompact] = useState(false)
     const [contentWidth, setContentWidth] = useState(postWidth)
     const [textExpanded, setTextExpanded] = useState(initiallyExpanded)
 
@@ -26,10 +25,10 @@ function Post({ post, postState }) {
             marginVertical: 8,
         },
         mainContainer: {
-            flexDirection: compact ? 'column' : 'row',
+            flexDirection:  'column',
         },
         content: {
-            flex: compact ? 0 : 1,
+            flex: 0,
             paddingHorizontal: 6,
             paddingTop: 4,
         },
@@ -49,7 +48,8 @@ function Post({ post, postState }) {
             fontSize: 10,
             color: theme.colors.onSurfaceVariant,
             fontFamily: DisplayFont,
-            marginRight: 6,
+            marginLeft: 6,
+            marginRight: 1,
         },
     })
 
@@ -62,9 +62,6 @@ function Post({ post, postState }) {
         :
         <TruncatedText
             text={text} linesToTruncate={7}
-            onLayout={({ nativeEvent: { layout } }) =>
-                setCompact(layout.height < 120)
-            }
             initiallyExpanded={initiallyExpanded}
             onStateChange={setTextExpanded}
         />
@@ -88,7 +85,6 @@ function Post({ post, postState }) {
                     </View>
                     <ActionButtons
                         post={post}
-                        compact={compact}
                         postWidth={contentWidth}
                         textExpanded={textExpanded}
                     />
