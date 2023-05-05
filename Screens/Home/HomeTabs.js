@@ -72,16 +72,19 @@ export default function HomeTabs() {
 
     function animateIcon(elevated) {
         translateY.stopAnimation()
-        Animated.timing(translateY, {
-            toValue: elevated ? -10 : -2,
-            duration: 250,
-            useNativeDriver: true,
-        }).start()
-        Animated.timing(iconSize, {
-            toValue: elevated ? 1.25 : 1,
-            duration: 250,
-            useNativeDriver: true,
-        }).start()
+        iconSize.stopAnimation()
+        Animated.parallel([
+            Animated.timing(translateY, {
+                toValue: elevated ? -10 : -2,
+                duration: 250,
+                useNativeDriver: true,
+            }),
+            Animated.timing(iconSize, {
+                toValue: elevated ? 1.25 : 1,
+                duration: 250,
+                useNativeDriver: true,
+            })
+        ]).start()
     }
 
     function IconBox({ focused, children }) {
