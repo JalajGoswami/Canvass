@@ -1,22 +1,30 @@
-import { Dimensions, Image, StyleSheet } from 'react-native'
-import React from 'react'
+import { Dimensions, Image, StyleSheet, TouchableOpacity } from 'react-native'
+import React, { useState } from 'react'
 import Box from 'Components/Common/Box'
 import Ionicons from 'react-native-vector-icons/Ionicons'
-import { useTheme } from 'react-native-paper'
+import { TouchableRipple, useTheme } from 'react-native-paper'
 import TokenizedText from 'Components/Common/TokenizedText'
+import OptionMenu from './OptionMenu'
 
 export default function Message({ body, status, type }) {
     const theme = useTheme()
+    const [showOptions, setShowOptions] = useState(false)
+    const [saved, setSaved] = useState(false)
     const received = status === 'received'
     const seen = status === 'seen'
+    const text = type === 'text'
     const image = type === 'image'
+    const post = type === 'post'
     const contentWidth = (Dimensions.get('window').width - 30)
     const aspect_ratio = 1.503
 
     const styles = StyleSheet.create({
-        msg: {
+        msgContainer: {
             alignSelf: received ?
                 'flex-start' : 'flex-end',
+            flexDirection: received ? 'row' : 'row-reverse',
+        },
+        msg: {
             paddingVertical: image ? 3 : 8,
             paddingHorizontal: image ? 3 : 15,
             maxWidth: '65%',
@@ -44,40 +52,78 @@ export default function Message({ body, status, type }) {
                 right: 10,
                 bottom: 5
             } : {})
+        },
+        optionAnchor: {
+            opacity: 0,
+            transform: [{ translateX: received ? -75 : 25 }]
+        },
+        saveBtn: {
+            width: 35,
+            height: 35,
+            borderRadius: 20,
+            alignSelf: 'center',
+            alignItems: 'center'
         }
     })
 
     return (
-        <Box
-            style={styles.msg}
-            variant={received ?
-                'secondary' : 'primary'
-            }
-            shadow='low'
+        <TouchableOpacity
+            activeOpacity={0.75}
+            style={styles.msgContainer}
+            onLongPress={() => setShowOptions(true)}
         >
-            {image ?
-                <Image
-                    style={styles.img}
-                    source={body}
-                />
-                :
-                <TokenizedText
-                    style={styles.txt}
+            <Box
+                style={styles.msg}
+                variant={received ?
+                    'secondary' : 'primary'
+                }
+                shadow='low'
+            >
+                {image ?
+                    <Image
+                        style={styles.img}
+                        source={body}
+                    />
+                    :
+                    <TokenizedText
+                        style={styles.txt}
+                    >
+                        {body}
+                    </TokenizedText>
+                }
+                {!received &&
+                    <Ionicons
+                        style={styles.seenIcon}
+                        size={seen ? 16 : 15}
+                        name={
+                            seen ?
+                                'md-checkmark-done-circle'
+                                : 'md-checkmark-done'
+                        }
+                    />
+                }
+            </Box>
+            <OptionMenu
+                isText={text} style={styles.optionAnchor}
+                setShowOptions={setShowOptions}
+                showOptions={showOptions}
+            />
+            {post &&
+                <TouchableRipple
+                    style={styles.saveBtn} borderless
+                    onPress={() => setSaved(s => !s)}
+                    rippleColor={theme.colors.primary + '55'}
                 >
-                    {body}
-                </TokenizedText>
+                    <Ionicons
+                        name={saved ? 'download' : 'download-outline'}
+                        size={25}
+                        color={theme.colors[saved
+                            ? 'primary' : 'primary'
+                        ]}
+                        style={{ transform: [{ translateY: 1.5 }] }}
+                    />
+                </TouchableRipple>
             }
-            {!received &&
-                <Ionicons
-                    style={styles.seenIcon}
-                    size={seen ? 16 : 15}
-                    name={
-                        seen ?
-                            'md-checkmark-done-circle'
-                            : 'md-checkmark-done'
-                    }
-                />
-            }
-        </Box>
+        </TouchableOpacity>
     )
 }

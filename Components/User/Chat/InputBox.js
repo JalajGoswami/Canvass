@@ -5,6 +5,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import TokenizedText from 'Components/Common/TokenizedText'
 import { BodyFont } from 'theme/theme'
 import { useRef, useState } from 'react'
+import DocumentPicker from 'react-native-document-picker'
 
 export default function InputBox() {
   const inputRef = useRef()
@@ -38,10 +39,16 @@ export default function InputBox() {
     }
   })
 
+  const handleImgSelect = () => {
+    DocumentPicker.pickSingle({ type: 'image/*' })
+      .then(imgFile => null)
+      .catch(err => null)
+  }
+
   return (
     <View style={styles.container}>
       <TouchableRipple
-        onPress={() => null}
+        onPress={handleImgSelect}
         style={styles.postBtn} borderless
         rippleColor={theme.colors.tertiary + '33'}
       >
