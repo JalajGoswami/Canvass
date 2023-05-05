@@ -7,29 +7,29 @@ const DATA = [
     {
         time: 'Yesterday 10:12pm',
         data: [
-            { message: 'Some text msg', status: 'seen' },
-            { message: 'Some text msg', status: 'received' },
-            { message: 'Some very very very very very very long text msg', status: 'seen' },
+            { body: 'Some text msg', status: 'seen' },
+            { body: 'Some text msg', status: 'received' },
+            { body: 'Some very very very very very very long text msg', status: 'seen' },
         ]
     },
     {
         time: 'Today 4:50pm',
         data: [
-            { message: 'Some very very very very very very long text msg', status: 'received' },
-            { message: 'Some normally long msg', status: 'seen' },
-            { message: 'Some random msg', status: 'sent' },
-            { message: 'Some text msg', status: 'sent' },
-            { message: 'Some text msg', status: 'received' },
+            { body: 'Some very very very very very very long text msg', status: 'received' },
+            { body: 'Some normally long msg', status: 'seen' },
+            { body: 'Some random msg', status: 'sent' },
+            { body: 'Some text msg', status: 'sent' },
+            { type: 'image', body: require('assets/images/categories/cars.webp'), status: 'received' },
         ]
     },
     {
         time: 'Today 5:20pm',
         data: [
-            { message: 'Some very very very very very very long text msg', status: 'received' },
-            { message: 'Some normally long text msg', status: 'seen' },
-            { message: 'Some text msg', status: 'sent' },
-            { message: 'Some #random msg', status: 'sent' },
-            { message: 'Some text msg', status: 'received' },
+            { body: 'Some very very very very very very long text msg', status: 'received' },
+            { body: 'Some normally long text msg', status: 'seen' },
+            { body: 'Some text msg', status: 'sent' },
+            { body: 'Some #random msg', status: 'sent' },
+            { body: 'Some text msg', status: 'received' },
         ]
     }
 ]
