@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import { Button, TextInput, TouchableRipple, useTheme } from 'react-native-paper'
 import StyledText from 'Components/Common/StyledText'
 import DocumentPicker from 'react-native-document-picker'
+import ImageCropPicker from 'react-native-image-crop-picker'
 import TagsInput from './TagsInput'
 import SelectTopic from './SelectTopic'
 
@@ -55,12 +56,19 @@ export default function CreateForm() {
     })
 
     const handleFileSelect = () => {
-        DocumentPicker.pickSingle({ type: 'image/*' })
-            .then(file =>
-                Image.getSize(file.uri, (w, h) => {
-                    setImgFile({ ...file, aspect_ratio: w / h })
-                })
-            )
+        ImageCropPicker.openPicker({
+            cropping: true,
+            freeStyleCropEnabled: true,
+            enableRotationGesture: false,
+            cropperToolbarColor: theme.colors.background,
+            cropperActiveWidgetColor: theme.colors.tertiary,
+            cropperToolbarWidgetColor: theme.colors.primary,
+            cropperStatusBarColor: theme.colors.outline,
+        })
+            .then(img => setImgFile({
+                uri: img.path,
+                aspect_ratio: img.width / img.height
+            }))
             .catch(err => null)
     }
 
