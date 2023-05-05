@@ -2,10 +2,10 @@ import { Image, StyleSheet, View } from 'react-native'
 import React, { useState } from 'react'
 import { Button, TextInput, TouchableRipple, useTheme } from 'react-native-paper'
 import StyledText from 'Components/Common/StyledText'
-import DocumentPicker from 'react-native-document-picker'
 import ImageCropPicker from 'react-native-image-crop-picker'
 import TagsInput from './TagsInput'
 import SelectTopic from './SelectTopic'
+import { getImageFile } from 'utils/helper'
 
 export default function CreateForm() {
     const theme = useTheme()
@@ -65,10 +65,7 @@ export default function CreateForm() {
             cropperToolbarWidgetColor: theme.colors.primary,
             cropperStatusBarColor: theme.colors.outline,
         })
-            .then(img => setImgFile({
-                uri: img.path,
-                aspect_ratio: img.width / img.height
-            }))
+            .then(res => setImgFile(getImageFile(res)))
             .catch(err => null)
     }
 

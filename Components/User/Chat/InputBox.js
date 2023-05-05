@@ -5,7 +5,8 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import TokenizedText from 'Components/Common/TokenizedText'
 import { BodyFont } from 'theme/theme'
 import { useRef, useState } from 'react'
-import DocumentPicker from 'react-native-document-picker'
+import ImageCropPicker from 'react-native-image-crop-picker'
+import { getImageFile } from 'utils/helper'
 
 export default function InputBox() {
   const inputRef = useRef()
@@ -40,8 +41,16 @@ export default function InputBox() {
   })
 
   const handleImgSelect = () => {
-    DocumentPicker.pickSingle({ type: 'image/*' })
-      .then(imgFile => null)
+    ImageCropPicker.openPicker({
+      cropping: true,
+      freeStyleCropEnabled: true,
+      enableRotationGesture: false,
+      cropperToolbarColor: theme.colors.background,
+      cropperActiveWidgetColor: theme.colors.tertiary,
+      cropperToolbarWidgetColor: theme.colors.primary,
+      cropperStatusBarColor: theme.colors.outline,
+  })
+      .then(res => console.log(getImageFile(res)))
       .catch(err => null)
   }
 

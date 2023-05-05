@@ -3,11 +3,12 @@ import React, { useState } from 'react'
 import { TouchableRipple, useTheme } from 'react-native-paper'
 import Entypo from 'react-native-vector-icons/Entypo'
 import dropShadow from 'theme/dropShadow'
-import DocumentPicker from 'react-native-document-picker'
+import ImageCropPicker from 'react-native-image-crop-picker'
 import { useNavigation } from '@react-navigation/native'
 import { SharedElement } from 'react-navigation-shared-element'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { TouchableOpacity } from 'react-native'
+import { getImageFile } from 'utils/helper'
 
 export default function ProfilePic({ editing = false }) {
     const theme = useTheme()
@@ -44,8 +45,17 @@ export default function ProfilePic({ editing = false }) {
     })
 
     const handleFileSelect = () => {
-        DocumentPicker.pickSingle({ type: 'image/*' })
-            .then(setImgFile)
+        ImageCropPicker.openPicker({
+            cropping: true,
+            width: 1000,
+            height: 1000,
+            enableRotationGesture: false,
+            cropperToolbarColor: theme.colors.background,
+            cropperActiveWidgetColor: theme.colors.tertiary,
+            cropperToolbarWidgetColor: theme.colors.primary,
+            cropperStatusBarColor: theme.colors.outline,
+        })
+            .then(res => setImgFile(getImageFile(res)))
             .catch(err => null)
     }
 
