@@ -1,8 +1,9 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import API from 'utils/API';
 import { errorReducer } from 'utils/services'
 
 const initialState = {
-    loading: false,
+    loading: true,
     isAuthorized: null,
     accessToken: null,
     error: null,
@@ -33,7 +34,7 @@ const user = createSlice({
         builder.addCase(login.fulfilled, (state, { payload }) => {
             state.isAuthorized = Boolean(payload.accessToken)
             state.accessToken = payload.accessToken
-            state.user = payload
+            state.user = payload.user
             state.error = null
         })
         builder.addCase(login.rejected, errorReducer)

@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { login, logOut, userRestored, userRestoreFailed } from '../store/features/userProfile'
-import EncryptedStorage from 'react-native-encrypted-storage';
+import { login, logOut, userRestored, userRestoreFailed } from '../store/slices/user'
+import EncryptedStorage from 'react-native-encrypted-storage'
 
 const saveSession = async (user) => {
     await EncryptedStorage.setItem('user', JSON.stringify(user))
@@ -49,10 +49,12 @@ export const useRootSession = () => {
                 return
             }
 
-            const userState = JSON.parse(user)
+            const userState = JSON.parse(userData)
             dispatch(userRestored(userState))
         }
-        catch (err) { dispatch(userRestoreFailed()) }
+        catch (err) {
+            dispatch(userRestoreFailed())
+        }
     }
 
     useEffect(() => {

@@ -19,6 +19,8 @@ import Settings from 'Screens/Settings'
 import User from 'Screens/User'
 import { setSystemTheme } from 'store/slices/settings'
 import { darkTheme, lightTheme } from 'theme/theme'
+import getTheme from 'hooks/getTheme'
+import { useRootSession } from 'hooks/useSession'
 
 const mainThemes = {
   'dark': darkTheme,
@@ -35,8 +37,13 @@ const { Navigator, Screen } = createStackNavigator()
 const App = () => {
   const dispatch = useDispatch()
   const OsTheme = useColorScheme()
-  const { isAuthorized, loading } = useSelector(state => state.user)
-  const { appTheme, systemTheme } = useSelector(state => state.settings)
+  const { isAuthorized, loading,user, error } = useSelector(state => state.user)
+  const { theme, systemTheme } = getTheme()
+  const { restoreSession } = useRootSession()
+
+  useEffect(() => {
+    restoreSession()
+  }, [])
 
   useEffect(() => {
     if (systemTheme != OsTheme)
@@ -44,9 +51,9 @@ const App = () => {
   }, [OsTheme])
 
   return (
-    <PaperProvider theme={mainThemes[appTheme || systemTheme]}>
+    <PaperProvider theme={mainThemes[theme]}>
       <Suspense fallback={Loading}>
-        <NavigationContainer theme={navigationThemes[appTheme || systemTheme]}>
+        <NavigationContainer theme={navigationThemes[theme]}>
           <Navigator screenOptions={noHeader}>
             {loading ?
               <Screen name='Loading' component={Loading} />

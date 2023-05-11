@@ -26,4 +26,13 @@ export const SignupSchema = Yup.object().shape({
         .required('Required'),
 
     about: Yup.string().max(200, 'Upto 200 Characters allowed.')
-});
+})
+
+export const LoginSchema = Yup.object().shape({
+    email: Yup.string()
+        .email('Not a valid Email')
+        .required('Required'),
+
+    password: Yup.string()
+        .required('Required')
+})

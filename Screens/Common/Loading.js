@@ -5,7 +5,7 @@ import StyledBody from 'Components/Common/StyledBody'
 export default function Loading() {
   return (
     <StyledBody>
-      <StyledText>Loading</StyledText>
+      <StyledText size={25}>Loading</StyledText>
     </StyledBody>
   )
 }

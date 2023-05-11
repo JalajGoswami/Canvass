@@ -3,6 +3,10 @@ import React, { useMemo, useState } from 'react'
 import { Button, TextInput } from 'react-native-paper'
 import { DisplayFont } from 'theme/theme'
 import { useDispatch } from 'react-redux'
+import { Formik } from 'formik'
+import FormInput from 'Components/Common/FormInput'
+import { LoginSchema } from 'utils/FormSchemas'
+import { login } from 'store/slices/user'
 
 export default function LoginForm() {
     const [passHidden, setPassHidden] = useState(true)
@@ -39,34 +43,50 @@ export default function LoginForm() {
     }), [])
 
     return (
-        <View style={styles.container}>
-            <TextInput
-                style={styles.input}
-                label='Email Address'
-                keyboardType='email-address'
-                left={<TextInput.Icon icon="email" size={20} />}
-            />
-            <TextInput
-                style={styles.input}
-                label='Password'
-                secureTextEntry={passHidden}
-                right={<TextInput.Icon
-                    icon={passHidden ? 'eye' : 'eye-off'}
-                    onPress={() => setPassHidden(val => !val)} />}
-                left={<TextInput.Icon icon="lock" size={20} />}
-            />
-            <View style={styles.row}>
-                <Button labelStyle={styles.forgotBtn}>
-                    Forgot Password
-                </Button>
-            </View>
-            <Button style={styles.submitBtn} mode='contained'
-                labelStyle={styles.submitBtnTxt}
-                theme={{ roundness: 2 }}
-                onPress={() => null}
-            >
-                Login
-            </Button>
-        </View>
+        <Formik
+            initialValues={{
+                email: '', password: ''
+            }}
+            validationSchema={LoginSchema}
+            onSubmit={(values,) => {
+                dispatch(login(values))
+            }}
+        >
+            {formProps => (
+                <View style={styles.container}>
+                    <FormInput
+                        formProps={formProps}
+                        name='email' label='Email Address'
+                        style={styles.input}
+                        keyboardType='email-address'
+                        left={<TextInput.Icon icon="email" size={20} />}
+                        autoCapitalize='none' autoCorrect={false}
+                    />
+                    <FormInput
+                        formProps={formProps}
+                        name='password' label='Password'
+                        style={styles.input}
+                        secureTextEntry={passHidden}
+                        right={<TextInput.Icon
+                            icon={passHidden ? 'eye' : 'eye-off'}
+                            onPress={() => setPassHidden(val => !val)} />}
+                        left={<TextInput.Icon icon="lock" size={20} />}
+                        autoCapitalize='none' autoCorrect={false}
+                    />
+                    <View style={styles.row}>
+                        <Button labelStyle={styles.forgotBtn}>
+                            Forgot Password
+                        </Button>
+                    </View>
+                    <Button style={styles.submitBtn} mode='contained'
+                        labelStyle={styles.submitBtnTxt}
+                        theme={{ roundness: 2 }}
+                        onPress={formProps.handleSubmit}
+                    >
+                        Login
+                    </Button>
+                </View>
+            )}
+        </Formik>
     )
 }

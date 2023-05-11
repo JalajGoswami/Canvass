@@ -6,6 +6,7 @@ export default function getTheme() {
 
     return {
         theme: appTheme || systemTheme,
-        isDarkTheme: (appTheme || systemTheme) == 'dark'
+        isDarkTheme: (appTheme || systemTheme) == 'dark',
+        appTheme, systemTheme
     }
 }
