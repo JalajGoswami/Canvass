@@ -3,7 +3,6 @@ import React, { useMemo, useState } from 'react'
 import { Button, TextInput } from 'react-native-paper'
 import { DisplayFont } from 'theme/theme'
 import { useDispatch } from 'react-redux'
-import { toggleAuthorized } from 'store/slices/user'
 
 export default function LoginForm() {
     const [passHidden, setPassHidden] = useState(true)
@@ -64,7 +63,7 @@ export default function LoginForm() {
             <Button style={styles.submitBtn} mode='contained'
                 labelStyle={styles.submitBtnTxt}
                 theme={{ roundness: 2 }}
-                onPress={() => dispatch(toggleAuthorized())}
+                onPress={() => null}
             >
                 Login
             </Button>

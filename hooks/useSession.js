@@ -5,7 +5,7 @@ import EncryptedStorage from 'react-native-encrypted-storage';
 
 const saveSession = async (user) => {
     await EncryptedStorage.setItem('user', JSON.stringify(user))
-    await EncryptedStorage.setItem('token', user.accessToken)
+    process.env.ACCESS_TOKEN = user.accessToken
 }
 
 const deleteSavedData = async () => {
@@ -64,6 +64,6 @@ export const useRootSession = () => {
 
     return {
         ...session,
-        restoreSession,
+        restoreSession
     }
 }
