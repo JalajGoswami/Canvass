@@ -1,10 +1,21 @@
 import React, { useMemo } from 'react'
 import { Image, StyleSheet, View } from 'react-native'
-import { Button, TextInput, useTheme } from 'react-native-paper'
+import { Button, useTheme } from 'react-native-paper'
 import { SharedElement } from 'react-navigation-shared-element'
 import StyledBody from 'Components/Common/StyledBody'
 import StyledText from 'Components/Common/StyledText'
 import { DisplayFont } from 'theme/theme'
+import * as Yup from 'yup'
+import { Formik } from 'formik'
+import FormInput from 'Components/Common/FormInput'
+import { showToast } from 'Components/Common/StyledToast'
+import API from 'utils/API'
+
+const validationSchema = Yup.object({
+    email: Yup.string()
+        .required('Required')
+        .email('Not a valid Email')
+})
 
 export default function Email({ navigation }) {
     const theme = useTheme()
@@ -28,11 +39,11 @@ export default function Email({ navigation }) {
         input: {
             height: 65,
             marginHorizontal: 25,
-            marginBottom: 15,
         },
         btn: {
             marginHorizontal: 25,
             borderRadius: 4,
+            marginTop: 15,
         },
         btnTxt: {
             fontWeight: 'bold',
@@ -40,6 +51,16 @@ export default function Email({ navigation }) {
             fontFamily: DisplayFont,
         }
     }))
+
+    async function handleProceed(data) {
+        try {
+            await API('/auth/verify-email').post(data)
+            navigation.navigate('SignUp/Verify', data)
+        }
+        catch (err) {
+            showToast(err?.message)
+        }
+    }
 
     return (
         <StyledBody variant='neutral'>
@@ -52,23 +73,34 @@ export default function Email({ navigation }) {
                     Create new Account for Free !
                 </StyledText>
             </SharedElement>
-            <View style={styles.formWrapper}>
-                <TextInput
-                    label='Email Address'
-                    keyboardType='email-address'
-                    style={styles.input}
-                />
-                <SharedElement id='proceed_btn'>
-                    <Button
-                        mode='contained'
-                        style={styles.btn} contentStyle={{ paddingVertical: 5 }}
-                        labelStyle={styles.btnTxt}
-                        onPress={() => navigation.navigate('SignUp/Verify')}
-                    >
-                        Proceed
-                    </Button>
-                </SharedElement>
-            </View>
+            <Formik
+                initialValues={{ email: '' }}
+                validationSchema={validationSchema}
+                onSubmit={handleProceed}
+            >
+                {formProps => (
+                    <View style={styles.formWrapper}>
+                        <FormInput
+                            formProps={formProps}
+                            label='Email Address' name='email'
+                            keyboardType='email-address'
+                            style={styles.input}
+                            helperTextStyle={{ marginHorizontal: 25 }}
+                        />
+                        <SharedElement id='proceed_btn'>
+                            <Button
+                                mode='contained'
+                                style={styles.btn}
+                                contentStyle={{ paddingVertical: 5 }}
+                                labelStyle={styles.btnTxt}
+                                onPress={formProps.handleSubmit}
+                            >
+                                Proceed
+                            </Button>
+                        </SharedElement>
+                    </View>
+                )}
+            </Formik>
         </StyledBody>
     )
 }

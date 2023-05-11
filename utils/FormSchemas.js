@@ -1,6 +1,6 @@
 import * as Yup from 'yup'
 
-export const SignupSchema = Yup.object().shape({
+export const SignupSchema = Yup.object({
     user_name: Yup.string()
         .min(3, 'Too Short!')
         .max(20, 'Too Long!')
@@ -28,7 +28,7 @@ export const SignupSchema = Yup.object().shape({
     about: Yup.string().max(200, 'Upto 200 Characters allowed.')
 })
 
-export const LoginSchema = Yup.object().shape({
+export const LoginSchema = Yup.object({
     email: Yup.string()
         .email('Not a valid Email')
         .required('Required'),

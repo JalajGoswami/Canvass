@@ -12,7 +12,7 @@ import { useColorScheme } from 'react-native'
 import Loading from 'Screens/Common/Loading'
 import { useDispatch, useSelector } from 'react-redux'
 import { noHeader } from 'theme/ScreenOptions'
-import StyledToast from 'Components/Common/StyledToast'
+import StyledToast, { showToast } from 'Components/Common/StyledToast'
 import AuthStack from 'Screens/AuthStack/AuthStack'
 import HomeTabs from 'Screens/Home/HomeTabs'
 import Settings from 'Screens/Settings'
@@ -37,13 +37,13 @@ const { Navigator, Screen } = createStackNavigator()
 const App = () => {
   const dispatch = useDispatch()
   const OsTheme = useColorScheme()
-  const { isAuthorized, loading,user, error } = useSelector(state => state.user)
+  const { isAuthorized, loading, error } = useSelector(state => state.user)
   const { theme, systemTheme } = getTheme()
   const { restoreSession } = useRootSession()
 
-  useEffect(() => {
-    restoreSession()
-  }, [])
+  useEffect(() => { restoreSession() }, [])
+
+  useEffect(() => { error && showToast(error) }, [error])
 
   useEffect(() => {
     if (systemTheme != OsTheme)

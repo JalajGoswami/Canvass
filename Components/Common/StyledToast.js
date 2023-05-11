@@ -13,7 +13,7 @@ export default function StyledToast() {
         <Snackbar
             visible={visible}
             onDismiss={() => dispatch(hideToast())}
-            style={{ width: '94%', alignSelf: 'center', marginBottom: 10 }}
+            style={{ width: '94%', alignSelf: 'center', marginBottom: 12 }}
             action={{
                 icon: 'close', labelStyle: { color: theme.colors.onPrimary },
                 onPress: () => dispatch(hideToast()),

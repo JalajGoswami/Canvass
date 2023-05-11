@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import API from 'utils/API';
-import { errorReducer } from 'utils/services'
+import { errorReducer, pendingReducer } from 'utils/services'
 
 const initialState = {
     loading: true,
@@ -31,13 +31,19 @@ const user = createSlice({
         },
     },
     extraReducers: builder => {
+        builder.addCase(login.pending, pendingReducer)
+        builder.addCase(login.rejected, errorReducer)
         builder.addCase(login.fulfilled, (state, { payload }) => {
             state.isAuthorized = Boolean(payload.accessToken)
             state.accessToken = payload.accessToken
             state.user = payload.user
-            state.error = null
         })
-        builder.addCase(login.rejected, errorReducer)
+
+        builder.addCase(createProfile.pending, pendingReducer)
+        builder.addCase(createProfile.rejected, errorReducer)
+        builder.addCase(createProfile.fulfilled, (state, { payload }) => {
+            state.user = payload.user
+        })
     }
 });
 
@@ -45,6 +51,13 @@ const user = createSlice({
 export const login = createAsyncThunk('user/login',
     async (body) => {
         const res = await API('/auth/login').post(body)
+        return res.data
+    }
+)
+
+export const createProfile = createAsyncThunk('user/createProfile',
+    async (body) => {
+        const res = await API('/user/create-profile').post(body)
         return res.data
     }
 )
