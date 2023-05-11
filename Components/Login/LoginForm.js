@@ -14,11 +14,12 @@ export default function LoginForm() {
 
     const styles = useMemo(() => StyleSheet.create({
         container: {
-            alignItems: 'center'
+            alignItems: 'center',
+            paddingTop: 15,
         },
         input: {
             width: '90%',
-            marginTop: 20,
+            marginTop: 5,
         },
         row: {
             flexDirection: 'row',

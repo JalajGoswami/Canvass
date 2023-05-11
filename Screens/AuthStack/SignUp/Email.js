@@ -43,7 +43,7 @@ export default function Email({ navigation }) {
         btn: {
             marginHorizontal: 25,
             borderRadius: 4,
-            marginTop: 15,
+            marginTop: 2,
         },
         btnTxt: {
             fontWeight: 'bold',
@@ -58,6 +58,7 @@ export default function Email({ navigation }) {
             navigation.navigate('SignUp/Verify', data)
         }
         catch (err) {
+            console.log(err)
             showToast(err?.message)
         }
     }
