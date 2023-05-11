@@ -8,11 +8,13 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import { useNavigation } from '@react-navigation/native'
+import useSession from 'hooks/useSession'
 
 export default function Actions() {
   const { isDarkTheme } = getTheme()
   const { navigate } = useNavigation()
   const theme = useTheme()
+  const { signOut } = useSession()
   const styles = StyleSheet.create({
     box: {
       marginTop: 'auto',
@@ -85,6 +87,12 @@ export default function Actions() {
         Icon={AntDesign}
         iconName='deleteusergroup'
         label='Blocked Users'
+      />
+      <ActionItem
+        Icon={AntDesign}
+        iconName='logout'
+        label='Logout' iconSize={22}
+        onPress={signOut}
       />
     </Box>
   )
