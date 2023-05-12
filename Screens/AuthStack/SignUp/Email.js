@@ -58,7 +58,6 @@ export default function Email({ navigation }) {
             navigation.navigate('SignUp/Verify', data)
         }
         catch (err) {
-            console.log(err)
             showToast(err?.message)
         }
     }

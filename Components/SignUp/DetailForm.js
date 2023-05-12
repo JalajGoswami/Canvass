@@ -6,7 +6,7 @@ import { Button } from 'react-native-paper'
 import { DisplayFont } from 'theme/theme'
 import { SignupSchema } from 'utils/FormSchemas'
 
-export default function DetailForm({ navigation }) {
+export default function DetailForm({ onSubmit }) {
     const styles = useMemo(() => StyleSheet.create({
         container: {
             alignItems: 'center',
@@ -35,10 +35,7 @@ export default function DetailForm({ navigation }) {
                 about: ''
             }}
             validationSchema={SignupSchema}
-            onSubmit={values => {
-                console.log(values)
-            }}
-            validate={values => console.log(values)}
+            onSubmit={onSubmit}
         >
             {formProps => (
                 <View style={styles.container}>
@@ -75,8 +72,7 @@ export default function DetailForm({ navigation }) {
                         style={styles.submitBtn}
                         labelStyle={styles.submitBtnTxt}
                         theme={{ roundness: 1 }}
-                        // onPress={formProps.handleSubmit}
-                        onPress={()=>navigation.navigate('SignUp/Prefrence')}
+                        onPress={formProps.handleSubmit}
                     >
                         Get Started
                     </Button>

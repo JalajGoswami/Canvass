@@ -1,14 +1,13 @@
 import { Image, StyleSheet, View } from 'react-native'
 import ImageCropPicker from 'react-native-image-crop-picker'
-import React, { useMemo, useState } from 'react'
+import React, { useMemo } from 'react'
 import { TouchableRipple, useTheme } from 'react-native-paper'
 import StyledText from 'Components/Common/StyledText'
 import { getImageFile } from 'utils/helper'
 
 
-export default function ProfileImage() {
+export default function ProfileImage({ imgFile, setImgFile }) {
     const theme = useTheme()
-    const [imgFile, setImgFile] = useState()
     const styles = useMemo(() => StyleSheet.create({
         container: {
             alignItems: 'center',
@@ -24,13 +23,15 @@ export default function ProfileImage() {
             textAlign: 'center',
             color: theme.colors.onSurface
         }
-    }))
+    }), [theme])
+
     const handleFileSelect = () => {
         ImageCropPicker.openPicker({
             cropping: true,
-            width: 1000,
-            height: 1000,
+            width: 500,
+            height: 500,
             enableRotationGesture: false,
+            cropperCircleOverlay: true,
             cropperToolbarColor: theme.colors.background,
             cropperActiveWidgetColor: theme.colors.tertiary,
             cropperToolbarWidgetColor: theme.colors.primary,
