@@ -1,15 +1,23 @@
-import React, { useState } from 'react'
+import React, { useState, useCallback } from 'react'
 import { KeyboardAvoidingView } from 'react-native'
 import StyledBody from 'Components/Common/StyledBody'
 import DetailForm from 'Components/SignUp/DetailForm'
 import ProfileImage from 'Components/SignUp/ProfileImage'
-import { useRoute } from '@react-navigation/native'
+import { useFocusEffect, useRoute } from '@react-navigation/native'
 import API from 'utils/API'
 import { showToast } from 'Components/Common/StyledToast'
 
 export default function Profile({ navigation }) {
     const { params } = useRoute()
     const [imgFile, setImgFile] = useState()
+
+    useFocusEffect(
+        useCallback(() => (
+            navigation.addListener('beforeRemove',
+                e => e.preventDefault()
+            )
+        ), [])
+    )
 
     async function onSubmit(data) {
         const form = new FormData()
@@ -25,7 +33,7 @@ export default function Profile({ navigation }) {
                     headers: { 'Content-Type': 'multipart/form-data' }
                 })
             navigation.navigate(
-                'SignUp/Prefrence', { userId: res.data.id }
+                'SignUp/Prefrence', { userId: 8 ?? res.data.id }
             )
         }
         catch (err) {

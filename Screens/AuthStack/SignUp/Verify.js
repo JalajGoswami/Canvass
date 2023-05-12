@@ -97,7 +97,11 @@ export default function Verify({ navigation }) {
                                 mode='contained' contentStyle={{ paddingVertical: 5 }}
                                 style={styles.btn}
                                 labelStyle={styles.btnTxt}
-                                onPress={formProps.handleSubmit}
+                                onPress={
+                                    !formProps.isSubmitting
+                                    && formProps.handleSubmit
+                                }
+                                loading={formProps.isSubmitting}
                             >
                                 Proceed
                             </Button>

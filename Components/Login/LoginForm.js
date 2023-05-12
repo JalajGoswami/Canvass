@@ -82,7 +82,11 @@ export default function LoginForm() {
                     <Button style={styles.submitBtn} mode='contained'
                         labelStyle={styles.submitBtnTxt}
                         theme={{ roundness: 2 }}
-                        onPress={formProps.handleSubmit}
+                        onPress={
+                            !formProps.isSubmitting
+                            && formProps.handleSubmit
+                        }
+                        loading={formProps.isSubmitting}
                     >
                         Login
                     </Button>

@@ -93,7 +93,11 @@ export default function Email({ navigation }) {
                                 style={styles.btn}
                                 contentStyle={{ paddingVertical: 5 }}
                                 labelStyle={styles.btnTxt}
-                                onPress={formProps.handleSubmit}
+                                onPress={
+                                    !formProps.isSubmitting
+                                    && formProps.handleSubmit
+                                }
+                                loading={formProps.isSubmitting}
                             >
                                 Proceed
                             </Button>

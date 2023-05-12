@@ -72,7 +72,11 @@ export default function DetailForm({ onSubmit }) {
                         style={styles.submitBtn}
                         labelStyle={styles.submitBtnTxt}
                         theme={{ roundness: 1 }}
-                        onPress={formProps.handleSubmit}
+                        onPress={
+                            !formProps.isSubmitting
+                            && formProps.handleSubmit
+                        }
+                        loading={formProps.isSubmitting}
                     >
                         Get Started
                     </Button>

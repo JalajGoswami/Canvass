@@ -1,5 +1,4 @@
-import React from 'react'
-import { useState } from 'react'
+import React, { useState, useCallback } from 'react'
 import { StyleSheet, View } from 'react-native'
 import { Button } from 'react-native-paper'
 import StyledBody from 'Components/Common/StyledBody'
@@ -7,9 +6,20 @@ import StyledText from 'Components/Common/StyledText'
 import { showToast } from 'Components/Common/StyledToast'
 import CategoryCard from 'Components/SignUp/CategoryCard'
 import { DisplayFont } from 'theme/theme'
+import { useFocusEffect, useRoute } from '@react-navigation/native'
 
-export default function Prefrence() {
+export default function Prefrence({ navigation }) {
     const [selected, setSelected] = useState([])
+    const { params } = useRoute()
+
+    useFocusEffect(
+        useCallback(() => (
+            navigation.addListener('beforeRemove',
+                e => e.preventDefault()
+            )
+        ), [])
+    )
+
     function updateSelected(id) {
         setSelected(prev => {
             if (prev.includes(id)) {
