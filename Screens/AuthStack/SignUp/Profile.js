@@ -28,7 +28,7 @@ export default function Profile({ navigation }) {
         imgFile && form.append('profile_pic', imgFile)
 
         try {
-            const res = await API('/user/create-profile')
+            const res = await API('/user/profile')
                 .post(form, {
                     headers: { 'Content-Type': 'multipart/form-data' }
                 })

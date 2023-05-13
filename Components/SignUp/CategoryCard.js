@@ -52,12 +52,13 @@ export default function CategoryCard({
                 : '#fff',
         }
     })
+
     return (
         <TouchableRipple onPress={() => handleClick(id)}
             style={styles.card} borderless={true}
         >
             <View>
-                <Image source={image} resizeMode='cover'
+                <Image source={{ uri: image }} resizeMode='cover'
                     style={styles.img} blurRadius={selected ? 5 : 2}
                 />
                 <View style={styles.overlay} />

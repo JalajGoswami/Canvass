@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react'
+import React, { useState, useCallback, useEffect } from 'react'
 import { StyleSheet, View } from 'react-native'
 import { Button } from 'react-native-paper'
 import StyledBody from 'Components/Common/StyledBody'
@@ -7,18 +7,29 @@ import { showToast } from 'Components/Common/StyledToast'
 import CategoryCard from 'Components/SignUp/CategoryCard'
 import { DisplayFont } from 'theme/theme'
 import { useFocusEffect, useRoute } from '@react-navigation/native'
+import { useDispatch, useSelector } from 'react-redux'
+import CategorySkeleton from 'Components/SignUp/CategorySkeleton'
+import { fetchCategories } from 'store/slices/tag'
+import API from 'utils/API'
 
 export default function Prefrence({ navigation }) {
+    const { categories, loading, error } = useSelector(state => state.tag)
     const [selected, setSelected] = useState([])
     const { params } = useRoute()
+    const dispatch = useDispatch()
 
     useFocusEffect(
         useCallback(() => (
             navigation.addListener('beforeRemove',
-                e => e.preventDefault()
+                e => e.data.action.type != 'RESET' &&
+                    e.preventDefault()
             )
         ), [])
     )
+
+    useEffect(() => { dispatch(fetchCategories()) }, [])
+
+    useEffect(() => { error && showToast(error) }, [error])
 
     function updateSelected(id) {
         setSelected(prev => {
@@ -29,29 +40,40 @@ export default function Prefrence({ navigation }) {
             return [...prev]
         })
     }
-    function handleSubmit() {
+
+    async function handleSubmit() {
         if (selected.length < 3) {
             showToast('Select atleast 3 Topics !')
             return;
         }
+        try {
+            await API('/user/prefrence')
+                .post({
+                    userId: params.userId,
+                    categories: selected
+                })
+            navigation.reset({ index: 1, routes: [{ name: 'Login' }] })
+            showToast('Signup complete now Login')
+        }
+        catch (err) { showToast(err?.message) }
     }
+
     const styles = StyleSheet.create({
         container: {
-            alignItems: 'center'
         },
         headerTxt: {
-            width: '90%',
+            marginHorizontal: 16,
             marginTop: 20,
             marginBottom: 10,
         },
         cardsWrapper: {
-            width: '92%',
+            marginHorizontal: 16,
             flexDirection: 'row',
             flexWrap: 'wrap',
             justifyContent: 'space-between',
         },
         Btn: {
-            width: '90%',
+            marginHorizontal: 16,
             borderRadius: 8,
             marginTop: 30,
         },
@@ -62,33 +84,25 @@ export default function Prefrence({ navigation }) {
             marginVertical: 12,
         }
     })
-    const baseUrl = 'assets/images/categories/'
-    const categories = [
-        { name: 'Tech & Gadgets', image: require(baseUrl + 'tech-gadgets.webp') },
-        { name: 'Science & Cosmos', image: require(baseUrl + 'science-cosmos.webp') },
-        { name: 'Art & Illustration', image: require(baseUrl + 'art-illustration.webp') },
-        { name: 'Traveling', image: require(baseUrl + 'traveling.webp') },
-        { name: 'Sports', image: require(baseUrl + 'sports.webp') },
-        { name: 'Food & Taste', image: require(baseUrl + 'food-taste.webp') },
-        { name: 'Gaming', image: require(baseUrl + 'gaming.webp') },
-        { name: 'Movies & Shows', image: require(baseUrl + 'movies-shows.webp') },
-        { name: 'Cars', image: require(baseUrl + 'cars.webp') },
-        { name: 'Heroes & Fiction', image: require(baseUrl + 'heroes-fiction.webp') },
-    ]
+
     return (
         <StyledBody style={styles.container}>
             <StyledText style={styles.headerTxt} variant='title'>
                 Choose your favorite fields of interest (atleast 3)
             </StyledText>
-            <View style={styles.cardsWrapper}>
-                {categories.map(({ name, image }, i) => (
-                    <CategoryCard key={i} id={i}
-                        label={name} image={image}
-                        selected={selected.includes(i)}
-                        handleClick={updateSelected}
-                    />
-                ))}
-            </View>
+            {loading ?
+                <CategorySkeleton />
+                :
+                <View style={styles.cardsWrapper}>
+                    {categories?.map(({ id, name, image }) => (
+                        <CategoryCard key={id} id={id}
+                            label={name} image={image}
+                            selected={selected.includes(id)}
+                            handleClick={updateSelected}
+                        />
+                    ))}
+                </View>
+            }
             <Button mode='contained' style={styles.Btn}
                 labelStyle={styles.btnTxt}
                 onPress={handleSubmit}

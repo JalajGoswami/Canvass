@@ -38,26 +38,13 @@ const user = createSlice({
             state.accessToken = payload.accessToken
             state.user = payload.user
         })
-
-        builder.addCase(createProfile.pending, pendingReducer)
-        builder.addCase(createProfile.rejected, errorReducer)
-        builder.addCase(createProfile.fulfilled, (state, { payload }) => {
-            state.user = payload.user
-        })
     }
-});
+})
 
 
 export const login = createAsyncThunk('user/login',
     async (body) => {
         const res = await API('/auth/login').post(body)
-        return res.data
-    }
-)
-
-export const createProfile = createAsyncThunk('user/createProfile',
-    async (body) => {
-        const res = await API('/user/create-profile').post(body)
         return res.data
     }
 )
