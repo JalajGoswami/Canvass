@@ -1,9 +1,9 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import API from 'utils/API';
-import { errorReducer, pendingReducer } from 'utils/services'
+import { errorReducer, loadingReducer, pendingReducer } from 'utils/services'
 
 const initialState = {
-    loading: true,
+    loading: false,
     isAuthorized: null,
     accessToken: null,
     error: null,
@@ -20,7 +20,9 @@ const user = createSlice({
             state.user = null
         },
         userRestored: (state, { payload }) => {
-            const newState = { ...payload, loading: false }
+            const newState = {
+                ...payload, loading: false, error: null
+            }
             Object.keys(newState).forEach(key => {
                 state[key] = newState[key]
             })
@@ -31,16 +33,26 @@ const user = createSlice({
         },
     },
     extraReducers: builder => {
-        builder.addCase(login.pending, pendingReducer)
+        builder.addCase(login.pending, loadingReducer)
         builder.addCase(login.rejected, errorReducer)
         builder.addCase(login.fulfilled, (state, { payload }) => {
             state.isAuthorized = Boolean(payload.accessToken)
             state.accessToken = payload.accessToken
             state.user = payload.user
         })
+
+        builder.addCase(getProfile.pending, loadingReducer)
+        builder.addCase(getProfile.rejected, (state, { error }) => {
+            state.error = error?.message
+            state.loading = false
+            state.isAuthorized = false
+        })
+        builder.addCase(getProfile.fulfilled, (state, { payload }) => {
+            state.isAuthorized = true
+            state.user = payload
+        })
     }
 })
-
 
 export const login = createAsyncThunk('user/login',
     async (body) => {
@@ -49,6 +61,12 @@ export const login = createAsyncThunk('user/login',
     }
 )
 
+export const getProfile = createAsyncThunk('user/getProfile',
+    async () => {
+        const res = await API('/user/profile').get()
+        return res.data
+    }
+)
 
 export const {
     logOut, userRestored, userRestoreFailed

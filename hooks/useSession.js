@@ -1,11 +1,11 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { login, logOut, userRestored, userRestoreFailed } from '../store/slices/user'
+import { getProfile, login, logOut, userRestored, userRestoreFailed } from '../store/slices/user'
 import EncryptedStorage from 'react-native-encrypted-storage'
 
 const saveSession = async (user) => {
-    await EncryptedStorage.setItem('user', JSON.stringify(user))
     process.env.ACCESS_TOKEN = user.accessToken
+    await EncryptedStorage.setItem('user', JSON.stringify(user))
 }
 
 const deleteSavedData = async () => {
@@ -23,6 +23,7 @@ export default function useSession() {
     const signOut = () => {
         deleteSavedData()
         dispatch(logOut())
+        process.env.ACCESS_TOKEN = null
     }
 
     return {
@@ -50,6 +51,7 @@ export const useRootSession = () => {
             }
 
             const userState = JSON.parse(userData)
+            process.env.ACCESS_TOKEN = userState.accessToken
             dispatch(userRestored(userState))
         }
         catch (err) {
@@ -58,9 +60,16 @@ export const useRootSession = () => {
     }
 
     useEffect(() => {
-        if (user.user)
-            saveSession(user)
+        user.user && saveSession(user)
     }, [user.user])
+
+    useEffect(() => {
+        if (!user.isAuthorized) return;
+        // run on every startup for logged in user
+
+        dispatch(getProfile())
+
+    }, [user.isAuthorized])
 
     const session = useSession()
 

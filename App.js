@@ -37,7 +37,7 @@ const { Navigator, Screen } = createStackNavigator()
 const App = () => {
   const dispatch = useDispatch()
   const OsTheme = useColorScheme()
-  const { isAuthorized, loading, error } = useSelector(state => state.user)
+  const { isAuthorized, error } = useSelector(state => state.user)
   const { theme, systemTheme } = getTheme()
   const { restoreSession } = useRootSession()
 
@@ -55,7 +55,7 @@ const App = () => {
       <Suspense fallback={Loading}>
         <NavigationContainer theme={navigationThemes[theme]}>
           <Navigator screenOptions={noHeader}>
-            {loading ?
+            {isAuthorized === null ?
               <Screen name='Loading' component={Loading} />
               :
               isAuthorized ?

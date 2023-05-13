@@ -2,7 +2,7 @@ import { StyleSheet, View } from 'react-native'
 import React, { useMemo, useState } from 'react'
 import { Button, TextInput } from 'react-native-paper'
 import { DisplayFont } from 'theme/theme'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Formik } from 'formik'
 import FormInput from 'Components/Common/FormInput'
 import { LoginSchema } from 'utils/FormSchemas'
@@ -11,6 +11,7 @@ import { login } from 'store/slices/user'
 export default function LoginForm() {
     const [passHidden, setPassHidden] = useState(true)
     const dispatch = useDispatch()
+    const { loading } = useSelector(state => state.user)
 
     const styles = useMemo(() => StyleSheet.create({
         container: {
@@ -83,10 +84,9 @@ export default function LoginForm() {
                         labelStyle={styles.submitBtnTxt}
                         theme={{ roundness: 2 }}
                         onPress={
-                            !formProps.isSubmitting
-                            && formProps.handleSubmit
+                            !loading && formProps.handleSubmit
                         }
-                        loading={formProps.isSubmitting}
+                        loading={loading}
                     >
                         Login
                     </Button>

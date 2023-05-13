@@ -3,10 +3,11 @@ export const BASE_URL = 'http://localhost:5000'
 
 export default function API(url) {
     const accessToken = process.env.ACCESS_TOKEN
+
     const instance = axios.create({
         baseURL: BASE_URL,
         headers: {
-            Authorization: accessToken ? `Bearer ${accessToken}` : ''
+            Authorization: accessToken ? `Bearer${accessToken}` : ''
         }
     })
 
