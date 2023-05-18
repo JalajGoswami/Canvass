@@ -1,18 +1,23 @@
 import { StyleSheet, View } from 'react-native'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { AutocompleteDropdown } from 'react-native-autocomplete-dropdown'
 import { useTheme } from 'react-native-paper'
 import { BodyFont } from 'theme/theme'
 import StyledText from 'Components/Common/StyledText'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchCategories } from 'store/slices/tag'
 
-const DATA = [
-    { id: '1', title: 'Alpha' },
-    { id: '2', title: 'Beta' },
-    { id: '3', title: 'Gamma' },
-]
-
-export default function SelectTopic() {
+export default function SelectTopic({setCategory}) {
+    const dispatch = useDispatch()
+    const { categories } = useSelector(state => state.tag)
     const theme = useTheme()
+
+    useEffect(() => {
+        !categories && dispatch(fetchCategories())
+    }, [])
+
+    const data = categories?.map(c => ({ ...c, title: c.name })) ?? []
+
     const styles = StyleSheet.create({
         dropdownWrapper: {
             marginHorizontal: 15,
@@ -49,7 +54,8 @@ export default function SelectTopic() {
                 clearOnFocus={false}
                 closeOnBlur={true}
                 closeOnSubmit={true}
-                dataSet={DATA} direction='up'
+                dataSet={data} direction='up'
+                onSelectItem={setCategory}
                 containerStyle={styles.dropdownWrapper}
                 suggestionsListContainerStyle={styles.listWrapper}
                 suggestionsListTextStyle={styles.listItem}
@@ -74,6 +80,6 @@ export default function SelectTopic() {
                     </View>
                 }
             />
-    </View >
-  )
+        </View >
+    )
 }

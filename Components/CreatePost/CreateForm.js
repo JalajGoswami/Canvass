@@ -10,6 +10,8 @@ import { getImageFile } from 'utils/helper'
 export default function CreateForm() {
     const theme = useTheme()
     const [imgFile, setImgFile] = useState()
+    const [category, setCategory] = useState()
+    const [selectedTags, setSelectedTags] = useState([])
     const aspect_ratio = imgFile?.aspect_ratio > 0.75
         ? imgFile.aspect_ratio : 0.75
 
@@ -106,8 +108,14 @@ export default function CreateForm() {
                     </StyledText>
                 </TouchableRipple>
             }
-            <SelectTopic />
-            <TagsInput />
+            <SelectTopic
+                setCategory={setCategory}
+            />
+            <TagsInput
+                category={category}
+                selectedTags={selectedTags}
+                setSelectedTags={setSelectedTags}
+            />
             <Button
                 onPress={() => null}
                 buttonColor={theme.colors.secondary}

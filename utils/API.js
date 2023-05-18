@@ -7,7 +7,7 @@ export default function API(url) {
     const instance = axios.create({
         baseURL: BASE_URL,
         headers: {
-            Authorization: accessToken ? `Bearer${accessToken}` : ''
+            Authorization: accessToken ? `Bearer ${accessToken}` : ''
         }
     })
 

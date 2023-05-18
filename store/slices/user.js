@@ -36,6 +36,8 @@ const user = createSlice({
         builder.addCase(login.pending, loadingReducer)
         builder.addCase(login.rejected, errorReducer)
         builder.addCase(login.fulfilled, (state, { payload }) => {
+            process.env.ACCESS_TOKEN = payload.accessToken
+            state.loading = false
             state.isAuthorized = Boolean(payload.accessToken)
             state.accessToken = payload.accessToken
             state.user = payload.user

@@ -11,3 +11,11 @@ export function errorReducer(state, { error }) {
     state.error = error?.message ?? error
     state.loading = false
 }
+
+export const successReducer = (fieldName, withLoading = true) => (
+    function (state, { payload }) {
+        state[fieldName] = payload
+        if (withLoading)
+            state.loading = false
+    }
+)

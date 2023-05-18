@@ -1,21 +1,38 @@
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { AutocompleteDropdown } from 'react-native-autocomplete-dropdown'
 import { useTheme } from 'react-native-paper'
 import { BodyFont } from 'theme/theme'
 import StyledText from 'Components/Common/StyledText'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { showToast } from 'Components/Common/StyledToast'
+import { useDispatch, useSelector } from 'react-redux'
+import { getTagByCategory, searchTag } from 'store/slices/tag'
 
-export default function TagsInput() {
+export default function TagsInput({ category, selectedTags, setSelectedTags }) {
     const theme = useTheme()
     const dropdownRef = useRef()
-    const [selectedTags, setSelectedTags] = useState([])
-    const [suggestions, setSuggestions] = useState([
-        { id: '1', title: 'Alpha' },
-        { id: '2', title: 'Beta' },
-        { id: '3', title: 'Gamma' },
-    ])
+    const inputRef = useRef()
+    const textRef = useRef()
+    const { tags, loading } = useSelector(state => state.tag)
+    const dispatch = useDispatch()
+    const [suggestions, setSuggestions] = useState([])
+
+    useEffect(() => {
+        category && dispatch(getTagByCategory(category.id))
+    }, [category])
+
+    useEffect(() => {
+        if (!tags) return;
+
+        const result = tags.map(c => ({ ...c, title: c.name }))
+        const regex = new RegExp(textRef.current, 'i')
+        const exactMatch = result.find(t => t.name.match(regex))
+        if (!exactMatch)
+            result.push({ id: 'custom', title: textRef.current })
+
+        setSuggestions(result)
+    }, [tags])
 
     const styles = StyleSheet.create({
         tagsContainer: {
@@ -91,11 +108,11 @@ export default function TagsInput() {
 
     function getSuggestions(txt) {
         if (!txt) return;
-        setSuggestions(prev =>
-            prev.filter(d => d.id != 'custom').concat({
-                id: 'custom', title: txt
-            })
-        )
+        const keyword = txt.trim().replace(/ /g, '_')
+        if (txt.includes(' '))
+            inputRef.current.setNativeProps({ text: keyword })
+        textRef.current = keyword
+        dispatch(searchTag({ keyword }))
     }
 
     return (
@@ -131,6 +148,7 @@ export default function TagsInput() {
                 closeOnBlur={true}
                 closeOnSubmit={true}
                 onSelectItem={handleSelect}
+                loading={loading}
                 dataSet={suggestions}
                 onChangeText={getSuggestions}
                 debounce={500} direction='up'
@@ -146,6 +164,7 @@ export default function TagsInput() {
                     placeholderTextColor: theme.colors.outline,
                     style: styles.dropdownInp,
                     autoCorrect: false,
+                    onLayout: e => { inputRef.current = e.target }
                 }}
                 ItemSeparatorComponent={
                     <View style={styles.itemSeprator} />
