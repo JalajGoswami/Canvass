@@ -15,3 +15,30 @@ export function formatNumber(num) {
     const formatter = Intl.NumberFormat('en', { notation: 'compact' })
     return formatter.format(num)
 }
+
+export function debounce(callback, delay) {
+    let intervalId = undefined
+    let returnValue
+
+    function debounced(...args) {
+        // very first run
+        if (intervalId === undefined) {
+            intervalId = null
+            returnValue = callback(...args)
+            return returnValue
+        }
+
+        clearInterval(intervalId)
+        intervalId = setTimeout(
+            () => { returnValue = callback(...args) }, delay
+        )
+        return returnValue
+    }
+
+    function resetDebounce() {
+        clearInterval(intervalId)
+        intervalId = undefined
+    }
+
+    return [debounced, resetDebounce]
+}

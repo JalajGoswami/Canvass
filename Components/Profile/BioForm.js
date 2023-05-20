@@ -1,5 +1,5 @@
 import { StyleSheet, View } from 'react-native'
-import React from 'react'
+import React, { useMemo } from 'react'
 import { Button, Switch, useTheme } from 'react-native-paper'
 import StyledText from 'Components/Common/StyledText'
 import { Formik } from 'formik'
@@ -7,10 +7,27 @@ import FormInput from 'Components/Common/FormInput'
 import { UpdateProfileSchema } from 'utils/FormSchemas'
 import { useSelector } from 'react-redux'
 import API from 'utils/API'
+import { debounce } from 'utils/helper'
 
 export default function BioForm({ onSubmit }) {
     const theme = useTheme()
-    const { user } = useSelector(state => state.user)
+    const { user, loading } = useSelector(state => state.user)
+
+    const [checkUserName, resetDebounce] = useMemo(() => debounce(
+        async (values) => {
+            if (user.user_name === values.user_name)
+                return {}
+            try { UpdateProfileSchema.validateSync(values) }
+            catch { return {} }
+            try {
+                const res = await API('/user/check-user-name').get({
+                    params: { user_name: values.user_name }
+                })
+                return res.data.exist ?
+                    { user_name: 'UserName already exist' } : {}
+            }
+            catch (err) { return { user_name: err.message } }
+        }, 800), [user])
 
     const styles = StyleSheet.create({
         container: {
@@ -54,26 +71,9 @@ export default function BioForm({ onSubmit }) {
                 about: user.about, website: user.website,
                 private: user.private
             }}
-            validate={async (values) => {
-                try {
-                    UpdateProfileSchema.validateSync(values)
-                }
-                catch { return {} }
-                try {
-                    const res = await API('/user/check-user-name').get({
-                        params: { user_name: values.user_name }
-                    })
-                    if (res.data.exist)
-                        return { user_name: 'UserName already exist' }
-                    else
-                        return {}
-                }
-                catch (err) {
-                    return { user_name: err.message }
-                }
-            }}
+            validate={checkUserName}
             validationSchema={UpdateProfileSchema}
-            onSubmit={(val) => console.log(val)}
+            onSubmit={onSubmit}
         >
             {formProps => (
                 <View style={styles.container}>
@@ -111,7 +111,12 @@ export default function BioForm({ onSubmit }) {
                         textColor={theme.colors.background}
                         theme={{ roundness: 2 }}
                         style={styles.submitBtn}
-                        onPress={formProps.handleSubmit}
+                        loading={loading}
+                        onPress={() => {
+                            if (loading) return;
+                            resetDebounce()
+                            formProps.handleSubmit()
+                        }}
                     >
                         Update
                     </Button>

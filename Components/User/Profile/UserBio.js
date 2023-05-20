@@ -7,8 +7,6 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import { useTheme } from 'react-native-paper'
 import { useSelector } from 'react-redux'
 
-const websiteUrl = 'https://www.linkedin.com/in/jalaj-goswami-87637b220/'
-
 export default function UserBio() {
     const theme = useTheme()
     const { user } = useSelector(state => state.user)
@@ -74,7 +72,6 @@ export default function UserBio() {
                     {user.about}
                 </TokenizedText>
             }
-            {/* {'Student of Computer Science Engg.\n#Autofreak #GearHead\nCheck my Linkedin 👇'} */}
             {previewUrl &&
                 <TouchableOpacity
                     activeOpacity={0.8}

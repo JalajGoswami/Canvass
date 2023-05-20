@@ -5,8 +5,24 @@ import FormInput from 'Components/Common/FormInput'
 import { Button } from 'react-native-paper'
 import { DisplayFont } from 'theme/theme'
 import { SignupSchema } from 'utils/FormSchemas'
+import { debounce } from 'utils/helper'
+import API from 'utils/API'
 
 export default function DetailForm({ onSubmit }) {
+    const [checkUserName, resetDebounce] = useMemo(() => debounce(
+        async (values) => {
+            try { SignupSchema.validateSync(values) }
+            catch { return {} }
+            try {
+                const res = await API('/user/check-user-name').get({
+                    params: { user_name: values.user_name }
+                })
+                return res.data.exist ?
+                    { user_name: 'UserName already exist' } : {}
+            }
+            catch (err) { return { user_name: err.message } }
+        }, 800), [])
+
     const styles = useMemo(() => StyleSheet.create({
         container: {
             alignItems: 'center',
@@ -34,6 +50,7 @@ export default function DetailForm({ onSubmit }) {
                 password: '', confirm_password: '',
                 about: ''
             }}
+            validate={checkUserName}
             validationSchema={SignupSchema}
             onSubmit={onSubmit}
         >
@@ -72,10 +89,11 @@ export default function DetailForm({ onSubmit }) {
                         style={styles.submitBtn}
                         labelStyle={styles.submitBtnTxt}
                         theme={{ roundness: 1 }}
-                        onPress={
-                            !formProps.isSubmitting
-                            && formProps.handleSubmit
-                        }
+                        onPress={() => {
+                            if (formProps.isSubmitting) return;
+                            resetDebounce()
+                            formProps.handleSubmit()
+                        }}
                         loading={formProps.isSubmitting}
                     >
                         Get Started
