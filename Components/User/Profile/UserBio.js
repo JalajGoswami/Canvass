@@ -5,11 +5,13 @@ import TokenizedText from 'Components/Common/TokenizedText'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { useTheme } from 'react-native-paper'
+import { useSelector } from 'react-redux'
 
 const websiteUrl = 'https://www.linkedin.com/in/jalaj-goswami-87637b220/'
 
 export default function UserBio() {
     const theme = useTheme()
+    const { user } = useSelector(state => state.user)
     const styles = StyleSheet.create({
         container: {
             marginTop: 15,
@@ -43,12 +45,15 @@ export default function UserBio() {
 
     async function openUrl() {
         try {
-            await Linking.openURL(websiteUrl)
-        } catch {}
+            await Linking.openURL(user.website)
+        } catch { }
     }
 
-    const previewUrl = websiteUrl.startsWith('https') ?
-        websiteUrl.slice(8) : websiteUrl
+    let previewUrl = user.website || ""
+    previewUrl = previewUrl.startsWith('https') ?
+        previewUrl.slice(8) : previewUrl
+    previewUrl = previewUrl.startsWith('www') ?
+        previewUrl.slice(4) : previewUrl
 
     return (
         <View style={styles.container}>
@@ -56,32 +61,37 @@ export default function UserBio() {
                 color='onSurfaceVariant'
                 style={styles.usrname}
             >
-                jalaj_goswami
+                {user.user_name}
             </StyledText>
             <StyledText
                 variant='title' size={12}
                 style={styles.usrname}
             >
-                Jalaj Goswami
+                {user.full_name}
             </StyledText>
-            <TokenizedText style={styles.bio}>
-                {'Student of Computer Science Engg.\n#Autofreak #GearHead\nCheck my Linkedin 👇'}
-            </TokenizedText>
-            <TouchableOpacity
-                activeOpacity={0.8}
-                style={styles.urlContainer}
-                onPress={openUrl}
-            >
-                <MaterialCommunityIcons
-                    name='link-variant'
-                    size={15} style={styles.urlIcon}
-                />
-                <StyledText style={styles.url}
-                    numberOfLines={1}
+            {user.about &&
+                <TokenizedText style={styles.bio}>
+                    {user.about}
+                </TokenizedText>
+            }
+            {/* {'Student of Computer Science Engg.\n#Autofreak #GearHead\nCheck my Linkedin 👇'} */}
+            {previewUrl &&
+                <TouchableOpacity
+                    activeOpacity={0.8}
+                    style={styles.urlContainer}
+                    onPress={openUrl}
                 >
-                    {previewUrl}
-                </StyledText>
-            </TouchableOpacity>
+                    <MaterialCommunityIcons
+                        name='link-variant'
+                        size={15} style={styles.urlIcon}
+                    />
+                    <StyledText style={styles.url}
+                        numberOfLines={1}
+                    >
+                        {previewUrl}
+                    </StyledText>
+                </TouchableOpacity>
+            }
         </View>
     )
 }

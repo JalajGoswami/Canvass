@@ -36,3 +36,25 @@ export const LoginSchema = Yup.object({
     password: Yup.string()
         .required('Required')
 })
+
+export const UpdateProfileSchema = Yup.object({
+    user_name: Yup.string()
+        .min(3, 'Too Short!')
+        .max(20, 'Too Long!')
+        .lowercase('Must be Lowercase').strict()
+        .matches(/^\S+$/, 'Without Spaces')
+        .required('Required'),
+
+    full_name: Yup.string()
+        .min(3, 'Too Short!')
+        .max(30, 'Too Long!')
+        .required('Required'),
+
+    about: Yup.string()
+        .max(200, 'Upto 200 Characters allowed.')
+        .nullable(),
+
+    website: Yup.string()
+        .url('Not a valid URL')
+        .nullable()
+})

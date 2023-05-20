@@ -8,12 +8,15 @@ import { useNavigation } from '@react-navigation/native'
 import { SharedElement } from 'react-navigation-shared-element'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { TouchableOpacity } from 'react-native'
-import { getImageFile } from 'utils/helper'
+import { UserAvatar, getImageFile } from 'utils/helper'
+import { useSelector } from 'react-redux'
 
-export default function ProfilePic({ editing = false }) {
+export default function ProfilePic({
+    editing = false, imgFile, setImgFile
+}) {
     const theme = useTheme()
-    const [imgFile, setImgFile] = useState()
     const { navigate } = useNavigation()
+    const { user } = useSelector(state => state.user)
 
     const styles = StyleSheet.create({
         container: {
@@ -76,7 +79,9 @@ export default function ProfilePic({ editing = false }) {
                     <Image
                         source={
                             imgFile ? { uri: imgFile.uri } :
-                                require('assets/images/profile.png')
+                                user?.profile_pic ?
+                                    { uri: user.profile_pic }
+                                    : UserAvatar
                         }
                         style={styles.img}
                     />

@@ -1,11 +1,16 @@
 import { StyleSheet, View } from 'react-native'
-import React, { useState } from 'react'
-import { Button, Switch, TextInput, useTheme } from 'react-native-paper'
+import React from 'react'
+import { Button, Switch, useTheme } from 'react-native-paper'
 import StyledText from 'Components/Common/StyledText'
+import { Formik } from 'formik'
+import FormInput from 'Components/Common/FormInput'
+import { UpdateProfileSchema } from 'utils/FormSchemas'
+import { useSelector } from 'react-redux'
+import API from 'utils/API'
 
-export default function BioForm() {
+export default function BioForm({ onSubmit }) {
     const theme = useTheme()
-    const [privateProfile, setPrivateProfile] = useState(false)
+    const { user } = useSelector(state => state.user)
 
     const styles = StyleSheet.create({
         container: {
@@ -14,7 +19,7 @@ export default function BioForm() {
             marginTop: 30,
         },
         txtInput: {
-            marginBottom: 16,
+            marginTop: 1,
         },
         row: {
             marginVertical: 8,
@@ -29,13 +34,13 @@ export default function BioForm() {
     })
 
     function InputField({
-        label, defaultValue, ...rest
+        formProps, name, label, ...rest
     }) {
         return (
-            <TextInput
-                label={label}
+            <FormInput
+                formProps={formProps}
+                name={name} label={label}
                 mode='outlined' style={styles.txtInput}
-                defaultValue={defaultValue}
                 selectionColor={theme.colors.primary + '55'}
                 {...rest}
             />
@@ -43,44 +48,75 @@ export default function BioForm() {
     }
 
     return (
-        <View style={styles.container}>
-            <InputField
-                label='Your Full Name'
-                defaultValue='Jalaj Goswami'
-                maxLength={50}
-            />
-            <InputField
-                label='Unique UserName'
-                defaultValue='jalaj_goswami'
-                maxLength={50}
-            />
-            <InputField
-                label='Your Bio' multiline maxLength={200}
-                defaultValue={'Student of Computer Science Engg.\n#Autofreak #GearHead\nCheck my Linkedin 👇'}
-            />
-            <InputField
-                label='Website Url'
-                defaultValue='https://www.linkedin.com/in/jalaj-goswami-87637b220/'
-                maxLength={150}
-                onLayout={e => (e.target.setNativeProps(
-                    { selection: { start: 0, end: 0 } }
-                ))}
-            />
-            <View style={styles.row}>
-                <StyledText size={12}>Private Profile</StyledText>
-                <Switch
-                    value={privateProfile}
-                    onValueChange={setPrivateProfile}
-                />
-            </View>
-            <Button mode='contained'
-                buttonColor={theme.colors.onPrimaryContainer}
-                textColor={theme.colors.background}
-                theme={{ roundness: 2 }}
-                style={styles.submitBtn}
-            >
-                Update
-            </Button>
-        </View>
+        <Formik
+            initialValues={{
+                user_name: user.user_name, full_name: user.full_name,
+                about: user.about, website: user.website,
+                private: user.private
+            }}
+            validate={async (values) => {
+                try {
+                    UpdateProfileSchema.validateSync(values)
+                }
+                catch { return {} }
+                try {
+                    const res = await API('/user/check-user-name').get({
+                        params: { user_name: values.user_name }
+                    })
+                    if (res.data.exist)
+                        return { user_name: 'UserName already exist' }
+                    else
+                        return {}
+                }
+                catch (err) {
+                    return { user_name: err.message }
+                }
+            }}
+            validationSchema={UpdateProfileSchema}
+            onSubmit={(val) => console.log(val)}
+        >
+            {formProps => (
+                <View style={styles.container}>
+                    <InputField
+                        formProps={formProps}
+                        label='Your Full Name' name='full_name'
+                    />
+                    <InputField
+                        formProps={formProps}
+                        label='Unique UserName' name='user_name'
+                    />
+                    <InputField
+                        formProps={formProps}
+                        label='Your Bio' name='about'
+                        multiline
+                    />
+                    <InputField
+                        formProps={formProps}
+                        label='Website Url' name='website'
+                        onLayout={e => (e.target.setNativeProps(
+                            { selection: { start: 0, end: 0 } }
+                        ))}
+                    />
+                    <View style={styles.row}>
+                        <StyledText size={12}>Private Profile</StyledText>
+                        <Switch
+                            value={formProps.values.private}
+                            onValueChange={val =>
+                                formProps.setFieldValue('private', val)
+                            }
+                        />
+                    </View>
+                    <Button mode='contained'
+                        buttonColor={theme.colors.onPrimaryContainer}
+                        textColor={theme.colors.background}
+                        theme={{ roundness: 2 }}
+                        style={styles.submitBtn}
+                        onPress={formProps.handleSubmit}
+                    >
+                        Update
+                    </Button>
+                </View>
+            )}
+        </Formik>
     )
 }
