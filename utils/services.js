@@ -1,3 +1,6 @@
+import { showToast } from "Components/Common/StyledToast"
+import API from "./API"
+
 export function pendingReducer(state) {
     state.error = null
 }
@@ -19,3 +22,10 @@ export const successReducer = (fieldName, withLoading = true) => (
             state.loading = false
     }
 )
+
+export async function updateTags(data) {
+    try {
+        await API('/tag/update-tags').post(data)
+    }
+    catch (err) { showToast(err?.message) }
+}

@@ -2,6 +2,7 @@ import { configureStore } from '@reduxjs/toolkit'
 import userReducer from './slices/user'
 import toastReducer from './slices/toast'
 import settingsReducer from './slices/settings'
+import postReducer from './slices/post'
 import tagReducer from './slices/tag'
 
 const store = configureStore({
@@ -9,6 +10,7 @@ const store = configureStore({
         user: userReducer,
         toast: toastReducer,
         settings: settingsReducer,
+        post: postReducer,
         tag: tagReducer,
     },
     // middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false })

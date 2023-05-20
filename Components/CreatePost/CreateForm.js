@@ -1,54 +1,32 @@
-import { Image, StyleSheet, View } from 'react-native'
-import React, { useState } from 'react'
-import { Button, TextInput, TouchableRipple, useTheme } from 'react-native-paper'
-import StyledText from 'Components/Common/StyledText'
-import ImageCropPicker from 'react-native-image-crop-picker'
+import { StyleSheet, View } from 'react-native'
+import React, { useState, useRef, useEffect } from 'react'
+import { Button, TextInput, useTheme } from 'react-native-paper'
 import TagsInput from './TagsInput'
 import SelectTopic from './SelectTopic'
-import { getImageFile } from 'utils/helper'
+import { useDispatch, useSelector } from 'react-redux'
+import { showToast } from 'Components/Common/StyledToast'
+import ImageSelector from './ImageSelector'
+import { updateTags } from 'utils/services'
+import { createPost } from 'store/slices/post'
+import { useNavigation } from '@react-navigation/native'
 
 export default function CreateForm() {
     const theme = useTheme()
+    const { error, loading } = useSelector(state => state.post)
+    const dispatch = useDispatch()
+    const textBody = useRef('')
     const [imgFile, setImgFile] = useState()
     const [category, setCategory] = useState()
     const [selectedTags, setSelectedTags] = useState([])
-    const aspect_ratio = imgFile?.aspect_ratio > 0.75
-        ? imgFile.aspect_ratio : 0.75
+    const [submitting, setSubmitting] = useState(false)
+    const { replace } = useNavigation()
+
+    useEffect(() => { error && showToast(error) }, [error])
 
     const styles = StyleSheet.create({
         input: {
             marginBottom: 5,
             maxHeight: 145
-        },
-        addPhoto: {
-            borderColor: theme.colors.outline,
-            borderWidth: 1,
-            borderStyle: 'dashed',
-            borderRadius: 5,
-            alignItems: 'center',
-            padding: 10,
-            marginHorizontal: 15,
-        },
-        imageWrapper: {
-            width: 200,
-            alignSelf: 'center',
-            borderWidth: 0.5,
-            borderColor: theme.colors.outline
-        },
-        image: {
-            width: 200,
-            height: imgFile ?
-                200 / aspect_ratio
-                : 200,
-            resizeMode: 'contain',
-        },
-        imgBtns: {
-            position: 'absolute',
-            width: '100%',
-            height: '100%',
-            flexDirection: 'row',
-            justifyContent: 'center',
-            alignItems: 'center'
         },
         submtBtn: {
             marginHorizontal: 15,
@@ -57,18 +35,33 @@ export default function CreateForm() {
         }
     })
 
-    const handleFileSelect = () => {
-        ImageCropPicker.openPicker({
-            cropping: true,
-            freeStyleCropEnabled: true,
-            enableRotationGesture: false,
-            cropperToolbarColor: theme.colors.background,
-            cropperActiveWidgetColor: theme.colors.tertiary,
-            cropperToolbarWidgetColor: theme.colors.primary,
-            cropperStatusBarColor: theme.colors.outline,
-        })
-            .then(res => setImgFile(getImageFile(res)))
-            .catch(err => null)
+    async function onSubmit() {
+        if (!textBody.current) {
+            showToast('Text is required to Post')
+            return;
+        }
+        if (!category) {
+            showToast('Topic is required')
+            return;
+        }
+        if (selectedTags.length < 2) {
+            showToast('Add atleast 2 tags')
+            return;
+        }
+        setSubmitting(true)
+        const tags = selectedTags.map(t => t.title)
+        await updateTags({ tags, category: category.id })
+        const form = new FormData()
+        form.append('body', textBody.current)
+        form.append('categoryId', category.id)
+        form.append('tags', tags.join(','))
+        if (imgFile) {
+            form.append('image', imgFile)
+            form.append('aspect_ratio', imgFile.aspect_ratio)
+        }
+        dispatch(createPost(form))
+        setSubmitting(false)
+        replace('Home', { screen: 'Explore' })
     }
 
     return (
@@ -78,36 +71,16 @@ export default function CreateForm() {
                 style={styles.input}
                 multiline mode='outlined'
                 numberOfLines={5}
+                onChangeText={t => { textBody.current = t }}
                 selectionColor={theme.colors.tertiary + '66'}
                 placeholderTextColor={theme.colors.outline}
                 outlineColor='transparent'
                 activeOutlineColor='transparent'
             />
-            {imgFile ?
-                <View style={styles.imageWrapper}>
-                    <Image
-                        source={imgFile}
-                        style={styles.image}
-                    />
-                    <View style={styles.imgBtns}>
-                        <TouchableRipple onPress={handleFileSelect}>
-                            <StyledText>Chng</StyledText>
-                        </TouchableRipple>
-                        <TouchableRipple onPress={() => setImgFile(null)}>
-                            <StyledText>Rmv</StyledText>
-                        </TouchableRipple>
-                    </View>
-                </View>
-                :
-                <TouchableRipple
-                    style={styles.addPhoto}
-                    onPress={handleFileSelect}
-                >
-                    <StyledText color='outline'>
-                        Add a Photo
-                    </StyledText>
-                </TouchableRipple>
-            }
+            <ImageSelector
+                imgFile={imgFile}
+                setImgFile={setImgFile}
+            />
             <SelectTopic
                 setCategory={setCategory}
             />
@@ -117,10 +90,11 @@ export default function CreateForm() {
                 setSelectedTags={setSelectedTags}
             />
             <Button
-                onPress={() => null}
+                onPress={!(submitting || loading) && onSubmit}
                 buttonColor={theme.colors.secondary}
                 textColor={theme.colors.onSecondary}
                 style={styles.submtBtn}
+                loading={submitting || loading}
             >
                 Share this Post
             </Button>

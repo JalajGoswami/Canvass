@@ -47,9 +47,11 @@ export default function ProfilePic({ editing = false }) {
     const handleFileSelect = () => {
         ImageCropPicker.openPicker({
             cropping: true,
-            width: 1000,
-            height: 1000,
+            width: 500,
+            height: 500,
+            compressImageQuality: 0.9,
             enableRotationGesture: false,
+            cropperCircleOverlay: true,
             cropperToolbarColor: theme.colors.background,
             cropperActiveWidgetColor: theme.colors.tertiary,
             cropperToolbarWidgetColor: theme.colors.primary,

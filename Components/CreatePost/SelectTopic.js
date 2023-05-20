@@ -7,7 +7,7 @@ import StyledText from 'Components/Common/StyledText'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchCategories } from 'store/slices/tag'
 
-export default function SelectTopic({setCategory}) {
+export default function SelectTopic({ setCategory }) {
     const dispatch = useDispatch()
     const { categories } = useSelector(state => state.tag)
     const theme = useTheme()

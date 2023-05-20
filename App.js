@@ -21,6 +21,7 @@ import { setSystemTheme } from 'store/slices/settings'
 import { darkTheme, lightTheme } from 'theme/theme'
 import getTheme from 'hooks/getTheme'
 import { useRootSession } from 'hooks/useSession'
+import ImageCropPicker from 'react-native-image-crop-picker'
 
 const mainThemes = {
   'dark': darkTheme,
@@ -41,7 +42,10 @@ const App = () => {
   const { theme, systemTheme } = getTheme()
   const { restoreSession } = useRootSession()
 
-  useEffect(() => { restoreSession() }, [])
+  useEffect(() => {
+    restoreSession()
+    ImageCropPicker.clean()
+  }, [])
 
   useEffect(() => { error && showToast(error) }, [error])
 

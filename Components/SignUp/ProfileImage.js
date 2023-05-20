@@ -30,6 +30,7 @@ export default function ProfileImage({ imgFile, setImgFile }) {
             cropping: true,
             width: 500,
             height: 500,
+            compressImageQuality: 0.9,
             enableRotationGesture: false,
             cropperCircleOverlay: true,
             cropperToolbarColor: theme.colors.background,
