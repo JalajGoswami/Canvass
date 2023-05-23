@@ -33,7 +33,7 @@ export default function Profile({ navigation }) {
                     headers: { 'Content-Type': 'multipart/form-data' }
                 })
             navigation.navigate(
-                'SignUp/Prefrence', { userId: 8 ?? res.data.id }
+                'SignUp/Prefrence', { userId: res.data.id }
             )
         }
         catch (err) {

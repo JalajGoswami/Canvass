@@ -17,7 +17,6 @@ const user = createSlice({
         logOut: (state) => {
             state.isAuthorized = false
             state.accessToken = null
-            state.user = null
         },
         userRestored: (state, { payload }) => {
             const newState = {

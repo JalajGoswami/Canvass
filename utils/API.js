@@ -1,5 +1,5 @@
 import axios from 'axios'
-export const BASE_URL = 'http://localhost:5000'
+export const BASE_URL = 'https://canvass-social-app.cyclic.app'
 
 export default function API(url) {
     const accessToken = process.env.ACCESS_TOKEN
