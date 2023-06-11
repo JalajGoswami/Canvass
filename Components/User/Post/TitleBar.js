@@ -5,7 +5,7 @@ import StyledText from 'Components/Common/StyledText'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
-export default function TitleBar({ user }) {
+export default function TitleBar({ user, pic }) {
     const theme = useTheme()
     const [options, setOptions] = useState(false)
 
@@ -70,7 +70,10 @@ export default function TitleBar({ user }) {
     return (
         <View style={styles.titleBar}>
             <Image
-                source={require('assets/images/profile.png')}
+                source={
+                    pic ? { uri: pic } :
+                        require('assets/images/profile.png')
+                }
                 style={styles.userImg} resizeMode='cover'
             />
             <StyledText>{user}</StyledText>

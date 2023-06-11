@@ -11,9 +11,10 @@ import { SharedElement } from 'react-navigation-shared-element'
 
 function Post({ post, postState }) {
     const {
-        id, user, text, image, aspect_ratio = 1,
-        likes, dislikes, comments
+        id, author, body, image, aspect_ratio = 1, _count
     } = post
+    const { user_name, profile_pic } = author
+    const { likedBy, dislikedBy, comments } = _count
     const { initiallyExpanded = false } = postState ?? {}
 
     const theme = useTheme()
@@ -25,7 +26,7 @@ function Post({ post, postState }) {
             marginVertical: 8,
         },
         mainContainer: {
-            flexDirection:  'column',
+            flexDirection: 'column',
         },
         content: {
             flex: 0,
@@ -55,13 +56,13 @@ function Post({ post, postState }) {
 
     const formattedText = image ?
         <TruncatedText
-            text={text} linesToTruncate={4}
+            text={body} linesToTruncate={4}
             initiallyExpanded={initiallyExpanded}
             onStateChange={setTextExpanded}
         />
         :
         <TruncatedText
-            text={text} linesToTruncate={7}
+            text={body} linesToTruncate={7}
             initiallyExpanded={initiallyExpanded}
             onStateChange={setTextExpanded}
         />
@@ -69,12 +70,15 @@ function Post({ post, postState }) {
     return (
         <SharedElement id={`post.${id}`}>
             <View style={styles.postContainer}>
-                <TitleBar user={user} />
+                <TitleBar
+                    user={user_name}
+                    pic={profile_pic}
+                />
                 <View style={styles.mainContainer}>
                     <View style={styles.content}>
                         <View>{formattedText}</View>
                         {image &&
-                            <Image source={image}
+                            <Image source={{ uri: image }}
                                 style={styles.contentImg}
                             />
                         }
@@ -86,10 +90,10 @@ function Post({ post, postState }) {
                 </View>
                 <View style={styles.statusBar}>
                     <StyledText style={styles.counts}>
-                        {likes} Likes
+                        {likedBy} Likes
                     </StyledText>
                     <StyledText style={styles.counts}>
-                        {dislikes} Dislikes
+                        {dislikedBy} Dislikes
                     </StyledText>
                     <StyledText style={styles.counts}>
                         {comments} Comments
