@@ -1,11 +1,13 @@
 import { StyleSheet, View } from 'react-native'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { TouchableRipple, useTheme } from 'react-native-paper'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import Feather from 'react-native-vector-icons/Feather'
 import { useNavigation, useRoute } from '@react-navigation/native'
+import { useDispatch, useSelector } from 'react-redux'
+import { postAction } from 'store/slices/post'
 
 export default function ActionButtons({
     post, textExpanded
@@ -13,6 +15,8 @@ export default function ActionButtons({
     const theme = useTheme()
     const { navigate } = useNavigation()
     const route = useRoute()
+    const user = useSelector(state => state.user.user)
+    const dispatch = useDispatch()
     const [liked, setLiked] = useState(false)
     const [disliked, setDisliked] = useState(false)
     const [saved, setSaved] = useState(false)
@@ -52,11 +56,36 @@ export default function ActionButtons({
         )
     }
 
+    useEffect(() => {
+        const { likedPosts, dislikedPosts, savedPosts } = user
+        const isLiked = Boolean(likedPosts.find(p => p.id === post.id))
+        const isDisliked = Boolean(dislikedPosts.find(p => p.id === post.id))
+        const isSaved = Boolean(savedPosts.find(p => p.id === post.id))
+        setLiked(isLiked)
+        setDisliked(isDisliked)
+        setSaved(isSaved)
+    }, [user])
+
+    function onLike() {
+        setLiked(p => !p)
+        dispatch(postAction([post.id, 'like']))
+    }
+
+    function onDislike() {
+        setDisliked(p => !p)
+        dispatch(postAction([post.id, 'dislike']))
+    }
+
+    function onSave() {
+        setSaved(p => !p)
+        dispatch(postAction([post.id, 'save']))
+    }
+
     return (
         <View style={styles.actions}>
             <ActionBtn
                 rippleColor={theme.colors.secondary + '33'}
-                onPress={() => setLiked(!liked)}
+                onPress={onLike}
             >
                 <AntDesign
                     name={liked ? 'like1' : 'like2'}
@@ -66,7 +95,7 @@ export default function ActionButtons({
             </ActionBtn>
             <ActionBtn
                 rippleColor={theme.colors.tertiary + '33'}
-                onPress={() => setDisliked(!disliked)}
+                onPress={onDislike}
             >
                 <AntDesign
                     name={disliked ? 'dislike1' : 'dislike2'}
@@ -93,7 +122,7 @@ export default function ActionButtons({
             </ActionBtn>
             <ActionBtn
                 rippleColor={theme.colors.primary + '33'}
-                onPress={() => setSaved(!saved)}
+                onPress={onSave}
             >
                 <Ionicons
                     name={saved ? 'download' : 'download-outline'}

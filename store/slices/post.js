@@ -55,6 +55,10 @@ const post = createSlice({
                 else
                     state.userPosts = state.userPosts.concat(payload.data)
             })
+
+        builder.addCase(postAction.pending, pendingReducer)
+        builder.addCase(postAction.rejected, errorReducer)
+        builder.addCase(postAction.fulfilled, () => { })
     }
 })
 
@@ -86,6 +90,13 @@ export const getUserPosts = createAsyncThunk('post/getUserPosts',
     async (id, page) => {
         const p = page || 1
         const res = await API(`/post/user/${id}?page=${p}`).get()
+        return res.data
+    }
+)
+
+export const postAction = createAsyncThunk('post/postAction',
+    async ([id, action]) => {
+        const res = await API(`/post/${id}/${action}`).get()
         return res.data
     }
 )
