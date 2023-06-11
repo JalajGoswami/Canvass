@@ -11,7 +11,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getFeedPosts, refreshFeedPosts } from 'store/slices/post'
 
 export default function Explore() {
-    const { feedPosts, pages, loading } = useSelector(state => state.post)
+    const { feedPosts, pages: { feed: pages }, loading
+    } = useSelector(state => state.post)
     const dispatch = useDispatch()
     const listRef = useRef()
     const theme = useTheme()

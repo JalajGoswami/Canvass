@@ -4,8 +4,11 @@ import { errorReducer, loadingReducer, pendingReducer } from 'utils/services'
 
 const initialState = {
     feedPosts: [],
-    pages: { current: 0, total: 0 },
     userPosts: null,
+    pages: {
+        feed: { current: 0, total: 0 },
+        user: { current: 0, total: 0 }
+    },
     loading: false,
     error: null
 }
@@ -29,7 +32,7 @@ const post = createSlice({
         builder.addCase(getFeedPosts.rejected, errorReducer)
         builder.addCase(getFeedPosts.fulfilled,
             (state, { payload }) => {
-                state.pages = payload.pages
+                state.pages.feed = payload.pages
                 state.feedPosts = state.feedPosts.concat(payload.data)
             })
 
@@ -37,9 +40,20 @@ const post = createSlice({
         builder.addCase(refreshFeedPosts.rejected, errorReducer)
         builder.addCase(refreshFeedPosts.fulfilled,
             (state, { payload }) => {
-                state.pages = payload.pages
+                state.pages.feed = payload.pages
                 state.feedPosts = payload.data
                 state.loading = false
+            })
+
+        builder.addCase(getUserPosts.pending, pendingReducer)
+        builder.addCase(getUserPosts.rejected, errorReducer)
+        builder.addCase(getUserPosts.fulfilled,
+            (state, { payload }) => {
+                state.pages.user = payload.pages
+                if (payload.pages.current === 1)
+                    state.userPosts = payload.data
+                else
+                    state.userPosts = state.userPosts.concat(payload.data)
             })
     }
 })
@@ -64,6 +78,14 @@ export const getFeedPosts = createAsyncThunk('post/getFeedPosts',
 export const refreshFeedPosts = createAsyncThunk('post/refreshFeedPosts',
     async () => {
         const res = await API('/post/feed?page=1').get()
+        return res.data
+    }
+)
+
+export const getUserPosts = createAsyncThunk('post/getUserPosts',
+    async (id, page) => {
+        const p = page || 1
+        const res = await API(`/post/user/${id}?page=${p}`).get()
         return res.data
     }
 )
