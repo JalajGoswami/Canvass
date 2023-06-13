@@ -58,9 +58,9 @@ export default function ActionButtons({
 
     useEffect(() => {
         const { likedPosts, dislikedPosts, savedPosts } = user
-        const isLiked = Boolean(likedPosts.find(p => p.id === post.id))
-        const isDisliked = Boolean(dislikedPosts.find(p => p.id === post.id))
-        const isSaved = Boolean(savedPosts.find(p => p.id === post.id))
+        const isLiked = Boolean(likedPosts?.find(p => p.id === post.id))
+        const isDisliked = Boolean(dislikedPosts?.find(p => p.id === post.id))
+        const isSaved = Boolean(savedPosts?.find(p => p.id === post.id))
         setLiked(isLiked)
         setDisliked(isDisliked)
         setSaved(isSaved)
